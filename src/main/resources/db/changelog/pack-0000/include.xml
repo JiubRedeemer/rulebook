@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+">
+
+    <include file="001-PRO-24-initial.xml" relativeToChangelogFile="true"/>
+    <include file="002-PRO-24-init-5e-abilities.xml" relativeToChangelogFile="true"/>
+    <include file="002-PRO-24-init-5e-race.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

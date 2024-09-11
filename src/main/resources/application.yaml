@@ -1,0 +1,21 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: rulebook
+  datasource:
+    password: pd
+    url: jdbc:postgresql://localhost:5432/rule_book
+    username: pd
+    driver-class-name: org.postgresql.Driver
+
+jooq:
+  generator:
+    database:
+      name: org.jooq.meta.postgres.PostgresDatabase
+      with-input-schema: rules
+      with-includes: .*
+    target:
+      package-name: com.jiubredeemer.rulebook.dal.entity
+      directory: G:/Work/Pets/ProjectD/rulebook/src/main/kotlin
