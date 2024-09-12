@@ -1,4 +1,4 @@
-package com.jiubredeemer.rulebook.business.rooms.dto;
+package com.jiubredeemer.rulebook.domain.rooms.dto;
 
 import lombok.Data;
 

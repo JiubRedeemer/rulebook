@@ -7,7 +7,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
 ">
     <changeSet id="PRO-24:Init-5e-races:11.09.2024" author="jiubredeemer">
-        <sqlFile path="002-PRO-24-init-5e-race.sql" relativeToChangelogFile="true" splitStatements="false"/>
+        <sqlFile path="003-PRO-24-init-5e-race.sql" relativeToChangelogFile="true" splitStatements="false"/>
     </changeSet>
 
 </databaseChangeLog>

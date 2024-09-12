@@ -1,8 +1,8 @@
-package com.jiubredeemer.rulebook.dal.repository;
+package com.jiubredeemer.rulebook.dal.repository.room;
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Rooms;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.RoomsRecord;
-import com.jiubredeemer.rulebook.business.rooms.dto.RoomDto;
+import com.jiubredeemer.rulebook.domain.rooms.dto.RoomDto;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;

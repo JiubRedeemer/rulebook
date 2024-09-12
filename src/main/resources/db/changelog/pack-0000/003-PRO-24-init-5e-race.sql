@@ -472,7 +472,7 @@ VALUES ('0e7c7903-dfd5-405c-a3dd-eb219db8ef0a'::uuid, 'd45171da-8765-473c-ad90-4
 
 /* Скальный гном */
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
-VALUES ('28ad32ba-7e06-44f1-ac37-689a6536afb5'::uuid, 'df0ee778-2f0a-4bcb-9963-1ebe4c224c82'::uuid, 'INSTRUMENTS'::text,
+VALUES ('28ad32ba-7e06-44f1-ac37-689a6536afb5'::uuid, 'df0ee778-2f0a-4bcb-9963-1ebe4c224c82'::uuid, 'INSTRUMENT'::text,
         'REPA'::text);
 
 /* Горный дварф */
@@ -493,15 +493,15 @@ VALUES ('29d03721-9ded-420d-b652-54346372123d'::uuid, 'f292377f-a552-45cb-b6d4-4
         'WHMR'::text);
 
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
-VALUES ('6fe9e0a7-bcb2-4e0b-9cf0-e488d5990cbf'::uuid, 'f292377f-a552-45cb-b6d4-4b8d6520d37a'::uuid, 'INSTRUMENTS'::text,
+VALUES ('6fe9e0a7-bcb2-4e0b-9cf0-e488d5990cbf'::uuid, 'f292377f-a552-45cb-b6d4-4b8d6520d37a'::uuid, 'INSTRUMENT'::text,
         'SMIT'::text);
 
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
-VALUES ('f101e545-1dfd-4733-b234-d5a3f9608718'::uuid, 'f292377f-a552-45cb-b6d4-4b8d6520d37a'::uuid, 'INSTRUMENTS'::text,
+VALUES ('f101e545-1dfd-4733-b234-d5a3f9608718'::uuid, 'f292377f-a552-45cb-b6d4-4b8d6520d37a'::uuid, 'INSTRUMENT'::text,
         'BREW'::text);
 
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
-VALUES ('1a3ae60e-e9d5-4150-959f-1614fc3df056'::uuid, 'f292377f-a552-45cb-b6d4-4b8d6520d37a'::uuid, 'INSTRUMENTS'::text,
+VALUES ('1a3ae60e-e9d5-4150-959f-1614fc3df056'::uuid, 'f292377f-a552-45cb-b6d4-4b8d6520d37a'::uuid, 'INSTRUMENT'::text,
         'MASON'::text);
 
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
@@ -530,21 +530,21 @@ VALUES ('2363d51c-c629-4f6d-ab1f-0beb513c2aa2'::uuid, 'c1f3a725-e03e-48d8-b18c-a
         'WHMR'::text);
 
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
-VALUES ('5669a0df-51fa-4b5b-b824-eff37de00179'::uuid, 'c1f3a725-e03e-48d8-b18c-a1a1affbf964'::uuid, 'INSTRUMENTS'::text,
+VALUES ('5669a0df-51fa-4b5b-b824-eff37de00179'::uuid, 'c1f3a725-e03e-48d8-b18c-a1a1affbf964'::uuid, 'INSTRUMENT'::text,
         'SMIT'::text);
 
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
-VALUES ('cde9c913-a6a9-4f32-b56f-4ab4a06b56cc'::uuid, 'c1f3a725-e03e-48d8-b18c-a1a1affbf964'::uuid, 'INSTRUMENTS'::text,
+VALUES ('cde9c913-a6a9-4f32-b56f-4ab4a06b56cc'::uuid, 'c1f3a725-e03e-48d8-b18c-a1a1affbf964'::uuid, 'INSTRUMENT'::text,
         'BREW'::text);
 
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
-VALUES ('b506e7db-9442-4748-ac05-8e8fa722880a'::uuid, 'c1f3a725-e03e-48d8-b18c-a1a1affbf964'::uuid, 'INSTRUMENTS'::text,
+VALUES ('b506e7db-9442-4748-ac05-8e8fa722880a'::uuid, 'c1f3a725-e03e-48d8-b18c-a1a1affbf964'::uuid, 'INSTRUMENT'::text,
         'MASON'::text);
 
 /* Высший эльф */
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
 VALUES ('1322e9f4-d3e1-46fb-bb21-274ac30474b7'::uuid, 'cce6f7de-b5de-48e3-941a-37c9d0ddb98e'::uuid, 'ABILITY'::text,
-        'PERCEPTION'::text);
+        'PERC'::text);
 
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
 VALUES ('7701cdf5-62ef-4f29-8325-afd1c9a5a817'::uuid, 'cce6f7de-b5de-48e3-941a-37c9d0ddb98e'::uuid, 'WEAPON'::text,
@@ -565,7 +565,7 @@ VALUES ('fe529e22-4a02-40f1-bcbf-56a7f05dd1c3'::uuid, 'cce6f7de-b5de-48e3-941a-3
 /* Лесной эльф */
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
 VALUES ('071cfcc0-af9c-4913-8a7c-fa1858a1ea35'::uuid, '32bdff9e-1432-43a9-ab11-623ba757616d'::uuid, 'ABILITY'::text,
-        'PERCEPTION'::text);
+        'PERC'::text);
 
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
 VALUES ('c4b0bc6b-a393-4b31-bb5a-5818bdad36b4'::uuid, '32bdff9e-1432-43a9-ab11-623ba757616d'::uuid, 'WEAPON'::text,
@@ -587,7 +587,7 @@ VALUES ('cc6c1a08-e3e6-494a-98d3-940dcc7a053e'::uuid, '32bdff9e-1432-43a9-ab11-6
 /* Темный Эльф (Дроу) */
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
 VALUES ('6d5b8696-58be-438b-92ac-917f7933b3e6'::uuid, 'd45171da-8765-473c-ad90-4004b6f6462a'::uuid, 'ABILITY'::text,
-        'PERCEPTION'::text);
+        'PERC'::text);
 
 INSERT INTO rules.race_proficiencies (id, race_stats_id, type, code)
 VALUES ('bb1c7811-319a-4bf9-a9d2-94bd9388d77b'::uuid, 'd45171da-8765-473c-ad90-4004b6f6462a'::uuid, 'WEAPON'::text,

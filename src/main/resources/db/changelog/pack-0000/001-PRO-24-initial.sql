@@ -106,25 +106,17 @@ CREATE TABLE rules.race_traits
     description   text NOT NULL,
     PRIMARY KEY (id)
 );
-CREATE TABLE rules.class_proficiencies
-(
-    id             uuid NOT NULL,
-    class_stats_id uuid NOT NULL,
-    type           text NOT NULL,
-    code           text NOT NULL,
-    PRIMARY KEY (id)
-);
 CREATE TABLE rules.class_stats
 (
     id                      uuid  NOT NULL,
     hp_dice                 text  NOT NULL,
     start_hp                text  NOT NULL,
     saving_throws_abilities jsonb NOT NULL,
-    skills                  jsonb NOT NULL,
+    available_skills        jsonb NOT NULL,
     PRIMARY KEY (id)
 );
 COMMENT ON COLUMN rules.class_stats.saving_throws_abilities IS '["WIS", "INT"]';
-COMMENT ON COLUMN rules.class_stats.skills IS 'Навыки, которыми может владеть класс: {"count" : 2, "list" : "WIS", "INT"}';
+COMMENT ON COLUMN rules.class_stats.available_skills IS 'Навыки, которыми может владеть класс: {"count" : 2, "list" : "WIS", "INT"}';
 CREATE TABLE rules.race_proficiencies
 (
     id            uuid NOT NULL,
@@ -133,6 +125,20 @@ CREATE TABLE rules.race_proficiencies
     code          text NOT NULL,
     PRIMARY KEY (id)
 );
+CREATE INDEX abilities_room_id
+    ON rules.abilities (room_id);
+CREATE INDEX skills_depend_on_ability_id
+    ON rules.skills (depend_on_ability_id);
+CREATE INDEX default_5e_skills_depend_on_ability
+    ON rules.default_5e_skills (depend_on_ability);
+CREATE INDEX races_room_id
+    ON rules.races (room_id);
+CREATE INDEX classes_room_id
+    ON rules.classes (room_id);
+CREATE INDEX race_traits_race_stats_id
+    ON rules.race_traits (race_stats_id);
+CREATE INDEX race_proficiencies_race_stats_id
+    ON rules.race_proficiencies (race_stats_id);
 ALTER TABLE rules.skills
     ADD CONSTRAINT FKskills69995 FOREIGN KEY (depend_on_ability_id) REFERENCES rules.abilities (id);
 ALTER TABLE rules.abilities
@@ -153,7 +159,5 @@ ALTER TABLE rules.classes
     ADD CONSTRAINT FKclasses375368 FOREIGN KEY (class_stats_id) REFERENCES rules.class_stats (id);
 ALTER TABLE rules.default_5e_classes
     ADD CONSTRAINT FKdefault_5e174476 FOREIGN KEY (class_stats_id) REFERENCES rules.class_stats (id);
-ALTER TABLE rules.class_proficiencies
-    ADD CONSTRAINT FKclass_prof188640 FOREIGN KEY (class_stats_id) REFERENCES rules.class_stats (id);
 ALTER TABLE rules.race_proficiencies
     ADD CONSTRAINT FKrace_profi169598 FOREIGN KEY (race_stats_id) REFERENCES rules.race_stats (id);

@@ -5,7 +5,6 @@ package com.jiubredeemer.rulebook.dal.entity;
 
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Abilities;
-import com.jiubredeemer.rulebook.dal.entity.tables.ClassProficiencies;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClassStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.Classes;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eAbilities;
@@ -30,11 +29,6 @@ public class Tables {
      * Кастомные характеристики существ (для homebrew игр)
      */
     public static final Abilities ABILITIES = Abilities.ABILITIES;
-
-    /**
-     * The table <code>rules.class_proficiencies</code>.
-     */
-    public static final ClassProficiencies CLASS_PROFICIENCIES = ClassProficiencies.CLASS_PROFICIENCIES;
 
     /**
      * The table <code>rules.class_stats</code>.

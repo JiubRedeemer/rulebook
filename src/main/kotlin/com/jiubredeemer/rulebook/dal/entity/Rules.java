@@ -5,7 +5,6 @@ package com.jiubredeemer.rulebook.dal.entity;
 
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Abilities;
-import com.jiubredeemer.rulebook.dal.entity.tables.ClassProficiencies;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClassStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.Classes;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eAbilities;
@@ -44,11 +43,6 @@ public class Rules extends SchemaImpl {
      * Кастомные характеристики существ (для homebrew игр)
      */
     public final Abilities ABILITIES = Abilities.ABILITIES;
-
-    /**
-     * The table <code>rules.class_proficiencies</code>.
-     */
-    public final ClassProficiencies CLASS_PROFICIENCIES = ClassProficiencies.CLASS_PROFICIENCIES;
 
     /**
      * The table <code>rules.class_stats</code>.
@@ -127,7 +121,6 @@ public class Rules extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             Abilities.ABILITIES,
-            ClassProficiencies.CLASS_PROFICIENCIES,
             ClassStats.CLASS_STATS,
             Classes.CLASSES,
             Default_5eAbilities.DEFAULT_5E_ABILITIES,

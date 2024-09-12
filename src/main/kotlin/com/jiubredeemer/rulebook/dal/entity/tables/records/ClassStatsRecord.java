@@ -80,18 +80,18 @@ public class ClassStatsRecord extends UpdatableRecordImpl<ClassStatsRecord> {
     }
 
     /**
-     * Setter for <code>rules.class_stats.skills</code>. Навыки, которыми может
-     * владеть класс: {"count" : 2, "list" : "WIS", "INT"}
+     * Setter for <code>rules.class_stats.available_skills</code>. Навыки,
+     * которыми может владеть класс: {"count" : 2, "list" : "WIS", "INT"}
      */
-    public void setSkills(JSONB value) {
+    public void setAvailableSkills(JSONB value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>rules.class_stats.skills</code>. Навыки, которыми может
-     * владеть класс: {"count" : 2, "list" : "WIS", "INT"}
+     * Getter for <code>rules.class_stats.available_skills</code>. Навыки,
+     * которыми может владеть класс: {"count" : 2, "list" : "WIS", "INT"}
      */
-    public JSONB getSkills() {
+    public JSONB getAvailableSkills() {
         return (JSONB) get(4);
     }
 
@@ -118,14 +118,14 @@ public class ClassStatsRecord extends UpdatableRecordImpl<ClassStatsRecord> {
     /**
      * Create a detached, initialised ClassStatsRecord
      */
-    public ClassStatsRecord(UUID id, String hpDice, String startHp, JSONB savingThrowsAbilities, JSONB skills) {
+    public ClassStatsRecord(UUID id, String hpDice, String startHp, JSONB savingThrowsAbilities, JSONB availableSkills) {
         super(ClassStats.CLASS_STATS);
 
         setId(id);
         setHpDice(hpDice);
         setStartHp(startHp);
         setSavingThrowsAbilities(savingThrowsAbilities);
-        setSkills(skills);
+        setAvailableSkills(availableSkills);
         resetChangedOnNotNull();
     }
 }

@@ -6,10 +6,8 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
 ">
-
-    <include file="001-PRO-24-initial.xml" relativeToChangelogFile="true"/>
-    <include file="002-PRO-24-init-5e-abilities.xml" relativeToChangelogFile="true"/>
-    <include file="003-PRO-24-init-5e-race.xml" relativeToChangelogFile="true"/>
-    <include file="004-PRO-24-init-5e-class.sql" relativeToChangelogFile="true"/>
+    <changeSet id="PRO-24:Init-5e-classes:11.09.2024" author="jiubredeemer">
+        <sqlFile path="004-PRO-24-init-5e-class.sql" relativeToChangelogFile="true" splitStatements="false"/>
+    </changeSet>
 
 </databaseChangeLog>

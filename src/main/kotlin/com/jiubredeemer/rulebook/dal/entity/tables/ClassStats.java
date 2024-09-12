@@ -6,7 +6,6 @@ package com.jiubredeemer.rulebook.dal.entity.tables;
 
 import com.jiubredeemer.rulebook.dal.entity.Keys;
 import com.jiubredeemer.rulebook.dal.entity.Rules;
-import com.jiubredeemer.rulebook.dal.entity.tables.ClassProficiencies.ClassProficienciesPath;
 import com.jiubredeemer.rulebook.dal.entity.tables.Classes.ClassesPath;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eClasses.Default_5eClassesPath;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.ClassStatsRecord;
@@ -80,10 +79,10 @@ public class ClassStats extends TableImpl<ClassStatsRecord> {
     public final TableField<ClassStatsRecord, JSONB> SAVING_THROWS_ABILITIES = createField(DSL.name("saving_throws_abilities"), SQLDataType.JSONB.nullable(false), this, "[\"WIS\", \"INT\"]");
 
     /**
-     * The column <code>rules.class_stats.skills</code>. Навыки, которыми может
-     * владеть класс: {"count" : 2, "list" : "WIS", "INT"}
+     * The column <code>rules.class_stats.available_skills</code>. Навыки,
+     * которыми может владеть класс: {"count" : 2, "list" : "WIS", "INT"}
      */
-    public final TableField<ClassStatsRecord, JSONB> SKILLS = createField(DSL.name("skills"), SQLDataType.JSONB.nullable(false), this, "Навыки, которыми может владеть класс: {\"count\" : 2, \"list\" : \"WIS\", \"INT\"}");
+    public final TableField<ClassStatsRecord, JSONB> AVAILABLE_SKILLS = createField(DSL.name("available_skills"), SQLDataType.JSONB.nullable(false), this, "Навыки, которыми может владеть класс: {\"count\" : 2, \"list\" : \"WIS\", \"INT\"}");
 
     private ClassStats(Name alias, Table<ClassStatsRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -155,19 +154,6 @@ public class ClassStats extends TableImpl<ClassStatsRecord> {
     @Override
     public UniqueKey<ClassStatsRecord> getPrimaryKey() {
         return Keys.CLASS_STATS_PKEY;
-    }
-
-    private transient ClassProficienciesPath _classProficiencies;
-
-    /**
-     * Get the implicit to-many join path to the
-     * <code>rules.class_proficiencies</code> table
-     */
-    public ClassProficienciesPath classProficiencies() {
-        if (_classProficiencies == null)
-            _classProficiencies = new ClassProficienciesPath(this, null, Keys.CLASS_PROFICIENCIES__FKCLASS_PROF188640.getInverseKey());
-
-        return _classProficiencies;
     }
 
     private transient ClassesPath _classes;

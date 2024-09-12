@@ -9,6 +9,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/rule_book
     username: pd
     driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false
 
 jooq:
   generator:

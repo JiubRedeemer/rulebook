@@ -4,6 +4,7 @@
 package com.jiubredeemer.rulebook.dal.entity.tables;
 
 
+import com.jiubredeemer.rulebook.dal.entity.Indexes;
 import com.jiubredeemer.rulebook.dal.entity.Keys;
 import com.jiubredeemer.rulebook.dal.entity.Rules;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClassStats.ClassStatsPath;
@@ -18,6 +19,7 @@ import java.util.UUID;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Index;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Path;
@@ -148,6 +150,11 @@ public class Classes extends TableImpl<ClassesRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : Rules.RULES;
+    }
+
+    @Override
+    public List<Index> getIndexes() {
+        return Arrays.asList(Indexes.CLASSES_ROOM_ID);
     }
 
     @Override

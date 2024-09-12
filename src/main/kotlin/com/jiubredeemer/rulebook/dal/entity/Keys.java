@@ -5,7 +5,6 @@ package com.jiubredeemer.rulebook.dal.entity;
 
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Abilities;
-import com.jiubredeemer.rulebook.dal.entity.tables.ClassProficiencies;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClassStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.Classes;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eAbilities;
@@ -19,7 +18,6 @@ import com.jiubredeemer.rulebook.dal.entity.tables.Races;
 import com.jiubredeemer.rulebook.dal.entity.tables.Rooms;
 import com.jiubredeemer.rulebook.dal.entity.tables.Skills;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.AbilitiesRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.ClassProficienciesRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.ClassStatsRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.ClassesRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_5eAbilitiesRecord;
@@ -52,7 +50,6 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<AbilitiesRecord> ABILITIES_PKEY = Internal.createUniqueKey(Abilities.ABILITIES, DSL.name("abilities_pkey"), new TableField[] { Abilities.ABILITIES.ID }, true);
-    public static final UniqueKey<ClassProficienciesRecord> CLASS_PROFICIENCIES_PKEY = Internal.createUniqueKey(ClassProficiencies.CLASS_PROFICIENCIES, DSL.name("class_proficiencies_pkey"), new TableField[] { ClassProficiencies.CLASS_PROFICIENCIES.ID }, true);
     public static final UniqueKey<ClassStatsRecord> CLASS_STATS_PKEY = Internal.createUniqueKey(ClassStats.CLASS_STATS, DSL.name("class_stats_pkey"), new TableField[] { ClassStats.CLASS_STATS.ID }, true);
     public static final UniqueKey<ClassesRecord> CLASSES_PKEY = Internal.createUniqueKey(Classes.CLASSES, DSL.name("classes_pkey"), new TableField[] { Classes.CLASSES.ID }, true);
     public static final UniqueKey<Default_5eAbilitiesRecord> DEFAULT_5E_ABILITIES_PKEY = Internal.createUniqueKey(Default_5eAbilities.DEFAULT_5E_ABILITIES, DSL.name("default_5e_abilities_pkey"), new TableField[] { Default_5eAbilities.DEFAULT_5E_ABILITIES.ID }, true);
@@ -71,7 +68,6 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final ForeignKey<AbilitiesRecord, RoomsRecord> ABILITIES__FKABILITIES898405 = Internal.createForeignKey(Abilities.ABILITIES, DSL.name("fkabilities898405"), new TableField[] { Abilities.ABILITIES.ROOM_ID }, Keys.ROOMS_PKEY, new TableField[] { Rooms.ROOMS.ROOM_ID }, true);
-    public static final ForeignKey<ClassProficienciesRecord, ClassStatsRecord> CLASS_PROFICIENCIES__FKCLASS_PROF188640 = Internal.createForeignKey(ClassProficiencies.CLASS_PROFICIENCIES, DSL.name("fkclass_prof188640"), new TableField[] { ClassProficiencies.CLASS_PROFICIENCIES.CLASS_STATS_ID }, Keys.CLASS_STATS_PKEY, new TableField[] { ClassStats.CLASS_STATS.ID }, true);
     public static final ForeignKey<ClassesRecord, ClassStatsRecord> CLASSES__FKCLASSES375368 = Internal.createForeignKey(Classes.CLASSES, DSL.name("fkclasses375368"), new TableField[] { Classes.CLASSES.CLASS_STATS_ID }, Keys.CLASS_STATS_PKEY, new TableField[] { ClassStats.CLASS_STATS.ID }, true);
     public static final ForeignKey<ClassesRecord, RoomsRecord> CLASSES__FKCLASSES862752 = Internal.createForeignKey(Classes.CLASSES, DSL.name("fkclasses862752"), new TableField[] { Classes.CLASSES.ROOM_ID }, Keys.ROOMS_PKEY, new TableField[] { Rooms.ROOMS.ROOM_ID }, true);
     public static final ForeignKey<Default_5eClassesRecord, ClassStatsRecord> DEFAULT_5E_CLASSES__FKDEFAULT_5E174476 = Internal.createForeignKey(Default_5eClasses.DEFAULT_5E_CLASSES, DSL.name("fkdefault_5e174476"), new TableField[] { Default_5eClasses.DEFAULT_5E_CLASSES.CLASS_STATS_ID }, Keys.CLASS_STATS_PKEY, new TableField[] { ClassStats.CLASS_STATS.ID }, true);
