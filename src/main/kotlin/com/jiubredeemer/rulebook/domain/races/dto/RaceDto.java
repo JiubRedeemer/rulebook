@@ -10,5 +10,6 @@ public class RaceDto {
     private UUID roomId;
     private String name;
     private String description;
+    private String code;
     private RaceStatsDto stats;
 }

@@ -72,60 +72,60 @@ VALUES ('d45171da-8765-473c-ad90-4004b6f6462a'::uuid, 1000::integer, 200::intege
 
 
 /* Лесной гном */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('54a56978-32fc-48d5-92be-26ab25d6a8a6'::uuid, 'Лесной гном'::text, 'FOREST_GNOME'::text, 'f72162d9-aa65-4297-a451-d70f7e3aeb53'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('54a56978-32fc-48d5-92be-26ab25d6a8a6'::uuid, 'Лесной гном'::text, 'Лесные гномы обладают природными способностями к иллюзии, и унаследовали проворство и скрытность. В мирах D&D лесные гномы встречаются редко, и являются скрытным народом. Они собираются в спрятанные в глубинах лесов общины, и используют иллюзию и обман, чтобы укрыться от опасности или скрыть свой побег в случае обнаружения. Лесные гномы обычно дружелюбны с другими добрыми лесными народами, и считают эльфов и добрых фей своими главными союзниками. Эти гномы также дружат с мелкими лесными зверушками, которые предупреждают их об опасности.'::text, 'FOREST_GNOME'::text, 'f72162d9-aa65-4297-a451-d70f7e3aeb53'::uuid);
 
 /* Скальный гном */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('89324be0-1d46-49dc-a065-44814984b52e'::uuid, 'Скальный гном'::text, 'ROCK_GNOME'::text, 'df0ee778-2f0a-4bcb-9963-1ebe4c224c82'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('89324be0-1d46-49dc-a065-44814984b52e'::uuid, 'Скальный гном'::text, 'Скальные гномы выделяются своей изобретательностью и стойкостью. Большинство гномов в мирах D&D являются скальными, включая гномов-ремесленников из мира Саги о Копье.'::text, 'ROCK_GNOME'::text, 'df0ee778-2f0a-4bcb-9963-1ebe4c224c82'::uuid);
 
 /* Горный дварф */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('7fbe4c1b-5e40-4ee7-bfbe-a8b4bced248a'::uuid, 'Горный дварф'::text, 'MOUNTAIN_DWARF'::text, 'f292377f-a552-45cb-b6d4-4b8d6520d37a'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('7fbe4c1b-5e40-4ee7-bfbe-a8b4bced248a'::uuid, 'Горный дварф'::text, 'Полные древнего величия королевства и вырезанные в толще гор чертоги, удары кирок и молотков, раздающиеся в глубоких шахтах и пылающий кузнечный горн, верность клану и традициям и пылающая ненависть к гоблинам и оркам — вот вещи, объединяющие всех дварфов.'::text, 'MOUNTAIN_DWARF'::text, 'f292377f-a552-45cb-b6d4-4b8d6520d37a'::uuid);
 
 /* Холмовой дварф */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('395cf2b0-0c01-4273-917a-5b302ba2bb5f'::uuid, 'Холмовой дварф'::text, 'HILL_DWARF'::text, 'c1f3a725-e03e-48d8-b18c-a1a1affbf964'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('395cf2b0-0c01-4273-917a-5b302ba2bb5f'::uuid, 'Холмовой дварф'::text, 'Полные древнего величия королевства и вырезанные в толще гор чертоги, удары кирок и молотков, раздающиеся в глубоких шахтах и пылающий кузнечный горн, верность клану и традициям и пылающая ненависть к гоблинам и оркам — вот вещи, объединяющие всех дварфов.'::text, 'HILL_DWARF'::text, 'c1f3a725-e03e-48d8-b18c-a1a1affbf964'::uuid);
 
 /* Драконорождённый */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('032c604e-4401-48a0-99c8-b6bdbfec7d4e'::uuid, 'Драконорождённый'::text, 'DRAGONBORN'::text, '92081e53-21ff-4a58-8c4f-23e97feeea9a'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('032c604e-4401-48a0-99c8-b6bdbfec7d4e'::uuid, 'Драконорождённый'::text, 'Рождённые драконами, о чём говорит их название, драконорождённые идут гордо подняв голову по миру, который встречает их со страхом и непониманием. Сформированные драконьими богами или самими драконами, драконорождённые первоначально вылупились из драконьих яиц как новая раса, сочетающая в себе лучшие качества драконов и гуманоидов. Некоторые драконорождённые являются верными слугами истинных драконов, другие образуют ряды солдат в великих войнах, а некоторые ищут свою судьбу, не найдя себе призвания.'::text, 'DRAGONBORN'::text, '92081e53-21ff-4a58-8c4f-23e97feeea9a'::uuid);
 
 /* Полуорк */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('ac6bd762-a46a-4183-b870-f1ac2f7d36db'::uuid, 'Полуорк'::text, 'HALF_ORC'::text, '50afafa1-6a73-4bf9-b1b3-b856ac2f83b0'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('ac6bd762-a46a-4183-b870-f1ac2f7d36db'::uuid, 'Полуорк'::text, 'Находясь ли под предводительством могучего колдуна, или стараясь установить мир после многолетнего конфликта, орки и племена людей иногда заключали союзы, объединяя силы в огромные орды, терроризирующие более цивилизованные государства по соседству. Когда такие союзы скреплялись узами брака, появлялись полуорки.'::text, 'HALF_ORC'::text, '50afafa1-6a73-4bf9-b1b3-b856ac2f83b0'::uuid);
 
 /* Коренастый полурослик */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('4ae31853-fa00-48ad-9feb-357f632aca6d'::uuid, 'Коренастый полурослик'::text, 'STOUT_HALFLING'::text, 'cacb27fc-f2e2-4b16-8950-3310076e93a4'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('4ae31853-fa00-48ad-9feb-357f632aca6d'::uuid, 'Коренастый полурослик'::text, 'Коренастые полурослики выносливее других и обладают некоторой устойчивостью к ядам. Поговаривают, что в их жилах течёт толика дварфской крови. В мире Забытых Королевств таких полуросликов зовут сильными сердцем, и чаще всего они встречаются на юге.'::text, 'STOUT_HALFLING'::text, 'cacb27fc-f2e2-4b16-8950-3310076e93a4'::uuid);
 
 /* Легконогий полурослик */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('2a40cd63-b4d0-4753-90e6-170f0a2c5f2f'::uuid, 'Легконогий полурослик'::text, 'LIGHTFOOT_HALFLING'::text, '6891e13f-f6ff-479f-9c11-4116fa756639'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('2a40cd63-b4d0-4753-90e6-170f0a2c5f2f'::uuid, 'Легконогий полурослик'::text, 'Легконогие полурослики умеют отлично скрываться, в том числе используя других существ как укрытие. Они приветливы и хорошо ладят с другими. В мире Забытых Королевств легконогие являются самой распространённой ветвью полуросликов. Легконогие более других склонны к перемене мест, и часто селятся по соседству с другими народами, или ведут кочевую жизнь. В мире Серого Ястреба таких полуросликов называют мохноногими или великанчиками.'::text, 'LIGHTFOOT_HALFLING'::text, '6891e13f-f6ff-479f-9c11-4116fa756639'::uuid);
 
 /* Полуэльф */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('ddd6378c-2240-4af6-91cc-01bf5533da12'::uuid, 'Полуэльф'::text, 'HALF_ELF'::text, 'b081c94d-b18f-4a85-b856-65c8781502e2'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('ddd6378c-2240-4af6-91cc-01bf5533da12'::uuid, 'Полуэльф'::text, 'Бродящие по двум мирам, но в действительности, не принадлежащие ни одному из них. Полуэльфы сочетают в себе, как некоторые говорят, лучшие качества обеих рас: человеческие любознательность, изобретательность и амбиции, приправленные изысканными чувствами, любовью к природе и ощущением прекрасного, свойственными эльфам.'::text, 'HALF_ELF'::text, 'b081c94d-b18f-4a85-b856-65c8781502e2'::uuid);
 
 /* Тифлинг */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('e92be7ea-5f5a-47d4-beb4-f35999b25f26'::uuid, 'Тифлинг'::text, 'TIEFLING'::text, 'f9636fb2-81a8-4dad-bb2a-97313333fab1'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('e92be7ea-5f5a-47d4-beb4-f35999b25f26'::uuid, 'Тифлинг'::text, 'Быть тифлингом — значит постоянно натыкаться на пристальные взгляды и перешёптывания, терпеть страдания и оскорбления, видеть страх и недоверие в глазах каждого встречного. Беда в том, что тифлинги знают причину этого — договор, заключённый много поколений назад и позволивший Асмодею — владыке Девяти Преисподних — внести вклад в их родословную'::text, 'TIEFLING'::text, 'f9636fb2-81a8-4dad-bb2a-97313333fab1'::uuid);
 
 /* Человек */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('969330b5-9dfa-4e44-b19d-fc5e9c21b285'::uuid, 'Человек'::text, 'HUMAN'::text, 'f3b6e124-b9bb-4607-9248-df35850908b2'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('969330b5-9dfa-4e44-b19d-fc5e9c21b285'::uuid, 'Человек'::text, 'В большинстве миров люди — это самая молодая из распространённых рас. Они поздно вышли на мировую сцену и живут намного меньше, чем дварфы, эльфы и драконы. Возможно, именно краткость их жизней заставляет их стремиться достигнуть как можно большего в отведённый им срок. А быть может, они хотят что-то доказать старшим расам, и поэтому создают могучие империи, основанные на завоеваниях и торговле.'::text, 'HUMAN'::text, 'f3b6e124-b9bb-4607-9248-df35850908b2'::uuid);
 
 /* Высший эльф */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('665584cf-fa27-49da-9fed-9f10ad02c743'::uuid, 'Высший эльф'::text, 'HIGH_ELF'::text, 'cce6f7de-b5de-48e3-941a-37c9d0ddb98e'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('665584cf-fa27-49da-9fed-9f10ad02c743'::uuid, 'Высший эльф'::text, 'Эльфы — это волшебный народ, обладающий неземным изяществом, живущий в мире, но не являющийся его частью. Они живут в местах, наполненных воздушной красотой, в глубинах древних лесов или в серебряных жилищах, увенчанных сверкающими шпилями и переливающихся волшебным светом. Там лёгкие дуновения ветра разносят обрывки тихих мелодий и нежные ароматы. Эльфы любят природу и магию, музыку и поэзию, и всё прекрасное, что есть в мире.'::text, 'HIGH_ELF'::text, 'cce6f7de-b5de-48e3-941a-37c9d0ddb98e'::uuid);
 
 /* Лесной эльф */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('5e89c042-fbc8-405b-b8f6-6a836c03d782'::uuid, 'Лесной эльф'::text, 'WOOD_ELF'::text, '32bdff9e-1432-43a9-ab11-623ba757616d'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('5e89c042-fbc8-405b-b8f6-6a836c03d782'::uuid, 'Лесной эльф'::text, 'Поскольку вы — лесной эльф, у вас обострённые чувства и интуиция, и ваши стремительные ноги несут вас быстро и незаметно через ваши родные леса. Эта категория включает диких эльфов Серого Ястреба и кагонести из Саги о Копье, а также расы, называемые лесными эльфами Серого Ястреба и Забытых Королевств. В Фаэруне лесные эльфы (также называемые дикими или зелёными) являются затворниками, не доверяющими не-эльфам.'::text, 'WOOD_ELF'::text, '32bdff9e-1432-43a9-ab11-623ba757616d'::uuid);
 
 /* Темный эльф (Дроу) */
-INSERT INTO rules.default_5e_races (id, name, code, race_stats_id)
-VALUES ('588a3065-f65c-4ad4-a63c-0243cf53df35'::uuid, 'Темный эльф (Дроу)'::text, 'DROW'::text, 'd45171da-8765-473c-ad90-4004b6f6462a'::uuid);
+INSERT INTO rules.default_5e_races (id, name, description, code, race_stats_id)
+VALUES ('588a3065-f65c-4ad4-a63c-0243cf53df35'::uuid, 'Темный эльф (Дроу)'::text, 'Как дроу, вы прониклись магией Подземья, подземного царства чудес и ужасов, которое редко можно увидеть на поверхности. Вы чувствуете себя в тени как дома и благодаря своей врожденной магии учитесь призывать и свет, и тьму. У ваших сородичей обычно ярко-белые волосы и разноцветная сероватая кожа.'::text, 'DROW'::text, 'd45171da-8765-473c-ad90-4004b6f6462a'::uuid);
 
 
 /* Лесной гном */

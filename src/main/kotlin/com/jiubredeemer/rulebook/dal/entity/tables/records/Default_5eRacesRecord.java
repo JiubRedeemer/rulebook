@@ -49,31 +49,45 @@ public class Default_5eRacesRecord extends UpdatableRecordImpl<Default_5eRacesRe
     }
 
     /**
+     * Setter for <code>rules.default_5e_races.description</code>.
+     */
+    public void setDescription(String value) {
+        set(2, value);
+    }
+
+    /**
+     * Getter for <code>rules.default_5e_races.description</code>.
+     */
+    public String getDescription() {
+        return (String) get(2);
+    }
+
+    /**
      * Setter for <code>rules.default_5e_races.code</code>.
      */
     public void setCode(String value) {
-        set(2, value);
+        set(3, value);
     }
 
     /**
      * Getter for <code>rules.default_5e_races.code</code>.
      */
     public String getCode() {
-        return (String) get(2);
+        return (String) get(3);
     }
 
     /**
      * Setter for <code>rules.default_5e_races.race_stats_id</code>.
      */
     public void setRaceStatsId(UUID value) {
-        set(3, value);
+        set(4, value);
     }
 
     /**
      * Getter for <code>rules.default_5e_races.race_stats_id</code>.
      */
     public UUID getRaceStatsId() {
-        return (UUID) get(3);
+        return (UUID) get(4);
     }
 
     // -------------------------------------------------------------------------
@@ -99,11 +113,12 @@ public class Default_5eRacesRecord extends UpdatableRecordImpl<Default_5eRacesRe
     /**
      * Create a detached, initialised Default_5eRacesRecord
      */
-    public Default_5eRacesRecord(UUID id, String name, String code, UUID raceStatsId) {
+    public Default_5eRacesRecord(UUID id, String name, String description, String code, UUID raceStatsId) {
         super(Default_5eRaces.DEFAULT_5E_RACES);
 
         setId(id);
         setName(name);
+        setDescription(description);
         setCode(code);
         setRaceStatsId(raceStatsId);
         resetChangedOnNotNull();

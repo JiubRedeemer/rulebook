@@ -63,31 +63,45 @@ public class RacesRecord extends UpdatableRecordImpl<RacesRecord> {
     }
 
     /**
+     * Setter for <code>rules.races.description</code>.
+     */
+    public void setDescription(String value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>rules.races.description</code>.
+     */
+    public String getDescription() {
+        return (String) get(3);
+    }
+
+    /**
      * Setter for <code>rules.races.code</code>.
      */
     public void setCode(String value) {
-        set(3, value);
+        set(4, value);
     }
 
     /**
      * Getter for <code>rules.races.code</code>.
      */
     public String getCode() {
-        return (String) get(3);
+        return (String) get(4);
     }
 
     /**
      * Setter for <code>rules.races.race_stats_id</code>.
      */
     public void setRaceStatsId(UUID value) {
-        set(4, value);
+        set(5, value);
     }
 
     /**
      * Getter for <code>rules.races.race_stats_id</code>.
      */
     public UUID getRaceStatsId() {
-        return (UUID) get(4);
+        return (UUID) get(5);
     }
 
     // -------------------------------------------------------------------------
@@ -113,12 +127,13 @@ public class RacesRecord extends UpdatableRecordImpl<RacesRecord> {
     /**
      * Create a detached, initialised RacesRecord
      */
-    public RacesRecord(UUID id, UUID roomId, String name, String code, UUID raceStatsId) {
+    public RacesRecord(UUID id, UUID roomId, String name, String description, String code, UUID raceStatsId) {
         super(Races.RACES);
 
         setId(id);
         setRoomId(roomId);
         setName(name);
+        setDescription(description);
         setCode(code);
         setRaceStatsId(raceStatsId);
         resetChangedOnNotNull();
