@@ -76,6 +76,11 @@ public class Classes extends TableImpl<ClassesRecord> {
     public final TableField<ClassesRecord, String> NAME = createField(DSL.name("name"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
+     * The column <code>rules.classes.description</code>.
+     */
+    public final TableField<ClassesRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB, this, "");
+
+    /**
      * The column <code>rules.classes.code</code>.
      */
     public final TableField<ClassesRecord, String> CODE = createField(DSL.name("code"), SQLDataType.CLOB.nullable(false), this, "");

@@ -68,6 +68,11 @@ public class Default_5eClasses extends TableImpl<Default_5eClassesRecord> {
     public final TableField<Default_5eClassesRecord, String> NAME = createField(DSL.name("name"), SQLDataType.CLOB.nullable(false), this, "");
 
     /**
+     * The column <code>rules.default_5e_classes.description</code>.
+     */
+    public final TableField<Default_5eClassesRecord, String> DESCRIPTION = createField(DSL.name("description"), SQLDataType.CLOB, this, "");
+
+    /**
      * The column <code>rules.default_5e_classes.code</code>.
      */
     public final TableField<Default_5eClassesRecord, String> CODE = createField(DSL.name("code"), SQLDataType.CLOB.nullable(false), this, "");

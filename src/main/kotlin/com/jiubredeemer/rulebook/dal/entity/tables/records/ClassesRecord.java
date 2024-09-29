@@ -63,31 +63,45 @@ public class ClassesRecord extends UpdatableRecordImpl<ClassesRecord> {
     }
 
     /**
+     * Setter for <code>rules.classes.description</code>.
+     */
+    public void setDescription(String value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>rules.classes.description</code>.
+     */
+    public String getDescription() {
+        return (String) get(3);
+    }
+
+    /**
      * Setter for <code>rules.classes.code</code>.
      */
     public void setCode(String value) {
-        set(3, value);
+        set(4, value);
     }
 
     /**
      * Getter for <code>rules.classes.code</code>.
      */
     public String getCode() {
-        return (String) get(3);
+        return (String) get(4);
     }
 
     /**
      * Setter for <code>rules.classes.class_stats_id</code>.
      */
     public void setClassStatsId(UUID value) {
-        set(4, value);
+        set(5, value);
     }
 
     /**
      * Getter for <code>rules.classes.class_stats_id</code>.
      */
     public UUID getClassStatsId() {
-        return (UUID) get(4);
+        return (UUID) get(5);
     }
 
     // -------------------------------------------------------------------------
@@ -113,12 +127,13 @@ public class ClassesRecord extends UpdatableRecordImpl<ClassesRecord> {
     /**
      * Create a detached, initialised ClassesRecord
      */
-    public ClassesRecord(UUID id, UUID roomId, String name, String code, UUID classStatsId) {
+    public ClassesRecord(UUID id, UUID roomId, String name, String description, String code, UUID classStatsId) {
         super(Classes.CLASSES);
 
         setId(id);
         setRoomId(roomId);
         setName(name);
+        setDescription(description);
         setCode(code);
         setClassStatsId(classStatsId);
         resetChangedOnNotNull();

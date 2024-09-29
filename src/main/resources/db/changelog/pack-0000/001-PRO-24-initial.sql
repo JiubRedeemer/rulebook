@@ -58,7 +58,7 @@ CREATE TABLE rules.races
     id            uuid NOT NULL,
     room_id       uuid NOT NULL,
     name          text NOT NULL,
-    description   text  NULL,
+    description   text NULL,
     code          text NOT NULL,
     race_stats_id uuid NOT NULL,
     PRIMARY KEY (id)
@@ -67,7 +67,7 @@ CREATE TABLE rules.default_5e_races
 (
     id            uuid NOT NULL,
     name          text NOT NULL,
-    description   text  NULL,
+    description   text NULL,
     code          text NOT NULL,
     race_stats_id uuid NOT NULL,
     PRIMARY KEY (id)
@@ -77,6 +77,7 @@ CREATE TABLE rules.classes
     id             uuid NOT NULL,
     room_id        uuid NOT NULL,
     name           text NOT NULL,
+    description    text NULL,
     code           text NOT NULL,
     class_stats_id uuid NOT NULL,
     PRIMARY KEY (id)
@@ -85,6 +86,7 @@ CREATE TABLE rules.default_5e_classes
 (
     id             uuid NOT NULL,
     name           text NOT NULL,
+    description    text NULL,
     code           text NOT NULL,
     class_stats_id uuid NOT NULL,
     PRIMARY KEY (id)

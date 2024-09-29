@@ -49,31 +49,45 @@ public class Default_5eClassesRecord extends UpdatableRecordImpl<Default_5eClass
     }
 
     /**
+     * Setter for <code>rules.default_5e_classes.description</code>.
+     */
+    public void setDescription(String value) {
+        set(2, value);
+    }
+
+    /**
+     * Getter for <code>rules.default_5e_classes.description</code>.
+     */
+    public String getDescription() {
+        return (String) get(2);
+    }
+
+    /**
      * Setter for <code>rules.default_5e_classes.code</code>.
      */
     public void setCode(String value) {
-        set(2, value);
+        set(3, value);
     }
 
     /**
      * Getter for <code>rules.default_5e_classes.code</code>.
      */
     public String getCode() {
-        return (String) get(2);
+        return (String) get(3);
     }
 
     /**
      * Setter for <code>rules.default_5e_classes.class_stats_id</code>.
      */
     public void setClassStatsId(UUID value) {
-        set(3, value);
+        set(4, value);
     }
 
     /**
      * Getter for <code>rules.default_5e_classes.class_stats_id</code>.
      */
     public UUID getClassStatsId() {
-        return (UUID) get(3);
+        return (UUID) get(4);
     }
 
     // -------------------------------------------------------------------------
@@ -99,11 +113,12 @@ public class Default_5eClassesRecord extends UpdatableRecordImpl<Default_5eClass
     /**
      * Create a detached, initialised Default_5eClassesRecord
      */
-    public Default_5eClassesRecord(UUID id, String name, String code, UUID classStatsId) {
+    public Default_5eClassesRecord(UUID id, String name, String description, String code, UUID classStatsId) {
         super(Default_5eClasses.DEFAULT_5E_CLASSES);
 
         setId(id);
         setName(name);
+        setDescription(description);
         setCode(code);
         setClassStatsId(classStatsId);
         resetChangedOnNotNull();

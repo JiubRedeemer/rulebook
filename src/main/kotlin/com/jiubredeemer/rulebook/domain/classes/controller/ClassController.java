@@ -1,6 +1,7 @@
 package com.jiubredeemer.rulebook.domain.classes.controller;
 
 import com.jiubredeemer.rulebook.domain.classes.dto.ClassDto;
+import com.jiubredeemer.rulebook.domain.classes.dto.request.ClassesRequest;
 import com.jiubredeemer.rulebook.domain.classes.service.ClassService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -8,13 +9,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/classes")
@@ -31,10 +31,10 @@ public class ClassController {
             @ApiResponse(responseCode = "400", description = "Некорректный идентификатор комнаты"),
             @ApiResponse(responseCode = "404", description = "Комната не найдена")
     })
-    @GetMapping()
+    @PostMapping()
     public List<ClassDto> getClassesForRoom(
             @Parameter(description = "Идентификатор комнаты, для которой нужно получить список классов", required = true)
-            @RequestBody UUID roomId) {
-        return classService.fetchAvailableClassesForRoom(roomId);
+            @RequestBody ClassesRequest request) {
+        return classService.fetchAvailableClassesForRoom(request.getRoomId());
     }
 }
