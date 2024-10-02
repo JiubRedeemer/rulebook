@@ -26,7 +26,7 @@ public class ClassStatsMapper implements RecordMapper<ClassStatsRecord, ClassSta
         List<AbilityShortDto> savingThrowsMapped = savingThrows.stream().map(s -> {
             AbilityShortDto abilityShortDto = new AbilityShortDto();
             abilityShortDto.setCode(s);
-            abilityShortDto.setName(abilityRepository.get5eAbilityByCode(abilityShortDto.getCode()).getName());
+            abilityShortDto.setName(abilityRepository.get5eAbilityByCode(abilityShortDto.getCode()).orElseThrow().getName());
             return abilityShortDto;
         }).toList();
         record.setSavingThrowsAbilities(null);

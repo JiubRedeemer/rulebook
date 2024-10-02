@@ -19,7 +19,7 @@ public class ClassService {
     public List<ClassDto> fetchAvailableClassesForRoom(UUID roomId) {
         final RoomDto roomDto = roomsService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
-            case DND5E -> classRepository.getFull5eClassesForRoom(roomId);
+            case DND5E -> classRepository.getFull5eClassesForRoom();
             default -> classRepository.getFullClassesForRoom(roomId);
         }).stream().peek(classDto -> classDto.setRoomId(roomId)).toList();
     }

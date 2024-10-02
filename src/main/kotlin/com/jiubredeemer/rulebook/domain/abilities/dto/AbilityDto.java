@@ -1,0 +1,12 @@
+package com.jiubredeemer.rulebook.domain.abilities.dto;
+
+import lombok.Data;
+
+import java.util.UUID;
+
+@Data
+public class AbilityDto {
+    public UUID roomId;
+    public String code;
+    public String name;
+}

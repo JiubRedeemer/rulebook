@@ -26,7 +26,7 @@ public class ClassRepository {
                 .map(classMapper);
     }
 
-    public List<ClassDto> getFull5eClassesForRoom(UUID roomId) {
+    public List<ClassDto> getFull5eClassesForRoom() {
         return dsl.selectFrom(Default_5eClasses.DEFAULT_5E_CLASSES)
                 .fetch()
                 .map(default5eClassMapper);

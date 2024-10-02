@@ -26,7 +26,7 @@ public class RaceRepository {
                 .map(raceMapper);
     }
 
-    public List<RaceDto> getFull5eRacesForRoom(UUID roomId) {
+    public List<RaceDto> getFull5eRacesForRoom() {
         return dsl.selectFrom(Default_5eRaces.DEFAULT_5E_RACES)
                 .fetch()
                 .map(default5eRaceMapper);

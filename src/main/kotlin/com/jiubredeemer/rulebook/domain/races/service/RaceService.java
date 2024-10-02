@@ -19,7 +19,7 @@ public class RaceService {
     public List<RaceDto> fetchAvailableRacesForRoom(UUID roomId) {
         final RoomDto roomDto = roomsService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
-            case DND5E -> raceRepository.getFull5eRacesForRoom(roomId);
+            case DND5E -> raceRepository.getFull5eRacesForRoom();
             default -> raceRepository.getFullRacesForRoom(roomId);
         }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }
