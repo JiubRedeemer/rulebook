@@ -1,7 +1,7 @@
 package com.jiubredeemer.rulebook.domain.races.controller;
 
 import com.jiubredeemer.rulebook.domain.races.dto.RaceDto;
-import com.jiubredeemer.rulebook.domain.races.dto.request.RacesRequest;
+import com.jiubredeemer.rulebook.domain.races.dto.request.RacesByRoomRequest;
 import com.jiubredeemer.rulebook.domain.races.service.RaceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -31,7 +31,7 @@ public class RaceController {
     @PostMapping()
     public List<RaceDto> getRacesForRoom(
             @Parameter(description = "Идентификатор комнаты, для которой необходимо получить список рас", required = true)
-            @RequestBody RacesRequest request) {
+            @RequestBody RacesByRoomRequest request) {
         return raceService.fetchAvailableRacesForRoom(request.getRoomId());
     }
 }

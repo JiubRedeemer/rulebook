@@ -10,6 +10,7 @@ import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -29,6 +30,21 @@ public class ClassRepository {
     public List<ClassDto> getFull5eClassesForRoom() {
         return dsl.selectFrom(Default_5eClasses.DEFAULT_5E_CLASSES)
                 .fetch()
+                .map(default5eClassMapper);
+    }
+
+    public Optional<ClassDto> getFullClassByCode(UUID roomId, String code) {
+        return dsl.selectFrom(Classes.CLASSES)
+                .where(Classes.CLASSES.ROOM_ID.eq(roomId))
+                .and(Classes.CLASSES.CODE.eq(code))
+                .fetchOptional()
+                .map(classMapper);
+    }
+
+    public Optional<ClassDto> getFull5eClassByCode(String code) {
+        return dsl.selectFrom(Default_5eClasses.DEFAULT_5E_CLASSES)
+                .where(Default_5eClasses.DEFAULT_5E_CLASSES.CODE.eq(code))
+                .fetchOptional()
                 .map(default5eClassMapper);
     }
 }

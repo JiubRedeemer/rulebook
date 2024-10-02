@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -33,5 +34,12 @@ public class AbilityService {
             abilityDto.setRoomId(roomId);
             return abilityDto;
         }).orElseThrow();
+    }
+
+    public List<AbilityDto> fetchByIds(RoomDto roomDto, Set<UUID> abilityIds) {
+        return (switch (roomDto.getRuleType()) {
+            case DND5E -> abilityRepository.get5eByIds(abilityIds);
+            default -> abilityRepository.getByIds(abilityIds);
+        }).stream().peek(abilityDto -> abilityDto.setRoomId(roomDto.getRoomId())).toList();
     }
 }

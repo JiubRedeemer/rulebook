@@ -1,8 +1,8 @@
 package com.jiubredeemer.rulebook.domain.abilities.controller;
 
 import com.jiubredeemer.rulebook.domain.abilities.dto.AbilityDto;
-import com.jiubredeemer.rulebook.domain.abilities.dto.request.AbilityByCodeRequest;
-import com.jiubredeemer.rulebook.domain.abilities.dto.request.AbilityRequest;
+import com.jiubredeemer.rulebook.domain.abilities.dto.request.AbilityByRoomAndCodeRequest;
+import com.jiubredeemer.rulebook.domain.abilities.dto.request.AbilitiesByRoomRequest;
 import com.jiubredeemer.rulebook.domain.abilities.service.AbilityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,7 +35,7 @@ public class AbilityController {
     @PostMapping()
     public List<AbilityDto> getAbilitiesForRoom(
             @Parameter(description = "Идентификатор комнаты, для которой нужно получить список характеристик", required = true)
-            @RequestBody AbilityRequest request) {
+            @RequestBody AbilitiesByRoomRequest request) {
         return abilityService.fetchAvailableAbilitiesForRoom(request.getRoomId());
     }
 
@@ -49,7 +49,7 @@ public class AbilityController {
     @PostMapping("/byCode")
     public AbilityDto getAbilityByCode(
             @Parameter(description = "Идентификатор комнаты, для которой нужно получить характеристику", required = true)
-            @RequestBody AbilityByCodeRequest request) {
+            @RequestBody AbilityByRoomAndCodeRequest request) {
         return abilityService.fetchByCodeAndRoomId(request.getRoomId(), request.getCode());
     }
 }

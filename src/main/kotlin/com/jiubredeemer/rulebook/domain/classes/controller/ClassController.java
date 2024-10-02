@@ -1,7 +1,7 @@
 package com.jiubredeemer.rulebook.domain.classes.controller;
 
 import com.jiubredeemer.rulebook.domain.classes.dto.ClassDto;
-import com.jiubredeemer.rulebook.domain.classes.dto.request.ClassesRequest;
+import com.jiubredeemer.rulebook.domain.classes.dto.request.ClassesByRoomRequest;
 import com.jiubredeemer.rulebook.domain.classes.service.ClassService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -34,7 +34,7 @@ public class ClassController {
     @PostMapping()
     public List<ClassDto> getClassesForRoom(
             @Parameter(description = "Идентификатор комнаты, для которой нужно получить список классов", required = true)
-            @RequestBody ClassesRequest request) {
+            @RequestBody ClassesByRoomRequest request) {
         return classService.fetchAvailableClassesForRoom(request.getRoomId());
     }
 }

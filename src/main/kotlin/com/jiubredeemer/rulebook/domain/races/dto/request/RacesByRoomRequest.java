@@ -5,6 +5,6 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class RacesRequest {
+public class RacesByRoomRequest {
     private UUID roomId;
 }

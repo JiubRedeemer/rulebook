@@ -23,4 +23,15 @@ public class ClassService {
             default -> classRepository.getFullClassesForRoom(roomId);
         }).stream().peek(classDto -> classDto.setRoomId(roomId)).toList();
     }
+
+    public ClassDto fetchByRoomAndCode(UUID roomId, String code) {
+        final RoomDto roomDto = roomsService.getById(roomId);
+        return (switch (roomDto.getRuleType()) {
+            case DND5E -> classRepository.getFull5eClassByCode(code);
+            default -> classRepository.getFullClassByCode(roomId, code);
+        }).map(classDto -> {
+            classDto.setRoomId(roomId);
+            return classDto;
+        }).orElseThrow();
+    }
 }

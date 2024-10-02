@@ -5,7 +5,6 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class AbilityByCodeRequest {
+public class AbilitiesByRoomRequest {
     private UUID roomId;
-    private String code;
 }
