@@ -20,4 +20,8 @@ public class RoomsService {
     public RoomDto getById(UUID roomId) {
         return roomRepository.getRoomByRoomId(roomId).orElseThrow(() -> new NotFoundException("Room not found by id"));
     }
+
+    public void deleteRoom(UUID roomId) {
+        roomRepository.deleteById(roomId);
+    }
 }

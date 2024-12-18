@@ -37,4 +37,10 @@ public class RoomRepository {
                 .where(Rooms.ROOMS.ROOM_ID.eq(roomId))
                 .fetchOptional());
     }
+
+    public void deleteById(UUID roomId) {
+        dsl.deleteFrom(Rooms.ROOMS)
+                .where(Rooms.ROOMS.ROOM_ID.eq(roomId))
+                .execute();
+    }
 }

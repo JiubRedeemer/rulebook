@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/rooms")
 @RequiredArgsConstructor
@@ -30,5 +32,11 @@ public class RoomController {
             @Parameter(description = "Данные комнаты, которые необходимо сохранить или найти", required = true)
             @RequestBody RoomDto roomDto) {
         return roomsService.saveOrGetRoom(roomDto);
+    }
+
+    @DeleteMapping("{roomId}")
+    public void deleteRoom(@Parameter(description = "ID комнаты для удаления", required = true)
+                           @PathVariable("roomId") UUID roomId) {
+        roomsService.deleteRoom(roomId);
     }
 }
