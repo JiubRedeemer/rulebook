@@ -1,6 +1,6 @@
 package com.jiubredeemer.rulebook.dal.mapper.race;
 
-import com.jiubredeemer.rulebook.domain.races.dto.RaceStatsDto;
+import com.jiubredeemer.rulebook.domain.race.dto.RaceStatsDto;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceStatsRecord;
 import com.jiubredeemer.rulebook.dal.repository.race.RaceProficienciesRepository;
 import com.jiubredeemer.rulebook.dal.repository.race.RaceTraitsRepository;

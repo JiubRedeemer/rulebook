@@ -6,10 +6,10 @@ package com.jiubredeemer.rulebook.dal.entity.tables;
 
 import com.jiubredeemer.rulebook.dal.entity.Keys;
 import com.jiubredeemer.rulebook.dal.entity.Rules;
-import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eRaces.Default_5eRacesPath;
-import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiencies.RaceProficienciesPath;
-import com.jiubredeemer.rulebook.dal.entity.tables.RaceTraits.RaceTraitsPath;
-import com.jiubredeemer.rulebook.dal.entity.tables.Races.RacesPath;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eRace.Default_5eRacePath;
+import com.jiubredeemer.rulebook.dal.entity.tables.Race.RacePath;
+import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiency.RaceProficiencyPath;
+import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait.RaceTraitPath;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceStatsRecord;
 
 import java.util.Collection;
@@ -161,55 +161,55 @@ public class RaceStats extends TableImpl<RaceStatsRecord> {
         return Keys.RACE_STATS_PKEY;
     }
 
-    private transient Default_5eRacesPath _default_5eRaces;
+    private transient Default_5eRacePath _default_5eRace;
 
     /**
      * Get the implicit to-many join path to the
-     * <code>rules.default_5e_races</code> table
+     * <code>rules.default_5e_race</code> table
      */
-    public Default_5eRacesPath default_5eRaces() {
-        if (_default_5eRaces == null)
-            _default_5eRaces = new Default_5eRacesPath(this, null, Keys.DEFAULT_5E_RACES__FKDEFAULT_5E40267.getInverseKey());
+    public Default_5eRacePath default_5eRace() {
+        if (_default_5eRace == null)
+            _default_5eRace = new Default_5eRacePath(this, null, Keys.DEFAULT_5E_RACE__FKDEFAULT_5E40267.getInverseKey());
 
-        return _default_5eRaces;
+        return _default_5eRace;
     }
 
-    private transient RaceProficienciesPath _raceProficiencies;
+    private transient RacePath _race;
+
+    /**
+     * Get the implicit to-many join path to the <code>rules.race</code> table
+     */
+    public RacePath race() {
+        if (_race == null)
+            _race = new RacePath(this, null, Keys.RACE__FKRACE292535.getInverseKey());
+
+        return _race;
+    }
+
+    private transient RaceProficiencyPath _raceProficiency;
 
     /**
      * Get the implicit to-many join path to the
-     * <code>rules.race_proficiencies</code> table
+     * <code>rules.race_proficiency</code> table
      */
-    public RaceProficienciesPath raceProficiencies() {
-        if (_raceProficiencies == null)
-            _raceProficiencies = new RaceProficienciesPath(this, null, Keys.RACE_PROFICIENCIES__FKRACE_PROFI169598.getInverseKey());
+    public RaceProficiencyPath raceProficiency() {
+        if (_raceProficiency == null)
+            _raceProficiency = new RaceProficiencyPath(this, null, Keys.RACE_PROFICIENCY__FKRACE_PROFI169598.getInverseKey());
 
-        return _raceProficiencies;
+        return _raceProficiency;
     }
 
-    private transient RaceTraitsPath _raceTraits;
+    private transient RaceTraitPath _raceTrait;
 
     /**
-     * Get the implicit to-many join path to the <code>rules.race_traits</code>
+     * Get the implicit to-many join path to the <code>rules.race_trait</code>
      * table
      */
-    public RaceTraitsPath raceTraits() {
-        if (_raceTraits == null)
-            _raceTraits = new RaceTraitsPath(this, null, Keys.RACE_TRAITS__FKRACE_TRAIT331219.getInverseKey());
+    public RaceTraitPath raceTrait() {
+        if (_raceTrait == null)
+            _raceTrait = new RaceTraitPath(this, null, Keys.RACE_TRAIT__FKRACE_TRAIT331219.getInverseKey());
 
-        return _raceTraits;
-    }
-
-    private transient RacesPath _races;
-
-    /**
-     * Get the implicit to-many join path to the <code>rules.races</code> table
-     */
-    public RacesPath races() {
-        if (_races == null)
-            _races = new RacesPath(this, null, Keys.RACES__FKRACES292535.getInverseKey());
-
-        return _races;
+        return _raceTrait;
     }
 
     @Override

@@ -4,32 +4,32 @@
 package com.jiubredeemer.rulebook.dal.entity;
 
 
-import com.jiubredeemer.rulebook.dal.entity.tables.Abilities;
-import com.jiubredeemer.rulebook.dal.entity.tables.ClassStats;
-import com.jiubredeemer.rulebook.dal.entity.tables.Classes;
-import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eAbilities;
-import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eClasses;
-import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eRaces;
-import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eSkills;
-import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiencies;
+import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
+import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
+import com.jiubredeemer.rulebook.dal.entity.tables.ClazzStats;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eAbility;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eClazz;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eRace;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eSkill;
+import com.jiubredeemer.rulebook.dal.entity.tables.Race;
+import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiency;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceStats;
-import com.jiubredeemer.rulebook.dal.entity.tables.RaceTraits;
-import com.jiubredeemer.rulebook.dal.entity.tables.Races;
-import com.jiubredeemer.rulebook.dal.entity.tables.Rooms;
-import com.jiubredeemer.rulebook.dal.entity.tables.Skills;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.AbilitiesRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.ClassStatsRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.ClassesRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_5eAbilitiesRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_5eClassesRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_5eRacesRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_5eSkillsRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceProficienciesRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait;
+import com.jiubredeemer.rulebook.dal.entity.tables.Room;
+import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.AbilityRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.ClazzRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.ClazzStatsRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_5eAbilityRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_5eClazzRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_5eRaceRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_5eSkillRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceProficiencyRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceStatsRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceTraitsRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.RacesRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.RoomsRecord;
-import com.jiubredeemer.rulebook.dal.entity.tables.records.SkillsRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceTraitRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.RoomRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.SkillRecord;
 
 import org.jooq.ForeignKey;
 import org.jooq.TableField;
@@ -49,33 +49,33 @@ public class Keys {
     // UNIQUE and PRIMARY KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final UniqueKey<AbilitiesRecord> ABILITIES_PKEY = Internal.createUniqueKey(Abilities.ABILITIES, DSL.name("abilities_pkey"), new TableField[] { Abilities.ABILITIES.ID }, true);
-    public static final UniqueKey<ClassStatsRecord> CLASS_STATS_PKEY = Internal.createUniqueKey(ClassStats.CLASS_STATS, DSL.name("class_stats_pkey"), new TableField[] { ClassStats.CLASS_STATS.ID }, true);
-    public static final UniqueKey<ClassesRecord> CLASSES_PKEY = Internal.createUniqueKey(Classes.CLASSES, DSL.name("classes_pkey"), new TableField[] { Classes.CLASSES.ID }, true);
-    public static final UniqueKey<Default_5eAbilitiesRecord> DEFAULT_5E_ABILITIES_PKEY = Internal.createUniqueKey(Default_5eAbilities.DEFAULT_5E_ABILITIES, DSL.name("default_5e_abilities_pkey"), new TableField[] { Default_5eAbilities.DEFAULT_5E_ABILITIES.ID }, true);
-    public static final UniqueKey<Default_5eClassesRecord> DEFAULT_5E_CLASSES_PKEY = Internal.createUniqueKey(Default_5eClasses.DEFAULT_5E_CLASSES, DSL.name("default_5e_classes_pkey"), new TableField[] { Default_5eClasses.DEFAULT_5E_CLASSES.ID }, true);
-    public static final UniqueKey<Default_5eRacesRecord> DEFAULT_5E_RACES_PKEY = Internal.createUniqueKey(Default_5eRaces.DEFAULT_5E_RACES, DSL.name("default_5e_races_pkey"), new TableField[] { Default_5eRaces.DEFAULT_5E_RACES.ID }, true);
-    public static final UniqueKey<Default_5eSkillsRecord> DEFAULT_5E_SKILLS_PKEY = Internal.createUniqueKey(Default_5eSkills.DEFAULT_5E_SKILLS, DSL.name("default_5e_skills_pkey"), new TableField[] { Default_5eSkills.DEFAULT_5E_SKILLS.ID }, true);
-    public static final UniqueKey<RaceProficienciesRecord> RACE_PROFICIENCIES_PKEY = Internal.createUniqueKey(RaceProficiencies.RACE_PROFICIENCIES, DSL.name("race_proficiencies_pkey"), new TableField[] { RaceProficiencies.RACE_PROFICIENCIES.ID }, true);
+    public static final UniqueKey<AbilityRecord> ABILITY_PKEY = Internal.createUniqueKey(Ability.ABILITY, DSL.name("ability_pkey"), new TableField[] { Ability.ABILITY.ID }, true);
+    public static final UniqueKey<ClazzRecord> CLAZZ_PKEY = Internal.createUniqueKey(Clazz.CLAZZ, DSL.name("clazz_pkey"), new TableField[] { Clazz.CLAZZ.ID }, true);
+    public static final UniqueKey<ClazzStatsRecord> CLAZZ_STATS_PKEY = Internal.createUniqueKey(ClazzStats.CLAZZ_STATS, DSL.name("clazz_stats_pkey"), new TableField[] { ClazzStats.CLAZZ_STATS.ID }, true);
+    public static final UniqueKey<Default_5eAbilityRecord> DEFAULT_5E_ABILITY_PKEY = Internal.createUniqueKey(Default_5eAbility.DEFAULT_5E_ABILITY, DSL.name("default_5e_ability_pkey"), new TableField[] { Default_5eAbility.DEFAULT_5E_ABILITY.ID }, true);
+    public static final UniqueKey<Default_5eClazzRecord> DEFAULT_5E_CLAZZ_PKEY = Internal.createUniqueKey(Default_5eClazz.DEFAULT_5E_CLAZZ, DSL.name("default_5e_clazz_pkey"), new TableField[] { Default_5eClazz.DEFAULT_5E_CLAZZ.ID }, true);
+    public static final UniqueKey<Default_5eRaceRecord> DEFAULT_5E_RACE_PKEY = Internal.createUniqueKey(Default_5eRace.DEFAULT_5E_RACE, DSL.name("default_5e_race_pkey"), new TableField[] { Default_5eRace.DEFAULT_5E_RACE.ID }, true);
+    public static final UniqueKey<Default_5eSkillRecord> DEFAULT_5E_SKILL_PKEY = Internal.createUniqueKey(Default_5eSkill.DEFAULT_5E_SKILL, DSL.name("default_5e_skill_pkey"), new TableField[] { Default_5eSkill.DEFAULT_5E_SKILL.ID }, true);
+    public static final UniqueKey<RaceRecord> RACE_PKEY = Internal.createUniqueKey(Race.RACE, DSL.name("race_pkey"), new TableField[] { Race.RACE.ID }, true);
+    public static final UniqueKey<RaceProficiencyRecord> RACE_PROFICIENCY_PKEY = Internal.createUniqueKey(RaceProficiency.RACE_PROFICIENCY, DSL.name("race_proficiency_pkey"), new TableField[] { RaceProficiency.RACE_PROFICIENCY.ID }, true);
     public static final UniqueKey<RaceStatsRecord> RACE_STATS_PKEY = Internal.createUniqueKey(RaceStats.RACE_STATS, DSL.name("race_stats_pkey"), new TableField[] { RaceStats.RACE_STATS.ID }, true);
-    public static final UniqueKey<RaceTraitsRecord> RACE_TRAITS_PKEY = Internal.createUniqueKey(RaceTraits.RACE_TRAITS, DSL.name("race_traits_pkey"), new TableField[] { RaceTraits.RACE_TRAITS.ID }, true);
-    public static final UniqueKey<RacesRecord> RACES_PKEY = Internal.createUniqueKey(Races.RACES, DSL.name("races_pkey"), new TableField[] { Races.RACES.ID }, true);
-    public static final UniqueKey<RoomsRecord> ROOMS_PKEY = Internal.createUniqueKey(Rooms.ROOMS, DSL.name("rooms_pkey"), new TableField[] { Rooms.ROOMS.ROOM_ID }, true);
-    public static final UniqueKey<SkillsRecord> SKILLS_PKEY = Internal.createUniqueKey(Skills.SKILLS, DSL.name("skills_pkey"), new TableField[] { Skills.SKILLS.ID }, true);
+    public static final UniqueKey<RaceTraitRecord> RACE_TRAIT_PKEY = Internal.createUniqueKey(RaceTrait.RACE_TRAIT, DSL.name("race_trait_pkey"), new TableField[] { RaceTrait.RACE_TRAIT.ID }, true);
+    public static final UniqueKey<RoomRecord> ROOM_PKEY = Internal.createUniqueKey(Room.ROOM, DSL.name("room_pkey"), new TableField[] { Room.ROOM.ROOM_ID }, true);
+    public static final UniqueKey<SkillRecord> SKILL_PKEY = Internal.createUniqueKey(Skill.SKILL, DSL.name("skill_pkey"), new TableField[] { Skill.SKILL.ID }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
-    public static final ForeignKey<AbilitiesRecord, RoomsRecord> ABILITIES__FKABILITIES898405 = Internal.createForeignKey(Abilities.ABILITIES, DSL.name("fkabilities898405"), new TableField[] { Abilities.ABILITIES.ROOM_ID }, Keys.ROOMS_PKEY, new TableField[] { Rooms.ROOMS.ROOM_ID }, true);
-    public static final ForeignKey<ClassesRecord, ClassStatsRecord> CLASSES__FKCLASSES375368 = Internal.createForeignKey(Classes.CLASSES, DSL.name("fkclasses375368"), new TableField[] { Classes.CLASSES.CLASS_STATS_ID }, Keys.CLASS_STATS_PKEY, new TableField[] { ClassStats.CLASS_STATS.ID }, true);
-    public static final ForeignKey<ClassesRecord, RoomsRecord> CLASSES__FKCLASSES862752 = Internal.createForeignKey(Classes.CLASSES, DSL.name("fkclasses862752"), new TableField[] { Classes.CLASSES.ROOM_ID }, Keys.ROOMS_PKEY, new TableField[] { Rooms.ROOMS.ROOM_ID }, true);
-    public static final ForeignKey<Default_5eClassesRecord, ClassStatsRecord> DEFAULT_5E_CLASSES__FKDEFAULT_5E174476 = Internal.createForeignKey(Default_5eClasses.DEFAULT_5E_CLASSES, DSL.name("fkdefault_5e174476"), new TableField[] { Default_5eClasses.DEFAULT_5E_CLASSES.CLASS_STATS_ID }, Keys.CLASS_STATS_PKEY, new TableField[] { ClassStats.CLASS_STATS.ID }, true);
-    public static final ForeignKey<Default_5eRacesRecord, RaceStatsRecord> DEFAULT_5E_RACES__FKDEFAULT_5E40267 = Internal.createForeignKey(Default_5eRaces.DEFAULT_5E_RACES, DSL.name("fkdefault_5e40267"), new TableField[] { Default_5eRaces.DEFAULT_5E_RACES.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
-    public static final ForeignKey<Default_5eSkillsRecord, Default_5eAbilitiesRecord> DEFAULT_5E_SKILLS__FKDEFAULT_5E869303 = Internal.createForeignKey(Default_5eSkills.DEFAULT_5E_SKILLS, DSL.name("fkdefault_5e869303"), new TableField[] { Default_5eSkills.DEFAULT_5E_SKILLS.DEPEND_ON_ABILITY }, Keys.DEFAULT_5E_ABILITIES_PKEY, new TableField[] { Default_5eAbilities.DEFAULT_5E_ABILITIES.ID }, true);
-    public static final ForeignKey<RaceProficienciesRecord, RaceStatsRecord> RACE_PROFICIENCIES__FKRACE_PROFI169598 = Internal.createForeignKey(RaceProficiencies.RACE_PROFICIENCIES, DSL.name("fkrace_profi169598"), new TableField[] { RaceProficiencies.RACE_PROFICIENCIES.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
-    public static final ForeignKey<RaceTraitsRecord, RaceStatsRecord> RACE_TRAITS__FKRACE_TRAIT331219 = Internal.createForeignKey(RaceTraits.RACE_TRAITS, DSL.name("fkrace_trait331219"), new TableField[] { RaceTraits.RACE_TRAITS.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
-    public static final ForeignKey<RacesRecord, RoomsRecord> RACES__FKRACES214766 = Internal.createForeignKey(Races.RACES, DSL.name("fkraces214766"), new TableField[] { Races.RACES.ROOM_ID }, Keys.ROOMS_PKEY, new TableField[] { Rooms.ROOMS.ROOM_ID }, true);
-    public static final ForeignKey<RacesRecord, RaceStatsRecord> RACES__FKRACES292535 = Internal.createForeignKey(Races.RACES, DSL.name("fkraces292535"), new TableField[] { Races.RACES.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
-    public static final ForeignKey<SkillsRecord, AbilitiesRecord> SKILLS__FKSKILLS69995 = Internal.createForeignKey(Skills.SKILLS, DSL.name("fkskills69995"), new TableField[] { Skills.SKILLS.DEPEND_ON_ABILITY_ID }, Keys.ABILITIES_PKEY, new TableField[] { Abilities.ABILITIES.ID }, true);
+    public static final ForeignKey<AbilityRecord, RoomRecord> ABILITY__FKABILITY898405 = Internal.createForeignKey(Ability.ABILITY, DSL.name("fkability898405"), new TableField[] { Ability.ABILITY.ROOM_ID }, Keys.ROOM_PKEY, new TableField[] { Room.ROOM.ROOM_ID }, true);
+    public static final ForeignKey<ClazzRecord, ClazzStatsRecord> CLAZZ__FKCLAZZ375368 = Internal.createForeignKey(Clazz.CLAZZ, DSL.name("fkclazz375368"), new TableField[] { Clazz.CLAZZ.CLAZZ_STATS_ID }, Keys.CLAZZ_STATS_PKEY, new TableField[] { ClazzStats.CLAZZ_STATS.ID }, true);
+    public static final ForeignKey<ClazzRecord, RoomRecord> CLAZZ__FKCLAZZ862752 = Internal.createForeignKey(Clazz.CLAZZ, DSL.name("fkclazz862752"), new TableField[] { Clazz.CLAZZ.ROOM_ID }, Keys.ROOM_PKEY, new TableField[] { Room.ROOM.ROOM_ID }, true);
+    public static final ForeignKey<Default_5eClazzRecord, ClazzStatsRecord> DEFAULT_5E_CLAZZ__FKDEFAULT_5E174476 = Internal.createForeignKey(Default_5eClazz.DEFAULT_5E_CLAZZ, DSL.name("fkdefault_5e174476"), new TableField[] { Default_5eClazz.DEFAULT_5E_CLAZZ.CLAZZ_STATS_ID }, Keys.CLAZZ_STATS_PKEY, new TableField[] { ClazzStats.CLAZZ_STATS.ID }, true);
+    public static final ForeignKey<Default_5eRaceRecord, RaceStatsRecord> DEFAULT_5E_RACE__FKDEFAULT_5E40267 = Internal.createForeignKey(Default_5eRace.DEFAULT_5E_RACE, DSL.name("fkdefault_5e40267"), new TableField[] { Default_5eRace.DEFAULT_5E_RACE.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
+    public static final ForeignKey<Default_5eSkillRecord, Default_5eAbilityRecord> DEFAULT_5E_SKILL__FKDEFAULT_5E869303 = Internal.createForeignKey(Default_5eSkill.DEFAULT_5E_SKILL, DSL.name("fkdefault_5e869303"), new TableField[] { Default_5eSkill.DEFAULT_5E_SKILL.DEPEND_ON_ABILITY }, Keys.DEFAULT_5E_ABILITY_PKEY, new TableField[] { Default_5eAbility.DEFAULT_5E_ABILITY.ID }, true);
+    public static final ForeignKey<RaceRecord, RoomRecord> RACE__FKRACE214766 = Internal.createForeignKey(Race.RACE, DSL.name("fkrace214766"), new TableField[] { Race.RACE.ROOM_ID }, Keys.ROOM_PKEY, new TableField[] { Room.ROOM.ROOM_ID }, true);
+    public static final ForeignKey<RaceRecord, RaceStatsRecord> RACE__FKRACE292535 = Internal.createForeignKey(Race.RACE, DSL.name("fkrace292535"), new TableField[] { Race.RACE.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
+    public static final ForeignKey<RaceProficiencyRecord, RaceStatsRecord> RACE_PROFICIENCY__FKRACE_PROFI169598 = Internal.createForeignKey(RaceProficiency.RACE_PROFICIENCY, DSL.name("fkrace_profi169598"), new TableField[] { RaceProficiency.RACE_PROFICIENCY.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
+    public static final ForeignKey<RaceTraitRecord, RaceStatsRecord> RACE_TRAIT__FKRACE_TRAIT331219 = Internal.createForeignKey(RaceTrait.RACE_TRAIT, DSL.name("fkrace_trait331219"), new TableField[] { RaceTrait.RACE_TRAIT.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
+    public static final ForeignKey<SkillRecord, AbilityRecord> SKILL__FKSKILL69995 = Internal.createForeignKey(Skill.SKILL, DSL.name("fkskill69995"), new TableField[] { Skill.SKILL.DEPEND_ON_ABILITY_ID }, Keys.ABILITY_PKEY, new TableField[] { Ability.ABILITY.ID }, true);
 }

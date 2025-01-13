@@ -1,9 +1,9 @@
 package com.jiubredeemer.rulebook.dal.repository.race;
 
-import com.jiubredeemer.rulebook.domain.races.dto.RaceStatsDto;
+import com.jiubredeemer.rulebook.domain.race.dto.RaceStatsDto;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceStats;
 import com.jiubredeemer.rulebook.dal.mapper.race.RaceStatsMapper;
-import com.jiubredeemer.rulebook.exceptions.NotFoundException;
+import com.jiubredeemer.rulebook.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
