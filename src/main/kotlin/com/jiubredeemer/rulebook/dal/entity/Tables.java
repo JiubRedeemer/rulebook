@@ -4,19 +4,19 @@
 package com.jiubredeemer.rulebook.dal.entity;
 
 
-import com.jiubredeemer.rulebook.dal.entity.tables.Abilities;
-import com.jiubredeemer.rulebook.dal.entity.tables.ClassStats;
-import com.jiubredeemer.rulebook.dal.entity.tables.Classes;
-import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eAbilities;
-import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eClasses;
-import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eRaces;
-import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eSkills;
-import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiencies;
+import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
+import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
+import com.jiubredeemer.rulebook.dal.entity.tables.ClazzStats;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eAbility;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eClazz;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eRace;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eSkill;
+import com.jiubredeemer.rulebook.dal.entity.tables.Race;
+import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiency;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceStats;
-import com.jiubredeemer.rulebook.dal.entity.tables.RaceTraits;
-import com.jiubredeemer.rulebook.dal.entity.tables.Races;
-import com.jiubredeemer.rulebook.dal.entity.tables.Rooms;
-import com.jiubredeemer.rulebook.dal.entity.tables.Skills;
+import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait;
+import com.jiubredeemer.rulebook.dal.entity.tables.Room;
+import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
 
 
 /**
@@ -28,42 +28,47 @@ public class Tables {
     /**
      * Кастомные характеристики существ (для homebrew игр)
      */
-    public static final Abilities ABILITIES = Abilities.ABILITIES;
+    public static final Ability ABILITY = Ability.ABILITY;
 
     /**
-     * The table <code>rules.class_stats</code>.
+     * The table <code>rules.clazz</code>.
      */
-    public static final ClassStats CLASS_STATS = ClassStats.CLASS_STATS;
+    public static final Clazz CLAZZ = Clazz.CLAZZ;
 
     /**
-     * The table <code>rules.classes</code>.
+     * The table <code>rules.clazz_stats</code>.
      */
-    public static final Classes CLASSES = Classes.CLASSES;
+    public static final ClazzStats CLAZZ_STATS = ClazzStats.CLAZZ_STATS;
 
     /**
      * Характеристики существ по дефолтным правилам ДнД 5е
      */
-    public static final Default_5eAbilities DEFAULT_5E_ABILITIES = Default_5eAbilities.DEFAULT_5E_ABILITIES;
+    public static final Default_5eAbility DEFAULT_5E_ABILITY = Default_5eAbility.DEFAULT_5E_ABILITY;
 
     /**
-     * The table <code>rules.default_5e_classes</code>.
+     * The table <code>rules.default_5e_clazz</code>.
      */
-    public static final Default_5eClasses DEFAULT_5E_CLASSES = Default_5eClasses.DEFAULT_5E_CLASSES;
+    public static final Default_5eClazz DEFAULT_5E_CLAZZ = Default_5eClazz.DEFAULT_5E_CLAZZ;
 
     /**
-     * The table <code>rules.default_5e_races</code>.
+     * The table <code>rules.default_5e_race</code>.
      */
-    public static final Default_5eRaces DEFAULT_5E_RACES = Default_5eRaces.DEFAULT_5E_RACES;
+    public static final Default_5eRace DEFAULT_5E_RACE = Default_5eRace.DEFAULT_5E_RACE;
 
     /**
      * Навыки по дефолтным правилам DnD 5e
      */
-    public static final Default_5eSkills DEFAULT_5E_SKILLS = Default_5eSkills.DEFAULT_5E_SKILLS;
+    public static final Default_5eSkill DEFAULT_5E_SKILL = Default_5eSkill.DEFAULT_5E_SKILL;
 
     /**
-     * The table <code>rules.race_proficiencies</code>.
+     * The table <code>rules.race</code>.
      */
-    public static final RaceProficiencies RACE_PROFICIENCIES = RaceProficiencies.RACE_PROFICIENCIES;
+    public static final Race RACE = Race.RACE;
+
+    /**
+     * The table <code>rules.race_proficiency</code>.
+     */
+    public static final RaceProficiency RACE_PROFICIENCY = RaceProficiency.RACE_PROFICIENCY;
 
     /**
      * The table <code>rules.race_stats</code>.
@@ -71,22 +76,17 @@ public class Tables {
     public static final RaceStats RACE_STATS = RaceStats.RACE_STATS;
 
     /**
-     * The table <code>rules.race_traits</code>.
+     * The table <code>rules.race_trait</code>.
      */
-    public static final RaceTraits RACE_TRAITS = RaceTraits.RACE_TRAITS;
-
-    /**
-     * The table <code>rules.races</code>.
-     */
-    public static final Races RACES = Races.RACES;
+    public static final RaceTrait RACE_TRAIT = RaceTrait.RACE_TRAIT;
 
     /**
      * Реплика информации о комнате из core микросервиса
      */
-    public static final Rooms ROOMS = Rooms.ROOMS;
+    public static final Room ROOM = Room.ROOM;
 
     /**
      * Кастомные навыки существ (для homebrew игр)
      */
-    public static final Skills SKILLS = Skills.SKILLS;
+    public static final Skill SKILL = Skill.SKILL;
 }

@@ -1,10 +1,10 @@
 package com.jiubredeemer.rulebook.dal.repository.clazz;
 
-import com.jiubredeemer.rulebook.dal.entity.tables.Classes;
-import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eClasses;
+import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eClazz;
 import com.jiubredeemer.rulebook.dal.mapper.clazz.ClassMapper;
 import com.jiubredeemer.rulebook.dal.mapper.clazz.Default5eClassMapper;
-import com.jiubredeemer.rulebook.domain.classes.dto.ClassDto;
+import com.jiubredeemer.rulebook.domain.clazz.dto.ClazzDto;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
@@ -20,31 +20,46 @@ public class ClassRepository {
     private final ClassMapper classMapper;
     private final Default5eClassMapper default5eClassMapper;
 
-    public List<ClassDto> getFullClassesForRoom(UUID roomId) {
-        return dsl.selectFrom(Classes.CLASSES)
-                .where(Classes.CLASSES.ROOM_ID.eq(roomId))
+    public List<ClazzDto> getFullClassesForRoom(UUID roomId) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(Clazz.CLAZZ.ROOM_ID.eq(roomId))
                 .fetch()
                 .map(classMapper);
     }
 
-    public List<ClassDto> getFull5eClassesForRoom() {
-        return dsl.selectFrom(Default_5eClasses.DEFAULT_5E_CLASSES)
+    public List<ClazzDto> getFull5eClassesForRoom() {
+        return dsl.selectFrom(Default_5eClazz.DEFAULT_5E_CLAZZ)
                 .fetch()
                 .map(default5eClassMapper);
     }
 
-    public Optional<ClassDto> getFullClassByCode(UUID roomId, String code) {
-        return dsl.selectFrom(Classes.CLASSES)
-                .where(Classes.CLASSES.ROOM_ID.eq(roomId))
-                .and(Classes.CLASSES.CODE.eq(code))
+    public Optional<ClazzDto> getFullClassByCode(UUID roomId, String code) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(Clazz.CLAZZ.ROOM_ID.eq(roomId))
+                .and(Clazz.CLAZZ.CODE.eq(code))
                 .fetchOptional()
                 .map(classMapper);
     }
 
-    public Optional<ClassDto> getFull5eClassByCode(String code) {
-        return dsl.selectFrom(Default_5eClasses.DEFAULT_5E_CLASSES)
-                .where(Default_5eClasses.DEFAULT_5E_CLASSES.CODE.eq(code))
+    public Optional<ClazzDto> getFull5eClassByCode(String code) {
+        return dsl.selectFrom(Default_5eClazz.DEFAULT_5E_CLAZZ)
+                .where(Default_5eClazz.DEFAULT_5E_CLAZZ.CODE.eq(code))
                 .fetchOptional()
                 .map(default5eClassMapper);
+    }
+
+    public Optional<ClazzDto> getFull5eRaceByCode(String code) {
+        return dsl.selectFrom(Default_5eClazz.DEFAULT_5E_CLAZZ)
+                .where(Default_5eClazz.DEFAULT_5E_CLAZZ.CODE.eq(code))
+                .fetchOptional()
+                .map(default5eClassMapper);
+    }
+
+    public Optional<ClazzDto> getFullRaceByCode(String code, UUID roomId) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(Clazz.CLAZZ.ROOM_ID.eq(roomId))
+                .and(Clazz.CLAZZ.CODE.eq(code))
+                .fetchOptional()
+                .map(classMapper);
     }
 }

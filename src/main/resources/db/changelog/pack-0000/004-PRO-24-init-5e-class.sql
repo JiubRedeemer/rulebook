@@ -1,5 +1,5 @@
 /* Бард */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('e768eed6-ad5e-4a4f-b48b-bf99f74373a9'::uuid, '8+CON'::text, '8+CON'::text, '["DEX", "CHA"]'::jsonb, '
 [
   {
@@ -38,11 +38,11 @@ VALUES ('e768eed6-ad5e-4a4f-b48b-bf99f74373a9'::uuid, '8+CON'::text, '8+CON'::te
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('cc7d91d5-ad75-44b4-8e9c-b3e040731b2a'::uuid, 'Бард'::text, 'Неважно, кем является бард: учёным, скальдом или проходимцем; он плетёт магию из слов и музыки, вдохновляя союзников, деморализуя противников, манипулируя сознанием, создавая иллюзии, и даже исцеляя раны.'::text, 'BARD'::text, 'e768eed6-ad5e-4a4f-b48b-bf99f74373a9'::uuid);
 
 /* Варвар */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('b5c59b67-4405-4342-b351-09a264e38adf'::uuid, '12+CON'::text, '12+CON'::text, '["STR", "CON"]'::jsonb, '
 [
   {
@@ -74,11 +74,11 @@ VALUES ('b5c59b67-4405-4342-b351-09a264e38adf'::uuid, '12+CON'::text, '12+CON'::
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('a7d34405-7b40-48bc-a904-80950a476907'::uuid, 'Варвар'::text, 'Несмотря на разнообразие, всех варваров объединяет одно — их ярость. Необузданный, неугасимый и бездумный гнев. Не просто эмоция, их ярость как свирепость загнанного в угол хищника, как безжалостный удар урагана, как штормовые валы океана. Ярость некоторых из них проистекает из общения со свирепыми духами животных. Другие черпают её из злости на полную боли и страдания действительность. Но для каждого варвара ярость — это источник не только боевого безумия, но и невероятных рефлексов, стойкости, а также непревзойдённой силы.'::text, 'BARBARIAN'::text, 'b5c59b67-4405-4342-b351-09a264e38adf'::uuid);
 
 /* Воин */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('d37773f5-fc06-4c99-b048-e6cafd1ac8fa'::uuid, '10+CON'::text, '10+CON'::text, '["STR", "CON"]'::jsonb, '
 [
   {
@@ -118,11 +118,11 @@ VALUES ('d37773f5-fc06-4c99-b048-e6cafd1ac8fa'::uuid, '10+CON'::text, '10+CON'::
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('63185051-5143-4a69-9d2b-4513420e4b12'::uuid, 'Воин'::text, 'Опытный гладиатор на арене умело использует трезубец и сеть, чтобы сбить врага и обойти его, вызывая восторг толпы и получая тактическое преимущество. Меч противника вспыхивает голубым светом и выпускает молнию. Все они — воины, один из самых разнообразных классов D&D. Рыцари, полководцы, чемпионы, элитные пехотинцы, наёмники и разбойники — они владеют оружием, доспехами и искусством боя, и хорошо знают смерть, которую приносят сами, часто глядя ей в глаза.'::text, 'FIGHTER'::text, 'd37773f5-fc06-4c99-b048-e6cafd1ac8fa'::uuid);
 
 /* Волшебник */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('dadeba2d-0278-4577-87aa-81defe56dab9'::uuid, '6+CON'::text, '6+CON'::text, '["INT", "WIS"]'::jsonb, '
 [
   {
@@ -151,11 +151,11 @@ VALUES ('dadeba2d-0278-4577-87aa-81defe56dab9'::uuid, '6+CON'::text, '6+CON'::te
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('06a508d9-f03d-4a6a-9598-4c380d74692d'::uuid, 'Волшебник'::text, 'Волшебники — адепты высшей магии, объединяющиеся по типу своих заклинаний. Опираясь на тонкие плетения магии, пронизывающей вселенную, волшебники способны создавать заклинания взрывного огня, искрящихся молний, тонкого обмана и грубого контроля над сознанием. Их магия вызывает чудовищ с других планов бытия, предсказывает будущее и обращает поверженных врагов в зомби. Их самые могущественные заклинания могут превращать одно вещество в другое, вызывать метеориты с небес и открывать порталы в другие миры.'::text, 'WIZARD'::text, 'dadeba2d-0278-4577-87aa-81defe56dab9'::uuid);
 
 /* Друид */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('9898735e-04b8-4fd7-96f1-0e7759f2bab4'::uuid, '8+CON'::text, '8+CON'::text, '["INT", "WIS"]'::jsonb, '
 [
   {
@@ -206,12 +206,12 @@ VALUES ('9898735e-04b8-4fd7-96f1-0e7759f2bab4'::uuid, '8+CON'::text, '8+CON'::te
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('999dbf92-311e-43df-83c8-77ff99251a3b'::uuid, 'Друид'::text, 'Призывая стихии или подражая животным, друиды воплощают незыблемость, приспособляемость и гнев природы. Они ни в коем случае не владыки природы — вместо этого друиды ощущают себя частью её неодолимой воли.'::text, 'DRUID'::text, '9898735e-04b8-4fd7-96f1-0e7759f2bab4'::uuid);
 
 
 /* Жрец */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('4c3f4fdb-9b6f-4e33-88e5-775fea197e64'::uuid, '8+CON'::text, '8+CON'::text, '["INT", "WIS"]'::jsonb, '
 [
   {
@@ -245,12 +245,12 @@ VALUES ('4c3f4fdb-9b6f-4e33-88e5-775fea197e64'::uuid, '8+CON'::text, '8+CON'::te
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('f1da23d8-494f-44cf-ac66-ac777efddd8d'::uuid, 'Жрец'::text, 'Жрецы являются посредниками между миром смертных и далёкими мирами богов. Настолько же разные, насколько боги, которым они служат, жрецы воплощают работу своих божеств. В отличие от обычного проповедника, жрец наделён божественной магией.'::text, 'CLERIC'::text, '4c3f4fdb-9b6f-4e33-88e5-775fea197e64'::uuid);
 
 
 /* Изобретатель */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('dc23fb8a-a8d8-4e98-be5f-5cdba6391841'::uuid, '8+CON'::text, '8+CON'::text, '["CON", "INT"]'::jsonb, '
 [
   {
@@ -295,11 +295,11 @@ VALUES ('dc23fb8a-a8d8-4e98-be5f-5cdba6391841'::uuid, '8+CON'::text, '8+CON'::te
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('0628d457-9a05-428c-a7ef-ce77c7c2ddf9'::uuid, 'Изобретатель'::text, 'Изобретатели — мастера оживления магии в обычных предметах. Для них магия — это система, которую можно расшифровать и использовать в заклинаниях и изобретениях. Для направления своей силы они применяют различные инструменты. Изобретатель может создать эликсир с помощью алхимических принадлежностей, нарисовать знак силы набором каллиграфа или создать временный амулет инструментами ремонтника. Их магия тесно связана с инструментами и умениями, и лишь немногие способны сделать правильные рабочие инструменты, как они.'::text, 'ARTIFICER'::text, 'dc23fb8a-a8d8-4e98-be5f-5cdba6391841'::uuid);
 
 /* Колдун */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('65b5e743-618e-4459-b92b-0643594435e4'::uuid, '8+CON'::text, '8+CON'::text, '["WIS", "CHA"]'::jsonb, '
 [
   {
@@ -334,12 +334,12 @@ VALUES ('65b5e743-618e-4459-b92b-0643594435e4'::uuid, '8+CON'::text, '8+CON'::te
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('f47f677b-9aa5-4265-b983-2684c065c7e8'::uuid, 'Колдун'::text, 'Колдуны — искатели знаний, что скрываются в ткани мультивселенной. Через договор, заключённый с таинственными существами сверхъестественной силы, колдуны открывают для себя магические эффекты, как едва уловимые, так и впечатляющие воображение. Колдуны подпитывают свои силы древними знаниями таких существ как феи, демоны, дьяволы, карги и чужеродные сущности Дальнего Предела.'::text, 'WARLOCK'::text, '65b5e743-618e-4459-b92b-0643594435e4'::uuid);
 
 
 /* Монах */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('b0a7f658-f59c-4199-9953-511edd83e822'::uuid, '8+CON'::text, '8+CON'::text, '["STR", "DEX"]'::jsonb, '
 [
   {
@@ -367,12 +367,12 @@ VALUES ('b0a7f658-f59c-4199-9953-511edd83e822'::uuid, '8+CON'::text, '8+CON'::te
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('bddb6c00-ac2c-4b31-b96f-2181547d38bb'::uuid, 'Монах'::text, 'Вне зависимости от выбранной дисциплины, всех монахов объединяет одно — возможность управлять энергией, текущей в их телах. Вне зависимости от того, проявляется ли она выдающимися боевыми способностями, или чуть заметным усилением защиты и скорости, эта энергия влияет на всё, что делает монах.'::text, 'MONK'::text, 'b0a7f658-f59c-4199-9953-511edd83e822'::uuid);
 
 
 /* Паладин */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('fbe7a3ee-c355-4ec0-95f0-73c999107e5e'::uuid, '10+CON'::text, '10+CON'::text, '["WIS", "CHA"]'::jsonb, '
 [
   {
@@ -409,12 +409,12 @@ VALUES ('fbe7a3ee-c355-4ec0-95f0-73c999107e5e'::uuid, '10+CON'::text, '10+CON'::
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('acdfbd1f-7bf9-4494-871d-f983bef41b22'::uuid, 'Паладин'::text, 'Вне зависимости от происхождения и миссии, паладинов объединяет их клятва противостоять силам зла. Принесённая ли перед алтарём бога и заверенная священником, или же на священной поляне перед духами природы и феями, или в момент отчаяния и горя смерти, присяга паладина — могущественный договор. Это источник силы, который превращает набожного воина в благословенного героя.'::text, 'PALADIN'::text, 'fbe7a3ee-c355-4ec0-95f0-73c999107e5e'::uuid);
 
 
 /* Плут */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('066b7e5d-85a9-4a53-b485-a09da72ba2e0'::uuid, '8+CON'::text, '8+CON'::text, '["DEX", "INT"]'::jsonb, '
 [
   {
@@ -463,12 +463,12 @@ VALUES ('066b7e5d-85a9-4a53-b485-a09da72ba2e0'::uuid, '8+CON'::text, '8+CON'::te
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('ae1fa7f9-a7a5-46a7-abc4-a403f42b54b6'::uuid, 'Плут'::text, 'Плуты полагаются на мастерство, скрытность и уязвимые места врагов, чтобы взять верх в любой ситуации. У них достаточно сноровки для нахождения решения в любой ситуации, демонстрируя находчивость и гибкость, которые являются краеугольным камнем любой успешной группы искателей приключений.'::text, 'ROGUE'::text, '066b7e5d-85a9-4a53-b485-a09da72ba2e0'::uuid);
 
 
 /* Следопыт */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('eeb72220-6167-48b9-9f58-75049335ee35'::uuid, '10+CON'::text, '10+CON'::text, '["STR", "DEX"]'::jsonb, '
 [
   {
@@ -507,12 +507,12 @@ VALUES ('eeb72220-6167-48b9-9f58-75049335ee35'::uuid, '10+CON'::text, '10+CON'::
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('cb14de2d-8475-418a-89b5-0f40e614fc3c'::uuid, 'Следопыт'::text, 'Вдали от суеты городов и посёлков, за изгородями, которые защищают самые далёкие фермы от ужасов дикой природы, среди плотно стоящих деревьев, беспутья лесов и на просторах необъятных равнин следопыты несут свой бесконечный дозор.'::text, 'RANGER'::text, 'eeb72220-6167-48b9-9f58-75049335ee35'::uuid);
 
 
 /* Чародей */
-INSERT INTO rules.class_stats (id, hp_dice, start_hp, saving_throws_abilities, available_skills)
+INSERT INTO rules.clazz_stats (id, hp_dice, start_hp, saving_throws_ability, available_skills)
 VALUES ('4f11a60a-b7c2-4892-a256-c26c1e9b2c12'::uuid, '6+CON'::text, '6+CON'::text, '["CON", "CHA"]'::jsonb, '
 [
   {
@@ -541,6 +541,6 @@ VALUES ('4f11a60a-b7c2-4892-a256-c26c1e9b2c12'::uuid, '6+CON'::text, '6+CON'::te
 ]
 '::jsonb);
 
-INSERT INTO rules.default_5e_classes (id, name, description, code, class_stats_id)
+INSERT INTO rules.default_5e_clazz (id, name, description, code, clazz_stats_id)
 VALUES ('53d71f8f-acba-42d4-ac63-12eb3d51fb45'::uuid, 'Чародей'::text, 'Чародеи являются носителями магии, дарованной им при рождении их экзотической родословной, неким потусторонним влиянием или воздействием неизвестных вселенских сил. Никто не может обучиться чародейству, как, например, выучить язык, так же как никто не может обучить, как прожить легендарную жизнь. Никто не может избрать путь чародейства, сила сама выбирает носителя.'::text, 'SORCERER'::text, '4f11a60a-b7c2-4892-a256-c26c1e9b2c12'::uuid);
 

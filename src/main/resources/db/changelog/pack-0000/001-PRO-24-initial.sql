@@ -1,14 +1,14 @@
-CREATE TABLE rules.rooms
+CREATE TABLE rules.room
 (
     room_id   uuid NOT NULL,
     owner_id  uuid NOT NULL,
     rule_type text NOT NULL,
     PRIMARY KEY (room_id)
 );
-COMMENT ON TABLE rules.rooms IS 'Реплика информации о комнате из core микросервиса';
-COMMENT ON COLUMN rules.rooms.owner_id IS 'Id владельца комнаты';
-COMMENT ON COLUMN rules.rooms.rule_type IS 'Тип правил, например: 4e, 5e, homebrew';
-CREATE TABLE rules.abilities
+COMMENT ON TABLE rules.room IS 'Реплика информации о комнате из core микросервиса';
+COMMENT ON COLUMN rules.room.owner_id IS 'Id владельца комнаты';
+COMMENT ON COLUMN rules.room.rule_type IS 'Тип правил, например: 4e, 5e, homebrew';
+CREATE TABLE rules.ability
 (
     id      uuid NOT NULL,
     room_id uuid NOT NULL,
@@ -16,10 +16,10 @@ CREATE TABLE rules.abilities
     code    text NOT NULL,
     PRIMARY KEY (id)
 );
-COMMENT ON TABLE rules.abilities IS 'Кастомные характеристики существ (для homebrew игр)';
-COMMENT ON COLUMN rules.abilities.name IS 'Название характеристики';
-COMMENT ON COLUMN rules.abilities.code IS 'Краткий код характеристики';
-CREATE TABLE rules.skills
+COMMENT ON TABLE rules.ability IS 'Кастомные характеристики существ (для homebrew игр)';
+COMMENT ON COLUMN rules.ability.name IS 'Название характеристики';
+COMMENT ON COLUMN rules.ability.code IS 'Краткий код характеристики';
+CREATE TABLE rules.skill
 (
     id                   uuid NOT NULL,
     name                 text NOT NULL,
@@ -27,21 +27,21 @@ CREATE TABLE rules.skills
     depend_on_ability_id uuid NOT NULL,
     PRIMARY KEY (id)
 );
-COMMENT ON TABLE rules.skills IS 'Кастомные навыки существ (для homebrew игр)';
-COMMENT ON COLUMN rules.skills.name IS 'Название навыка';
-COMMENT ON COLUMN rules.skills.code IS 'Краткий код навыка';
-COMMENT ON COLUMN rules.skills.depend_on_ability_id IS 'Зависимость навыка от характеристики';
-CREATE TABLE rules.default_5e_abilities
+COMMENT ON TABLE rules.skill IS 'Кастомные навыки существ (для homebrew игр)';
+COMMENT ON COLUMN rules.skill.name IS 'Название навыка';
+COMMENT ON COLUMN rules.skill.code IS 'Краткий код навыка';
+COMMENT ON COLUMN rules.skill.depend_on_ability_id IS 'Зависимость навыка от характеристики';
+CREATE TABLE rules.default_5e_ability
 (
     id   uuid NOT NULL,
     name text NOT NULL,
     code text NOT NULL,
     PRIMARY KEY (id)
 );
-COMMENT ON TABLE rules.default_5e_abilities IS 'Характеристики существ по дефолтным правилам ДнД 5е';
-COMMENT ON COLUMN rules.default_5e_abilities.name IS 'Название Характеристики';
-COMMENT ON COLUMN rules.default_5e_abilities.code IS 'Краткий код Характеристики';
-CREATE TABLE rules.default_5e_skills
+COMMENT ON TABLE rules.default_5e_ability IS 'Характеристики существ по дефолтным правилам ДнД 5е';
+COMMENT ON COLUMN rules.default_5e_ability.name IS 'Название Характеристики';
+COMMENT ON COLUMN rules.default_5e_ability.code IS 'Краткий код Характеристики';
+CREATE TABLE rules.default_5e_skill
 (
     id                uuid NOT NULL,
     name              text NOT NULL,
@@ -49,11 +49,11 @@ CREATE TABLE rules.default_5e_skills
     depend_on_ability uuid NOT NULL,
     PRIMARY KEY (id)
 );
-COMMENT ON TABLE rules.default_5e_skills IS 'Навыки по дефолтным правилам DnD 5e';
-COMMENT ON COLUMN rules.default_5e_skills.name IS 'Название навыка';
-COMMENT ON COLUMN rules.default_5e_skills.code IS 'Краткий код навыка';
-COMMENT ON COLUMN rules.default_5e_skills.depend_on_ability IS 'Зависимость навыка от характеристики';
-CREATE TABLE rules.races
+COMMENT ON TABLE rules.default_5e_skill IS 'Навыки по дефолтным правилам DnD 5e';
+COMMENT ON COLUMN rules.default_5e_skill.name IS 'Название навыка';
+COMMENT ON COLUMN rules.default_5e_skill.code IS 'Краткий код навыка';
+COMMENT ON COLUMN rules.default_5e_skill.depend_on_ability IS 'Зависимость навыка от характеристики';
+CREATE TABLE rules.race
 (
     id            uuid NOT NULL,
     room_id       uuid NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE rules.races
     race_stats_id uuid NOT NULL,
     PRIMARY KEY (id)
 );
-CREATE TABLE rules.default_5e_races
+CREATE TABLE rules.default_5e_race
 (
     id            uuid NOT NULL,
     name          text NOT NULL,
@@ -72,23 +72,23 @@ CREATE TABLE rules.default_5e_races
     race_stats_id uuid NOT NULL,
     PRIMARY KEY (id)
 );
-CREATE TABLE rules.classes
+CREATE TABLE rules.clazz
 (
     id             uuid NOT NULL,
     room_id        uuid NOT NULL,
     name           text NOT NULL,
     description    text NULL,
     code           text NOT NULL,
-    class_stats_id uuid NOT NULL,
+    clazz_stats_id uuid NOT NULL,
     PRIMARY KEY (id)
 );
-CREATE TABLE rules.default_5e_classes
+CREATE TABLE rules.default_5e_clazz
 (
     id             uuid NOT NULL,
     name           text NOT NULL,
     description    text NULL,
     code           text NOT NULL,
-    class_stats_id uuid NOT NULL,
+    clazz_stats_id uuid NOT NULL,
     PRIMARY KEY (id)
 );
 CREATE TABLE rules.race_stats
@@ -101,7 +101,7 @@ CREATE TABLE rules.race_stats
     ability_modifiers jsonb NOT NULL,
     PRIMARY KEY (id)
 );
-CREATE TABLE rules.race_traits
+CREATE TABLE rules.race_trait
 (
     id            uuid NOT NULL,
     race_stats_id uuid NOT NULL,
@@ -110,18 +110,18 @@ CREATE TABLE rules.race_traits
     description   text NOT NULL,
     PRIMARY KEY (id)
 );
-CREATE TABLE rules.class_stats
+CREATE TABLE rules.clazz_stats
 (
     id                      uuid  NOT NULL,
     hp_dice                 text  NOT NULL,
     start_hp                text  NOT NULL,
-    saving_throws_abilities jsonb NOT NULL,
+    saving_throws_ability jsonb NOT NULL,
     available_skills        jsonb NOT NULL,
     PRIMARY KEY (id)
 );
-COMMENT ON COLUMN rules.class_stats.saving_throws_abilities IS '["WIS", "INT"]';
-COMMENT ON COLUMN rules.class_stats.available_skills IS 'Навыки, которыми может владеть класс: {"count" : 2, "list" : "WIS", "INT"}';
-CREATE TABLE rules.race_proficiencies
+COMMENT ON COLUMN rules.clazz_stats.saving_throws_ability IS '["WIS", "INT"]';
+COMMENT ON COLUMN rules.clazz_stats.available_skills IS 'Навыки, которыми может владеть класс: {"count" : 2, "list" : "WIS", "INT"}';
+CREATE TABLE rules.race_proficiency
 (
     id            uuid NOT NULL,
     race_stats_id uuid NOT NULL,
@@ -129,39 +129,39 @@ CREATE TABLE rules.race_proficiencies
     code          text NOT NULL,
     PRIMARY KEY (id)
 );
-CREATE INDEX abilities_room_id
-    ON rules.abilities (room_id);
-CREATE INDEX skills_depend_on_ability_id
-    ON rules.skills (depend_on_ability_id);
-CREATE INDEX default_5e_skills_depend_on_ability
-    ON rules.default_5e_skills (depend_on_ability);
-CREATE INDEX races_room_id
-    ON rules.races (room_id);
-CREATE INDEX classes_room_id
-    ON rules.classes (room_id);
-CREATE INDEX race_traits_race_stats_id
-    ON rules.race_traits (race_stats_id);
-CREATE INDEX race_proficiencies_race_stats_id
-    ON rules.race_proficiencies (race_stats_id);
-ALTER TABLE rules.skills
-    ADD CONSTRAINT FKskills69995 FOREIGN KEY (depend_on_ability_id) REFERENCES rules.abilities (id);
-ALTER TABLE rules.abilities
-    ADD CONSTRAINT FKabilities898405 FOREIGN KEY (room_id) REFERENCES rules.rooms (room_id);
-ALTER TABLE rules.default_5e_skills
-    ADD CONSTRAINT FKdefault_5e869303 FOREIGN KEY (depend_on_ability) REFERENCES rules.default_5e_abilities (id);
-ALTER TABLE rules.races
-    ADD CONSTRAINT FKraces214766 FOREIGN KEY (room_id) REFERENCES rules.rooms (room_id);
-ALTER TABLE rules.classes
-    ADD CONSTRAINT FKclasses862752 FOREIGN KEY (room_id) REFERENCES rules.rooms (room_id);
-ALTER TABLE rules.default_5e_races
+CREATE INDEX ability_room_id
+    ON rules.ability (room_id);
+CREATE INDEX skill_depend_on_ability_id
+    ON rules.skill (depend_on_ability_id);
+CREATE INDEX default_5e_skill_depend_on_ability
+    ON rules.default_5e_skill (depend_on_ability);
+CREATE INDEX race_room_id
+    ON rules.race (room_id);
+CREATE INDEX clazz_room_id
+    ON rules.clazz (room_id);
+CREATE INDEX race_trait_race_stats_id
+    ON rules.race_trait (race_stats_id);
+CREATE INDEX race_proficiency_race_stats_id
+    ON rules.race_proficiency (race_stats_id);
+ALTER TABLE rules.skill
+    ADD CONSTRAINT FKskill69995 FOREIGN KEY (depend_on_ability_id) REFERENCES rules.ability (id);
+ALTER TABLE rules.ability
+    ADD CONSTRAINT FKability898405 FOREIGN KEY (room_id) REFERENCES rules.room (room_id);
+ALTER TABLE rules.default_5e_skill
+    ADD CONSTRAINT FKdefault_5e869303 FOREIGN KEY (depend_on_ability) REFERENCES rules.default_5e_ability (id);
+ALTER TABLE rules.race
+    ADD CONSTRAINT FKrace214766 FOREIGN KEY (room_id) REFERENCES rules.room (room_id);
+ALTER TABLE rules.clazz
+    ADD CONSTRAINT FKclazz862752 FOREIGN KEY (room_id) REFERENCES rules.room (room_id);
+ALTER TABLE rules.default_5e_race
     ADD CONSTRAINT FKdefault_5e40267 FOREIGN KEY (race_stats_id) REFERENCES rules.race_stats (id);
-ALTER TABLE rules.races
-    ADD CONSTRAINT FKraces292535 FOREIGN KEY (race_stats_id) REFERENCES rules.race_stats (id);
-ALTER TABLE rules.race_traits
+ALTER TABLE rules.race
+    ADD CONSTRAINT FKrace292535 FOREIGN KEY (race_stats_id) REFERENCES rules.race_stats (id);
+ALTER TABLE rules.race_trait
     ADD CONSTRAINT FKrace_trait331219 FOREIGN KEY (race_stats_id) REFERENCES rules.race_stats (id);
-ALTER TABLE rules.classes
-    ADD CONSTRAINT FKclasses375368 FOREIGN KEY (class_stats_id) REFERENCES rules.class_stats (id);
-ALTER TABLE rules.default_5e_classes
-    ADD CONSTRAINT FKdefault_5e174476 FOREIGN KEY (class_stats_id) REFERENCES rules.class_stats (id);
-ALTER TABLE rules.race_proficiencies
+ALTER TABLE rules.clazz
+    ADD CONSTRAINT FKclazz375368 FOREIGN KEY (clazz_stats_id) REFERENCES rules.clazz_stats (id);
+ALTER TABLE rules.default_5e_clazz
+    ADD CONSTRAINT FKdefault_5e174476 FOREIGN KEY (clazz_stats_id) REFERENCES rules.clazz_stats (id);
+ALTER TABLE rules.race_proficiency
     ADD CONSTRAINT FKrace_profi169598 FOREIGN KEY (race_stats_id) REFERENCES rules.race_stats (id);

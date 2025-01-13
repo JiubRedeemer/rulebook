@@ -4,13 +4,13 @@
 package com.jiubredeemer.rulebook.dal.entity;
 
 
-import com.jiubredeemer.rulebook.dal.entity.tables.Abilities;
-import com.jiubredeemer.rulebook.dal.entity.tables.Classes;
-import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eSkills;
-import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiencies;
-import com.jiubredeemer.rulebook.dal.entity.tables.RaceTraits;
-import com.jiubredeemer.rulebook.dal.entity.tables.Races;
-import com.jiubredeemer.rulebook.dal.entity.tables.Skills;
+import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
+import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eSkill;
+import com.jiubredeemer.rulebook.dal.entity.tables.Race;
+import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiency;
+import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait;
+import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
 
 import org.jooq.Index;
 import org.jooq.OrderField;
@@ -28,11 +28,11 @@ public class Indexes {
     // INDEX definitions
     // -------------------------------------------------------------------------
 
-    public static final Index ABILITIES_ROOM_ID = Internal.createIndex(DSL.name("abilities_room_id"), Abilities.ABILITIES, new OrderField[] { Abilities.ABILITIES.ROOM_ID }, false);
-    public static final Index CLASSES_ROOM_ID = Internal.createIndex(DSL.name("classes_room_id"), Classes.CLASSES, new OrderField[] { Classes.CLASSES.ROOM_ID }, false);
-    public static final Index DEFAULT_5E_SKILLS_DEPEND_ON_ABILITY = Internal.createIndex(DSL.name("default_5e_skills_depend_on_ability"), Default_5eSkills.DEFAULT_5E_SKILLS, new OrderField[] { Default_5eSkills.DEFAULT_5E_SKILLS.DEPEND_ON_ABILITY }, false);
-    public static final Index RACE_PROFICIENCIES_RACE_STATS_ID = Internal.createIndex(DSL.name("race_proficiencies_race_stats_id"), RaceProficiencies.RACE_PROFICIENCIES, new OrderField[] { RaceProficiencies.RACE_PROFICIENCIES.RACE_STATS_ID }, false);
-    public static final Index RACE_TRAITS_RACE_STATS_ID = Internal.createIndex(DSL.name("race_traits_race_stats_id"), RaceTraits.RACE_TRAITS, new OrderField[] { RaceTraits.RACE_TRAITS.RACE_STATS_ID }, false);
-    public static final Index RACES_ROOM_ID = Internal.createIndex(DSL.name("races_room_id"), Races.RACES, new OrderField[] { Races.RACES.ROOM_ID }, false);
-    public static final Index SKILLS_DEPEND_ON_ABILITY_ID = Internal.createIndex(DSL.name("skills_depend_on_ability_id"), Skills.SKILLS, new OrderField[] { Skills.SKILLS.DEPEND_ON_ABILITY_ID }, false);
+    public static final Index ABILITY_ROOM_ID = Internal.createIndex(DSL.name("ability_room_id"), Ability.ABILITY, new OrderField[] { Ability.ABILITY.ROOM_ID }, false);
+    public static final Index CLAZZ_ROOM_ID = Internal.createIndex(DSL.name("clazz_room_id"), Clazz.CLAZZ, new OrderField[] { Clazz.CLAZZ.ROOM_ID }, false);
+    public static final Index DEFAULT_5E_SKILL_DEPEND_ON_ABILITY = Internal.createIndex(DSL.name("default_5e_skill_depend_on_ability"), Default_5eSkill.DEFAULT_5E_SKILL, new OrderField[] { Default_5eSkill.DEFAULT_5E_SKILL.DEPEND_ON_ABILITY }, false);
+    public static final Index RACE_PROFICIENCY_RACE_STATS_ID = Internal.createIndex(DSL.name("race_proficiency_race_stats_id"), RaceProficiency.RACE_PROFICIENCY, new OrderField[] { RaceProficiency.RACE_PROFICIENCY.RACE_STATS_ID }, false);
+    public static final Index RACE_ROOM_ID = Internal.createIndex(DSL.name("race_room_id"), Race.RACE, new OrderField[] { Race.RACE.ROOM_ID }, false);
+    public static final Index RACE_TRAIT_RACE_STATS_ID = Internal.createIndex(DSL.name("race_trait_race_stats_id"), RaceTrait.RACE_TRAIT, new OrderField[] { RaceTrait.RACE_TRAIT.RACE_STATS_ID }, false);
+    public static final Index SKILL_DEPEND_ON_ABILITY_ID = Internal.createIndex(DSL.name("skill_depend_on_ability_id"), Skill.SKILL, new OrderField[] { Skill.SKILL.DEPEND_ON_ABILITY_ID }, false);
 }
