@@ -21,13 +21,13 @@ public class SkillRepository {
         return Objects.requireNonNull(dsl.selectFrom(Skill.SKILL)
                         .where(Skill.SKILL.ability().ROOM_ID.eq(roomId))
                         .fetch())
-                .map(roomsRecord -> roomsRecord.into(SkillDto.class));
+                .map(skillRecord -> skillRecord.into(SkillDto.class));
     }
 
     public List<SkillDto> getFull5eForRoom() {
         return Objects.requireNonNull(dsl.selectFrom(Default_5eSkill.DEFAULT_5E_SKILL)
                         .fetch())
-                .map(roomsRecord -> roomsRecord.into(SkillDto.class));
+                .map(skillRecord -> skillRecord.into(SkillDto.class));
     }
 
     public Optional<SkillDto> getByRoomIdAndCode(UUID roomId, String code) {
@@ -35,21 +35,21 @@ public class SkillRepository {
                         .where(Skill.SKILL.ability().ROOM_ID.eq(roomId))
                         .and(Skill.SKILL.CODE.eq(code))
                         .fetchOptional())
-                .map(roomsRecord -> roomsRecord.into(SkillDto.class));
+                .map(skillRecord -> skillRecord.into(SkillDto.class));
     }
 
     public Optional<SkillDto> get5eByCode(String code) {
         return Objects.requireNonNull(dsl.selectFrom(Default_5eSkill.DEFAULT_5E_SKILL)
                         .where(Default_5eSkill.DEFAULT_5E_SKILL.CODE.eq(code))
                         .fetchOptional())
-                .map(roomsRecord -> roomsRecord.into(SkillDto.class));
+                .map(skillRecord -> skillRecord.into(SkillDto.class));
     }
 
     public List<SkillDto> get5eByCodes(List<String> availableSkillCodes) {
         return Objects.requireNonNull(dsl.selectFrom(Default_5eSkill.DEFAULT_5E_SKILL)
                         .where(Default_5eSkill.DEFAULT_5E_SKILL.CODE.in(availableSkillCodes))
                         .fetch())
-                .map(roomsRecord -> roomsRecord.into(SkillDto.class));
+                .map(skillRecord -> skillRecord.into(SkillDto.class));
     }
 
     public List<SkillDto> getByRoomAndCodes(UUID roomId, List<String> availableSkillCodes) {
@@ -57,6 +57,20 @@ public class SkillRepository {
                         .where(Skill.SKILL.ability().ROOM_ID.eq(roomId))
                         .and(Skill.SKILL.CODE.in(availableSkillCodes))
                         .fetch())
-                .map(roomsRecord -> roomsRecord.into(SkillDto.class));
+                .map(skillRecord -> skillRecord.into(SkillDto.class));
+    }
+
+    public List<SkillDto> get5eByAbilityIdIn(List<UUID> abilityIds) {
+        return dsl.selectFrom(Default_5eSkill.DEFAULT_5E_SKILL)
+                .where(Default_5eSkill.DEFAULT_5E_SKILL.DEPEND_ON_ABILITY.in(abilityIds))
+                .fetch()
+                .map(skillRecord -> skillRecord.into(SkillDto.class));
+    }
+
+    public List<SkillDto> getByAbilityIdIn(List<UUID> abilityIds) {
+        return dsl.selectFrom(Skill.SKILL)
+                .where(Skill.SKILL.DEPEND_ON_ABILITY_ID.in(abilityIds))
+                .fetch()
+                .map(skillRecord -> skillRecord.into(SkillDto.class));
     }
 }

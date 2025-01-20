@@ -1,8 +1,8 @@
 package com.jiubredeemer.rulebook.domain.ability.controller;
 
 import com.jiubredeemer.rulebook.domain.ability.dto.AbilityDto;
-import com.jiubredeemer.rulebook.domain.ability.dto.request.AbilityByRoomAndCodeRequest;
 import com.jiubredeemer.rulebook.domain.ability.dto.request.AbilitiesByRoomRequest;
+import com.jiubredeemer.rulebook.domain.ability.dto.request.AbilityByRoomAndCodeRequest;
 import com.jiubredeemer.rulebook.domain.ability.service.AbilityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
