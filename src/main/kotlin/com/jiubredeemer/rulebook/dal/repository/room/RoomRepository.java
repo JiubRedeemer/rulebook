@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,15 +26,15 @@ public class RoomRepository {
     }
 
     public Optional<RoomDto> getRoomByRoomId(UUID roomId) {
-        return Objects.requireNonNull(dsl.selectFrom(Room.ROOM)
+        return dsl.selectFrom(Room.ROOM)
                 .where(Room.ROOM.ROOM_ID.eq(roomId))
-                .fetchOptional()).map(roomsRecord -> roomsRecord.into(RoomDto.class));
+                .fetchOptional().map(roomsRecord -> roomsRecord.into(RoomDto.class));
     }
 
     public Optional<RoomRecord> getRoomsRecordByRoomId(UUID roomId) {
-        return Objects.requireNonNull(dsl.selectFrom(Room.ROOM)
+        return dsl.selectFrom(Room.ROOM)
                 .where(Room.ROOM.ROOM_ID.eq(roomId))
-                .fetchOptional());
+                .fetchOptional();
     }
 
     public void deleteById(UUID roomId) {

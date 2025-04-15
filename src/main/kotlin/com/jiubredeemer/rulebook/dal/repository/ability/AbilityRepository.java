@@ -15,23 +15,23 @@ public class AbilityRepository {
     private final DSLContext dsl;
 
     public Optional<AbilityDto> getByRoomIdAndCode(UUID roomId, String code) {
-        return Objects.requireNonNull(dsl.selectFrom(Ability.ABILITY)
+        return dsl.selectFrom(Ability.ABILITY)
                         .where(Ability.ABILITY.ROOM_ID.eq(roomId).and(Ability.ABILITY.CODE.eq(code)))
-                        .fetchOptional())
+                        .fetchOptional()
                 .map(abilitiesRecord -> abilitiesRecord.into(AbilityDto.class));
     }
 
     public Optional<AbilityDto> get5eByCode(String code) {
-        return Objects.requireNonNull(dsl.selectFrom(Default_5eAbility.DEFAULT_5E_ABILITY)
+        return dsl.selectFrom(Default_5eAbility.DEFAULT_5E_ABILITY)
                         .where(Default_5eAbility.DEFAULT_5E_ABILITY.CODE.eq(code))
-                        .fetchOptional())
+                        .fetchOptional()
                 .map(abilitiesRecord -> abilitiesRecord.into(AbilityDto.class));
     }
 
     public Optional<AbilityDto> get5eAbilityByCode(String code) {
-        return Objects.requireNonNull(dsl.selectFrom(Default_5eAbility.DEFAULT_5E_ABILITY)
+        return dsl.selectFrom(Default_5eAbility.DEFAULT_5E_ABILITY)
                         .where(Default_5eAbility.DEFAULT_5E_ABILITY.CODE.eq(code))
-                        .fetchOptional())
+                        .fetchOptional()
                 .map(abilitiesRecord -> abilitiesRecord.into(AbilityDto.class));
     }
 

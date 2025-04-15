@@ -31,17 +31,17 @@ public class SkillRepository {
     }
 
     public Optional<SkillDto> getByRoomIdAndCode(UUID roomId, String code) {
-        return Objects.requireNonNull(dsl.selectFrom(Skill.SKILL)
+        return dsl.selectFrom(Skill.SKILL)
                         .where(Skill.SKILL.ability().ROOM_ID.eq(roomId))
                         .and(Skill.SKILL.CODE.eq(code))
-                        .fetchOptional())
+                        .fetchOptional()
                 .map(skillRecord -> skillRecord.into(SkillDto.class));
     }
 
     public Optional<SkillDto> get5eByCode(String code) {
-        return Objects.requireNonNull(dsl.selectFrom(Default_5eSkill.DEFAULT_5E_SKILL)
+        return dsl.selectFrom(Default_5eSkill.DEFAULT_5E_SKILL)
                         .where(Default_5eSkill.DEFAULT_5E_SKILL.CODE.eq(code))
-                        .fetchOptional())
+                        .fetchOptional()
                 .map(skillRecord -> skillRecord.into(SkillDto.class));
     }
 
