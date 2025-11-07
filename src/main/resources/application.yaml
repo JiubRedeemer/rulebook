@@ -20,4 +20,4 @@ jooq:
       with-includes: .*
     target:
       package-name: com.jiubredeemer.rulebook.dal.entity
-      directory: G:/Work/Pets/ProjectD/rulebook/src/main/kotlin
+      directory: D:/Work/Pets/ProjectD/rulebook/src/main/kotlin
