@@ -11,5 +11,6 @@
     <include file="002-PRO-24-init-5e-abilities.xml" relativeToChangelogFile="true"/>
     <include file="003-PRO-24-init-5e-race.xml" relativeToChangelogFile="true"/>
     <include file="004-PRO-24-init-5e-class.sql" relativeToChangelogFile="true"/>
+    <include file="005-PRO-61-fix-hp-dice.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
