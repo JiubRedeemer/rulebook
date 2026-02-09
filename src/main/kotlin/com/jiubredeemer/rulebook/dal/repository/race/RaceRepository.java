@@ -2,11 +2,16 @@ package com.jiubredeemer.rulebook.dal.repository.race;
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eRace;
 import com.jiubredeemer.rulebook.dal.entity.tables.Race;
+import com.jiubredeemer.rulebook.dal.mapper.race.Default2024RaceMapper;
 import com.jiubredeemer.rulebook.dal.mapper.race.Default5eRaceMapper;
 import com.jiubredeemer.rulebook.dal.mapper.race.RaceMapper;
 import com.jiubredeemer.rulebook.domain.race.dto.RaceDto;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
+import org.jooq.Field;
+import org.jooq.Record;
+import org.jooq.Table;
+import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,9 +21,13 @@ import java.util.UUID;
 @Repository
 @RequiredArgsConstructor
 public class RaceRepository {
+    private static final Table<Record> DEFAULT_2024_RACE = DSL.table(DSL.name("rules", "default_2024_race"));
+    private static final Field<String> DEFAULT_2024_RACE_CODE = DSL.field(DSL.name("code"), String.class);
+
     private final DSLContext dsl;
     private final RaceMapper raceMapper;
     private final Default5eRaceMapper default5eRaceMapper;
+    private final Default2024RaceMapper default2024RaceMapper;
 
     public List<RaceDto> getFullRacesForRoom(UUID roomId) {
         return dsl.selectFrom(Race.RACE)
@@ -33,11 +42,24 @@ public class RaceRepository {
                 .map(default5eRaceMapper);
     }
 
+    public List<RaceDto> getFull2024RacesForRoom() {
+        return dsl.selectFrom(DEFAULT_2024_RACE)
+                .fetch()
+                .map(default2024RaceMapper);
+    }
+
     public Optional<RaceDto> getFull5eRaceByCode(String raceCode) {
         return dsl.selectFrom(Default_5eRace.DEFAULT_5E_RACE)
                 .where(Default_5eRace.DEFAULT_5E_RACE.CODE.eq(raceCode))
                 .fetchOptional()
                 .map(default5eRaceMapper);
+    }
+
+    public Optional<RaceDto> getFull2024RaceByCode(String raceCode) {
+        return dsl.selectFrom(DEFAULT_2024_RACE)
+                .where(DEFAULT_2024_RACE_CODE.eq(raceCode))
+                .fetchOptional()
+                .map(default2024RaceMapper);
     }
 
     public Optional<RaceDto> getFullRaceByCode(String raceCode, UUID roomId) {

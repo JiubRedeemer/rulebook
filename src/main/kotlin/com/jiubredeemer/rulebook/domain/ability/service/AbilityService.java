@@ -26,6 +26,9 @@ public class AbilityService {
             case DND5E -> Stream.of(abilityRepository.getFull5eAbilitiesForRoom())
                     .map(abilities -> abilityBuilder.enrichSkills(abilities, RuleTypeEnum.DND5E))
                     .findAny();
+            case DND2024 -> Stream.of(abilityRepository.getFull5eAbilitiesForRoom())
+                    .map(abilities -> abilityBuilder.enrichSkills(abilities, RuleTypeEnum.DND2024))
+                    .findAny();
             default -> Stream.of(abilityRepository.getFullAbilitiesForRoom(roomId))
                     .map(abilities -> abilityBuilder.enrichSkills(abilities, RuleTypeEnum.HOMEBREW))
                     .findAny();
@@ -36,6 +39,7 @@ public class AbilityService {
         final RoomDto roomDto = roomService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
             case DND5E -> abilityRepository.get5eByCode(code);
+            case DND2024 -> abilityRepository.get5eByCode(code);
             default -> abilityRepository.getByRoomIdAndCode(roomId, code);
         }).map(abilityDto -> {
             abilityDto.setRoomId(roomId);
@@ -46,6 +50,7 @@ public class AbilityService {
     public List<AbilityDto> fetchByIds(RoomDto roomDto, Set<UUID> abilityIds) {
         return (switch (roomDto.getRuleType()) {
             case DND5E -> abilityRepository.get5eByIds(abilityIds);
+            case DND2024 -> abilityRepository.get5eByIds(abilityIds);
             default -> abilityRepository.getByIds(abilityIds);
         }).stream().peek(abilityDto -> abilityDto.setRoomId(roomDto.getRoomId())).toList();
     }

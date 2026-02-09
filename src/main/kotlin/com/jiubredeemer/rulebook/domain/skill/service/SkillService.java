@@ -26,6 +26,7 @@ public class SkillService {
         final RoomDto roomDto = roomService.getById(roomId);
         return switch (roomDto.getRuleType()) {
             case DND5E -> skillRepository.getFull5eForRoom();
+            case DND2024 -> skillRepository.getFull5eForRoom();
             default -> skillRepository.getFullForRoom(roomId);
         };
     }
@@ -34,6 +35,7 @@ public class SkillService {
         final RoomDto roomDto = roomService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
             case DND5E -> skillRepository.get5eByCode(code);
+            case DND2024 -> skillRepository.get5eByCode(code);
             default -> skillRepository.getByRoomIdAndCode(roomId, code);
         }).orElseThrow();
     }
@@ -51,6 +53,9 @@ public class SkillService {
             case DND5E -> !availableSkillCodes.contains(ANY) ?
                     skillRepository.get5eByCodes(availableSkillCodes) :
                     skillRepository.getFull5eForRoom();
+            case DND2024 -> !availableSkillCodes.contains(ANY) ?
+                    skillRepository.get5eByCodes(availableSkillCodes) :
+                    skillRepository.getFull5eForRoom();
             default -> !availableSkillCodes.contains(ANY) ?
                     skillRepository.getByRoomAndCodes(roomId, availableSkillCodes) :
                     skillRepository.getFullForRoom(roomId);
@@ -60,6 +65,7 @@ public class SkillService {
     public List<SkillDto> findAllByAbilityIdIn(List<UUID> abilityIds, RuleTypeEnum ruleType) {
         return switch (ruleType) {
             case DND5E -> skillRepository.get5eByAbilityIdIn(abilityIds);
+            case DND2024 -> skillRepository.get5eByAbilityIdIn(abilityIds);
             default -> skillRepository.getByAbilityIdIn(abilityIds);
         };
     }

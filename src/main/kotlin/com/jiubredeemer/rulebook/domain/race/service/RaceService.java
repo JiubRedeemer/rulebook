@@ -21,6 +21,7 @@ public class RaceService {
         final RoomDto roomDto = roomService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
             case DND5E -> raceRepository.getFull5eRacesForRoom();
+            case DND2024 -> raceRepository.getFull2024RacesForRoom();
             default -> raceRepository.getFullRacesForRoom(roomId);
         }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }
@@ -29,6 +30,7 @@ public class RaceService {
         final RoomDto roomDto = roomService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
             case DND5E -> raceRepository.getFull5eRaceByCode(raceCode);
+            case DND2024 -> raceRepository.getFull2024RaceByCode(raceCode);
             default -> raceRepository.getFullRaceByCode(raceCode, roomId);
         }).map(raceDto -> {
             raceDto.setRoomId(roomId);

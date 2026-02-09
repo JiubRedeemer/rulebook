@@ -21,6 +21,7 @@ public class ClazzService {
         final RoomDto roomDto = roomService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
             case DND5E -> classRepository.getFull5eClassesForRoom();
+            case DND2024 -> classRepository.getFull2024ClassesForRoom();
             default -> classRepository.getFullClassesForRoom(roomId);
         }).stream().peek(classDto -> classDto.setRoomId(roomId)).toList();
     }
@@ -29,6 +30,7 @@ public class ClazzService {
         final RoomDto roomDto = roomService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
             case DND5E -> classRepository.getFull5eClassByCode(code);
+            case DND2024 -> classRepository.getFull2024ClassByCode(code);
             default -> classRepository.getFullClassByCode(roomId, code);
         }).map(classDto -> {
             classDto.setRoomId(roomId);
@@ -40,6 +42,7 @@ public class ClazzService {
         final RoomDto roomDto = roomService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
             case DND5E -> classRepository.getFull5eRaceByCode(code);
+            case DND2024 -> classRepository.getFull2024ClassByCode(code);
             default -> classRepository.getFullRaceByCode(code, roomId);
         }).map(classDto -> {
             classDto.setRoomId(roomId);
