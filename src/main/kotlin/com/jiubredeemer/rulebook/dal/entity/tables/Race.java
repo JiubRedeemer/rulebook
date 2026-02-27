@@ -90,6 +90,16 @@ public class Race extends TableImpl<RaceRecord> {
      */
     public final TableField<RaceRecord, UUID> RACE_STATS_ID = createField(DSL.name("race_stats_id"), SQLDataType.UUID.nullable(false), this, "");
 
+    /**
+     * The column <code>rules.race.img_url</code>.
+     */
+    public final TableField<RaceRecord, String> IMG_URL = createField(DSL.name("img_url"), SQLDataType.VARCHAR, this, "");
+
+    /**
+     * The column <code>rules.race.species_code</code>.
+     */
+    public final TableField<RaceRecord, String> SPECIES_CODE = createField(DSL.name("species_code"), SQLDataType.VARCHAR, this, "");
+
     private Race(Name alias, Table<RaceRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }

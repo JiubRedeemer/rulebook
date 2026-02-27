@@ -6,6 +6,7 @@ package com.jiubredeemer.rulebook.dal.entity.tables;
 
 import com.jiubredeemer.rulebook.dal.entity.Keys;
 import com.jiubredeemer.rulebook.dal.entity.Rules;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Race.Default_2024RacePath;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eRace.Default_5eRacePath;
 import com.jiubredeemer.rulebook.dal.entity.tables.Race.RacePath;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiency.RaceProficiencyPath;
@@ -159,6 +160,19 @@ public class RaceStats extends TableImpl<RaceStatsRecord> {
     @Override
     public UniqueKey<RaceStatsRecord> getPrimaryKey() {
         return Keys.RACE_STATS_PKEY;
+    }
+
+    private transient Default_2024RacePath _default_2024Race;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>rules.default_2024_race</code> table
+     */
+    public Default_2024RacePath default_2024Race() {
+        if (_default_2024Race == null)
+            _default_2024Race = new Default_2024RacePath(this, null, Keys.DEFAULT_2024_RACE__FKDEFAULT_2024_RACE_STATS.getInverseKey());
+
+        return _default_2024Race;
     }
 
     private transient Default_5eRacePath _default_5eRace;

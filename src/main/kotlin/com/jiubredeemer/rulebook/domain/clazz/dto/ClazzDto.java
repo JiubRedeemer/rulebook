@@ -11,5 +11,7 @@ public class ClazzDto {
     private String name;
     private String description;
     private String code;
+    private String groupCode;
+    private String imgUrl;
     private ClazzStatsDto stats;
 }

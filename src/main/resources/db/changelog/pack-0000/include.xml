@@ -14,5 +14,16 @@
     <include file="005-PRO-61-fix-hp-dice.xml" relativeToChangelogFile="true"/>
     <include file="006-PRO-80-init-2024-data.sql" relativeToChangelogFile="true"/>
     <include file="007-PRO-80-update-2024-classes.sql" relativeToChangelogFile="true"/>
+    <include file="008-PRO-80-update-2024-races.sql" relativeToChangelogFile="true"/>
+    <include file="009-PRO-80-update-2024-classes-from-site.sql" relativeToChangelogFile="true"/>
+    <include file="010-PRO-80-insert-2024-subclasses-as-classes.sql" relativeToChangelogFile="true"/>
+    <include file="011-PRO-80-insert-2024-lineages-as-races.sql" relativeToChangelogFile="true"/>
+    <include file="012-PRO-80-add-images-to-classes-and-races.sql" relativeToChangelogFile="true"/>
+    <include file="013-PRO-80-add-default5e-img-urls.sql" relativeToChangelogFile="true"/>
+    <include file="014-PRO-80-add-species-code-for-races.sql" relativeToChangelogFile="true"/>
+    <include file="015-PRO-80-add-group-code-for-classes.sql" relativeToChangelogFile="true"/>
+    <include file="016-PRO-80-fix-grouping-for-2024-subclasses.sql" relativeToChangelogFile="true"/>
+    <include file="017-PRO-80-normalize-class-grouping-by-base.sql" relativeToChangelogFile="true"/>
+    <include file="018-PRO-80-force-normalize-class-groups.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

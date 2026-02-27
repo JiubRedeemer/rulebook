@@ -82,6 +82,16 @@ public class Default_5eClazz extends TableImpl<Default_5eClazzRecord> {
      */
     public final TableField<Default_5eClazzRecord, UUID> CLAZZ_STATS_ID = createField(DSL.name("clazz_stats_id"), SQLDataType.UUID.nullable(false), this, "");
 
+    /**
+     * The column <code>rules.default_5e_clazz.img_url</code>.
+     */
+    public final TableField<Default_5eClazzRecord, String> IMG_URL = createField(DSL.name("img_url"), SQLDataType.VARCHAR, this, "");
+
+    /**
+     * The column <code>rules.default_5e_clazz.group_code</code>.
+     */
+    public final TableField<Default_5eClazzRecord, String> GROUP_CODE = createField(DSL.name("group_code"), SQLDataType.VARCHAR, this, "");
+
     private Default_5eClazz(Name alias, Table<Default_5eClazzRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }

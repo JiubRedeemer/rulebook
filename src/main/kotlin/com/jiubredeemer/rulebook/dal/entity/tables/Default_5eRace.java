@@ -82,6 +82,16 @@ public class Default_5eRace extends TableImpl<Default_5eRaceRecord> {
      */
     public final TableField<Default_5eRaceRecord, UUID> RACE_STATS_ID = createField(DSL.name("race_stats_id"), SQLDataType.UUID.nullable(false), this, "");
 
+    /**
+     * The column <code>rules.default_5e_race.img_url</code>.
+     */
+    public final TableField<Default_5eRaceRecord, String> IMG_URL = createField(DSL.name("img_url"), SQLDataType.VARCHAR, this, "");
+
+    /**
+     * The column <code>rules.default_5e_race.species_code</code>.
+     */
+    public final TableField<Default_5eRaceRecord, String> SPECIES_CODE = createField(DSL.name("species_code"), SQLDataType.VARCHAR, this, "");
+
     private Default_5eRace(Name alias, Table<Default_5eRaceRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }

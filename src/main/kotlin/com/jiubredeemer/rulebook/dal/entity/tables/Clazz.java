@@ -90,6 +90,16 @@ public class Clazz extends TableImpl<ClazzRecord> {
      */
     public final TableField<ClazzRecord, UUID> CLAZZ_STATS_ID = createField(DSL.name("clazz_stats_id"), SQLDataType.UUID.nullable(false), this, "");
 
+    /**
+     * The column <code>rules.clazz.img_url</code>.
+     */
+    public final TableField<ClazzRecord, String> IMG_URL = createField(DSL.name("img_url"), SQLDataType.VARCHAR, this, "");
+
+    /**
+     * The column <code>rules.clazz.group_code</code>.
+     */
+    public final TableField<ClazzRecord, String> GROUP_CODE = createField(DSL.name("group_code"), SQLDataType.VARCHAR, this, "");
+
     private Clazz(Name alias, Table<ClazzRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }
@@ -169,19 +179,7 @@ public class Clazz extends TableImpl<ClazzRecord> {
 
     @Override
     public List<ForeignKey<ClazzRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.CLAZZ__FKCLAZZ375368, Keys.CLAZZ__FKCLAZZ862752);
-    }
-
-    private transient ClazzStatsPath _clazzStats;
-
-    /**
-     * Get the implicit join path to the <code>rules.clazz_stats</code> table.
-     */
-    public ClazzStatsPath clazzStats() {
-        if (_clazzStats == null)
-            _clazzStats = new ClazzStatsPath(this, Keys.CLAZZ__FKCLAZZ375368, null);
-
-        return _clazzStats;
+        return Arrays.asList(Keys.CLAZZ__FKCLAZZ862752, Keys.CLAZZ__FKCLAZZ375368);
     }
 
     private transient RoomPath _room;
@@ -194,6 +192,18 @@ public class Clazz extends TableImpl<ClazzRecord> {
             _room = new RoomPath(this, Keys.CLAZZ__FKCLAZZ862752, null);
 
         return _room;
+    }
+
+    private transient ClazzStatsPath _clazzStats;
+
+    /**
+     * Get the implicit join path to the <code>rules.clazz_stats</code> table.
+     */
+    public ClazzStatsPath clazzStats() {
+        if (_clazzStats == null)
+            _clazzStats = new ClazzStatsPath(this, Keys.CLAZZ__FKCLAZZ375368, null);
+
+        return _clazzStats;
     }
 
     @Override

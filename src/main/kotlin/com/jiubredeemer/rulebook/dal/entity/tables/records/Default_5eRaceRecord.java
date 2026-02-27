@@ -90,6 +90,34 @@ public class Default_5eRaceRecord extends UpdatableRecordImpl<Default_5eRaceReco
         return (UUID) get(4);
     }
 
+    /**
+     * Setter for <code>rules.default_5e_race.img_url</code>.
+     */
+    public void setImgUrl(String value) {
+        set(5, value);
+    }
+
+    /**
+     * Getter for <code>rules.default_5e_race.img_url</code>.
+     */
+    public String getImgUrl() {
+        return (String) get(5);
+    }
+
+    /**
+     * Setter for <code>rules.default_5e_race.species_code</code>.
+     */
+    public void setSpeciesCode(String value) {
+        set(6, value);
+    }
+
+    /**
+     * Getter for <code>rules.default_5e_race.species_code</code>.
+     */
+    public String getSpeciesCode() {
+        return (String) get(6);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -113,7 +141,7 @@ public class Default_5eRaceRecord extends UpdatableRecordImpl<Default_5eRaceReco
     /**
      * Create a detached, initialised Default_5eRaceRecord
      */
-    public Default_5eRaceRecord(UUID id, String name, String description, String code, UUID raceStatsId) {
+    public Default_5eRaceRecord(UUID id, String name, String description, String code, UUID raceStatsId, String imgUrl, String speciesCode) {
         super(Default_5eRace.DEFAULT_5E_RACE);
 
         setId(id);
@@ -121,6 +149,8 @@ public class Default_5eRaceRecord extends UpdatableRecordImpl<Default_5eRaceReco
         setDescription(description);
         setCode(code);
         setRaceStatsId(raceStatsId);
+        setImgUrl(imgUrl);
+        setSpeciesCode(speciesCode);
         resetChangedOnNotNull();
     }
 }
