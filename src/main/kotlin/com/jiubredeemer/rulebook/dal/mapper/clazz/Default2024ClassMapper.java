@@ -20,6 +20,7 @@ public class Default2024ClassMapper implements RecordMapper<Record, ClazzDto> {
     private static final Field<String> CODE = DSL.field(DSL.name("code"), String.class);
     private static final Field<String> GROUP_CODE = DSL.field(DSL.name("group_code"), String.class);
     private static final Field<UUID> CLAZZ_STATS_ID = DSL.field(DSL.name("clazz_stats_id"), UUID.class);
+    private static final Field<String> IMG_URL = DSL.field(DSL.name("img_url"), String.class);
 
     private final ClassStatsRepository classStatsRepository;
 
@@ -31,6 +32,7 @@ public class Default2024ClassMapper implements RecordMapper<Record, ClazzDto> {
         clazzDto.setDescription(record.get(DESCRIPTION));
         clazzDto.setCode(record.get(CODE));
         clazzDto.setGroupCode(record.get(GROUP_CODE));
+        clazzDto.setImgUrl(record.get(IMG_URL));
 
         UUID statsId = record.get(CLAZZ_STATS_ID);
         if (statsId != null) {
