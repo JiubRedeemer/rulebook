@@ -1,5 +1,5 @@
 # rulebook: Rule Book Service (Java 21, Kotlin)
-FROM maven:3-eclipse-temurin-25 AS build
+FROM maven:3-eclipse-temurin-21 AS build
 WORKDIR /app
 
 ENV MAVEN_OPTS="-Xmx512m"
