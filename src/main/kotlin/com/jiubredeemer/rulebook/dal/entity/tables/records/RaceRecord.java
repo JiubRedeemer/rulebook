@@ -104,6 +104,34 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> {
         return (UUID) get(5);
     }
 
+    /**
+     * Setter for <code>rules.race.img_url</code>.
+     */
+    public void setImgUrl(String value) {
+        set(6, value);
+    }
+
+    /**
+     * Getter for <code>rules.race.img_url</code>.
+     */
+    public String getImgUrl() {
+        return (String) get(6);
+    }
+
+    /**
+     * Setter for <code>rules.race.species_code</code>.
+     */
+    public void setSpeciesCode(String value) {
+        set(7, value);
+    }
+
+    /**
+     * Getter for <code>rules.race.species_code</code>.
+     */
+    public String getSpeciesCode() {
+        return (String) get(7);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -127,7 +155,7 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> {
     /**
      * Create a detached, initialised RaceRecord
      */
-    public RaceRecord(UUID id, UUID roomId, String name, String description, String code, UUID raceStatsId) {
+    public RaceRecord(UUID id, UUID roomId, String name, String description, String code, UUID raceStatsId, String imgUrl, String speciesCode) {
         super(Race.RACE);
 
         setId(id);
@@ -136,6 +164,8 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> {
         setDescription(description);
         setCode(code);
         setRaceStatsId(raceStatsId);
+        setImgUrl(imgUrl);
+        setSpeciesCode(speciesCode);
         resetChangedOnNotNull();
     }
 }

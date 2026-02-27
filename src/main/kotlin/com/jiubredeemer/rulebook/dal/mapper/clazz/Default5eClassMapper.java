@@ -16,6 +16,7 @@ public class Default5eClassMapper implements RecordMapper<Default_5eClazzRecord,
     @Override
     public ClazzDto map(Default_5eClazzRecord record) {
         ClazzDto clazzDto = record.into(ClazzDto.class);
+        clazzDto.setGroupCode(record.getCode());
         clazzDto.setStats(classStatsRepository.findById(record.getClazzStatsId()));
         return clazzDto;
     }

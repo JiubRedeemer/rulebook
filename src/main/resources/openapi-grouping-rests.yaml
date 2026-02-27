@@ -1,0 +1,269 @@
+openapi: 3.0.3
+info:
+  title: Rulebook Grouping API
+  version: "1.0.0"
+  description: OpenAPI-спецификация для REST-методов группировки видов/подвидов и классов/подклассов.
+
+paths:
+  /api/race-species:
+    post:
+      tags:
+        - Race Grouping
+      summary: Получение видов с подвидами для комнаты
+      operationId: getGroupedRacesForRoom
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoomIdRequestBody'
+      responses:
+        "200":
+          description: Список видов с подвидами
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RaceGroupDto'
+        "400":
+          description: Некорректный идентификатор комнаты
+        "404":
+          description: Комната не найдена
+
+  /api/class-groups:
+    post:
+      tags:
+        - Class Grouping
+      summary: Получение классов с подклассами для комнаты
+      operationId: getGroupedClassesForRoom
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClassesByRoomRequest'
+      responses:
+        "200":
+          description: Список классов с подклассами
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClazzGroupDto'
+        "400":
+          description: Некорректный идентификатор комнаты
+        "404":
+          description: Комната не найдена
+
+components:
+  schemas:
+    RoomIdRequestBody:
+      type: object
+      properties:
+        roomId:
+          type: string
+          format: uuid
+      required:
+        - roomId
+
+    ClassesByRoomRequest:
+      type: object
+      properties:
+        roomId:
+          type: string
+          format: uuid
+      required:
+        - roomId
+
+    RaceGroupDto:
+      type: object
+      properties:
+        species:
+          $ref: '#/components/schemas/RaceDto'
+        subspecies:
+          type: array
+          items:
+            $ref: '#/components/schemas/RaceDto'
+
+    ClazzGroupDto:
+      type: object
+      properties:
+        clazz:
+          $ref: '#/components/schemas/ClazzDto'
+        subClazzes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClazzDto'
+
+    RaceDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        roomId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        speciesCode:
+          type: string
+        imgUrl:
+          type: string
+        stats:
+          $ref: '#/components/schemas/RaceStatsDto'
+
+    ClazzDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        roomId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        code:
+          type: string
+        groupCode:
+          type: string
+        imgUrl:
+          type: string
+        stats:
+          $ref: '#/components/schemas/ClazzStatsDto'
+
+    RaceStatsDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        maxAge:
+          type: integer
+          format: int32
+        maxHeight:
+          type: integer
+          format: int32
+        maxWeight:
+          type: integer
+          format: int32
+        baseSpeed:
+          type: integer
+          format: int32
+        abilityModifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AbilityModifierDto'
+        traits:
+          type: array
+          items:
+            $ref: '#/components/schemas/RaceTraitDto'
+        proficiencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/RaceProficiencyDto'
+
+    ClazzStatsDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        hpDice:
+          type: string
+        savingThrowsAbilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/AbilityShortDto'
+        availableSkills:
+          type: array
+          items:
+            $ref: '#/components/schemas/AvailableSkillDto'
+
+    AbilityModifierDto:
+      type: object
+      properties:
+        code:
+          type: string
+        value:
+          type: integer
+          format: int32
+        count:
+          type: integer
+          format: int32
+
+    RaceTraitDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        raceStatsId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        code:
+          type: string
+        description:
+          type: string
+
+    RaceProficiencyDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        raceStatsId:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/RaceProficiencyTypeEnum'
+        code:
+          type: string
+
+    AbilityShortDto:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+
+    AvailableSkillDto:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/SkillTypeEnum'
+        count:
+          type: integer
+          format: int32
+        of:
+          type: array
+          items:
+            type: string
+
+    SkillTypeEnum:
+      type: string
+      enum:
+        - ABILITY
+        - WEAPON
+        - ARMOR
+        - INSTRUMENT
+
+    RaceProficiencyTypeEnum:
+      type: string
+      enum:
+        - WEAPON
+        - ARMOR
+        - INSTRUMENT
+        - ABILITY

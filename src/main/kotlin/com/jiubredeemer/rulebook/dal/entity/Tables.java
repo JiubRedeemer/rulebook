@@ -7,6 +7,8 @@ package com.jiubredeemer.rulebook.dal.entity;
 import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClazzStats;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Clazz;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Race;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eAbility;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eClazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eRace;
@@ -39,6 +41,16 @@ public class Tables {
      * The table <code>rules.clazz_stats</code>.
      */
     public static final ClazzStats CLAZZ_STATS = ClazzStats.CLAZZ_STATS;
+
+    /**
+     * The table <code>rules.default_2024_clazz</code>.
+     */
+    public static final Default_2024Clazz DEFAULT_2024_CLAZZ = Default_2024Clazz.DEFAULT_2024_CLAZZ;
+
+    /**
+     * The table <code>rules.default_2024_race</code>.
+     */
+    public static final Default_2024Race DEFAULT_2024_RACE = Default_2024Race.DEFAULT_2024_RACE;
 
     /**
      * Характеристики существ по дефолтным правилам ДнД 5е

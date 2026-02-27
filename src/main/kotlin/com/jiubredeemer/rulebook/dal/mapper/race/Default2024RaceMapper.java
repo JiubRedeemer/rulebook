@@ -18,6 +18,7 @@ public class Default2024RaceMapper implements RecordMapper<Record, RaceDto> {
     private static final Field<String> NAME = DSL.field(DSL.name("name"), String.class);
     private static final Field<String> DESCRIPTION = DSL.field(DSL.name("description"), String.class);
     private static final Field<String> CODE = DSL.field(DSL.name("code"), String.class);
+    private static final Field<String> SPECIES_CODE = DSL.field(DSL.name("species_code"), String.class);
     private static final Field<UUID> RACE_STATS_ID = DSL.field(DSL.name("race_stats_id"), UUID.class);
 
     private final RaceStatsRepository raceStatsRepository;
@@ -29,6 +30,7 @@ public class Default2024RaceMapper implements RecordMapper<Record, RaceDto> {
         raceDto.setName(record.get(NAME));
         raceDto.setDescription(record.get(DESCRIPTION));
         raceDto.setCode(record.get(CODE));
+        raceDto.setSpeciesCode(record.get(SPECIES_CODE));
 
         UUID statsId = record.get(RACE_STATS_ID);
         if (statsId != null) {

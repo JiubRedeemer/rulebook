@@ -7,6 +7,7 @@ package com.jiubredeemer.rulebook.dal.entity.tables;
 import com.jiubredeemer.rulebook.dal.entity.Keys;
 import com.jiubredeemer.rulebook.dal.entity.Rules;
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz.ClazzPath;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Clazz.Default_2024ClazzPath;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eClazz.Default_5eClazzPath;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.ClazzStatsRecord;
 
@@ -166,6 +167,19 @@ public class ClazzStats extends TableImpl<ClazzStatsRecord> {
             _clazz = new ClazzPath(this, null, Keys.CLAZZ__FKCLAZZ375368.getInverseKey());
 
         return _clazz;
+    }
+
+    private transient Default_2024ClazzPath _default_2024Clazz;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>rules.default_2024_clazz</code> table
+     */
+    public Default_2024ClazzPath default_2024Clazz() {
+        if (_default_2024Clazz == null)
+            _default_2024Clazz = new Default_2024ClazzPath(this, null, Keys.DEFAULT_2024_CLAZZ__FKDEFAULT_2024_CLAZZ_STATS.getInverseKey());
+
+        return _default_2024Clazz;
     }
 
     private transient Default_5eClazzPath _default_5eClazz;
