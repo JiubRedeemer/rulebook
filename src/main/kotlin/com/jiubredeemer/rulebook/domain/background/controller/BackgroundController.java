@@ -51,8 +51,16 @@ public class BackgroundController {
         return backgroundService.fetchByCode(code, request.getRoomId());
     }
 
+    @Operation(summary = "Создание предыстории",
+            description = "Создаёт новую предысторию (D&D 2024)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Предыстория успешно создана"),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
+    })
     @PutMapping
-    public BackgroundDto createBackground(@RequestBody BackgroundDto backgroundDto) throws JsonProcessingException {
+    public BackgroundDto createBackground(
+            @Parameter(description = "Данные предыстории для создания", required = true)
+            @RequestBody BackgroundDto backgroundDto) throws JsonProcessingException {
         return backgroundService.create(backgroundDto);
     }
 }

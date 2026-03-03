@@ -81,8 +81,16 @@ public class RaceController {
         return raceService.fetchSubspeciesByCode(code, request.getRoomId());
     }
 
+    @Operation(summary = "Создание расы",
+            description = "Создаёт новую расу (вид или подвид)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Раса успешно создана"),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
+    })
     @PutMapping()
-    public RaceDto createRace(@RequestBody RaceDto raceDto) throws JsonProcessingException {
+    public RaceDto createRace(
+            @Parameter(description = "Данные расы для создания", required = true)
+            @RequestBody RaceDto raceDto) throws JsonProcessingException {
         return raceService.createRace(raceDto);
     }
 }

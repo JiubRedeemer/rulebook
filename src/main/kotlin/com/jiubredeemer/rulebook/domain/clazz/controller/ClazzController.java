@@ -80,8 +80,16 @@ public class ClazzController {
         return clazzService.fetchByCode(request.getRoomId(), code);
     }
 
+    @Operation(summary = "Создание класса",
+            description = "Создаёт новый класс или подкласс")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Класс успешно создан"),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
+    })
     @PutMapping()
-    public ClazzDto create(@RequestBody ClazzDto clazzDto) throws JsonProcessingException {
+    public ClazzDto create(
+            @Parameter(description = "Данные класса для создания", required = true)
+            @RequestBody ClazzDto clazzDto) throws JsonProcessingException {
         return clazzService.createClass(clazzDto);
     }
 }
