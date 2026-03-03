@@ -7,6 +7,7 @@ import com.jiubredeemer.rulebook.domain.race.dto.RaceDto;
 import com.jiubredeemer.rulebook.domain.race.dto.RaceGroupDto;
 import com.jiubredeemer.rulebook.domain.race.dto.RaceStatsDto;
 import com.jiubredeemer.rulebook.domain.room.dto.RoomDto;
+import com.jiubredeemer.rulebook.domain.room.dto.RuleTypeEnum;
 import com.jiubredeemer.rulebook.domain.room.service.RoomService;
 import com.jiubredeemer.rulebook.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,20 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class RaceService {
+    public static final UUID ZERO_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
     private final RaceRepository raceRepository;
     private final RaceStatsRepository raceStatsRepository;
     private final RoomService roomService;
 
-    public List<RaceDto> fetchAvailableRacesForRoom(UUID roomId) {
-        final RoomDto roomDto = roomService.getById(roomId);
+    public List<RaceDto> fetchAvailableRacesForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
+        RoomDto roomDto;
+        if (roomId.equals(ZERO_UUID)) {
+            roomDto = new RoomDto();
+            roomDto.setRuleType(forceRuleType);
+            roomDto.setBaseRuleType(forceRuleType);
+        } else {
+            roomDto = roomService.getById(roomId);
+        }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> raceRepository.getFull5eRacesForRoom();
             case DND2024 -> raceRepository.getFull2024RacesForRoom();
@@ -33,8 +42,15 @@ public class RaceService {
         }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }
 
-    public List<RaceDto> fetchAvailableRootRacesForRoom(UUID roomId) {
-        final RoomDto roomDto = roomService.getById(roomId);
+    public List<RaceDto> fetchAvailableRootRacesForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
+        RoomDto roomDto;
+        if (roomId.equals(ZERO_UUID)) {
+            roomDto = new RoomDto();
+            roomDto.setRuleType(forceRuleType);
+            roomDto.setBaseRuleType(forceRuleType);
+        } else {
+            roomDto = roomService.getById(roomId);
+        }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> raceRepository.getFull5eRootRacesForRoom();
             case DND2024 -> raceRepository.getFull2024RootRacesForRoom();
@@ -54,8 +70,15 @@ public class RaceService {
         }).orElseThrow(() -> new NotFoundException("Race not found by code"));
     }
 
-    public List<RaceDto> fetchSubspeciesByCode(String raceCode, UUID roomId) {
-        final RoomDto roomDto = roomService.getById(roomId);
+    public List<RaceDto> fetchSubspeciesByCode(String raceCode, UUID roomId, RuleTypeEnum forceRuleType) {
+        RoomDto roomDto;
+        if (roomId.equals(ZERO_UUID)) {
+            roomDto = new RoomDto();
+            roomDto.setRuleType(forceRuleType);
+            roomDto.setBaseRuleType(forceRuleType);
+        } else {
+            roomDto = roomService.getById(roomId);
+        }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> raceRepository.getFull5eRaceSubspeciesByCode(raceCode);
             case DND2024 -> raceRepository.getFull2024RaceSubspeciesByCode(raceCode);
@@ -63,8 +86,16 @@ public class RaceService {
         }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }
 
+    public List<RaceGroupDto> fetchGroupedRacesForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
+        return fetchAvailableRacesForRoom(roomId, forceRuleType).stream()
+                .collect(java.util.stream.Collectors.groupingBy(this::resolveGroupingKey))
+                .values().stream()
+                .map(this::toRaceGroup)
+                .toList();
+    }
+
     public List<RaceGroupDto> fetchGroupedRacesForRoom(UUID roomId) {
-        return fetchAvailableRacesForRoom(roomId).stream()
+        return fetchAvailableRacesForRoom(roomId, null).stream()
                 .collect(java.util.stream.Collectors.groupingBy(this::resolveGroupingKey))
                 .values().stream()
                 .map(this::toRaceGroup)
@@ -99,7 +130,7 @@ public class RaceService {
         raceDto.setId(UUID.randomUUID());
         raceDto.setCode(raceDto.getId().toString());
         raceDto.setSpeciesCode(raceDto.getSpeciesCode() == null ? raceDto.getCode() : raceDto.getSpeciesCode());
-        raceDto.setImgUrl(raceDto.getId().toString());
+        raceDto.setImgUrl(raceDto.getImgUrl() == null ? raceDto.getId().toString() : raceDto.getImgUrl());
         raceDto.getStats().setId(UUID.randomUUID());
         final RaceStatsDto raceStatsDto = raceStatsRepository.create(raceDto.getStats());
         raceDto.setStats(raceStatsDto);

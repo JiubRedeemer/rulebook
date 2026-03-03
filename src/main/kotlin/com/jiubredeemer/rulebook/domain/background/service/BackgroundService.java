@@ -19,18 +19,32 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class BackgroundService {
+    public static final UUID ZERO_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
     private final BackgroundRepository backgroundRepository;
     private final BackgroundStatsRepository backgroundStatsRepository;
     private final RoomService roomService;
 
-    public List<BackgroundDto> fetchAvailableBackgroundsForRoom(UUID roomId) {
-        RoomDto roomDto = roomService.getById(roomId);
-        if (roomDto.getRuleType() != RuleTypeEnum.DND2024) {
+    public List<BackgroundDto> fetchAvailableBackgroundsForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
+        RoomDto roomDto;
+        if (roomId.equals(ZERO_UUID)) {
+            roomDto = new RoomDto();
+            roomDto.setRuleType(forceRuleType);
+            roomDto.setBaseRuleType(forceRuleType);
+        } else {
+            roomDto = roomService.getById(roomId);
+        }
+        if (roomDto.getRuleType() != RuleTypeEnum.DND2024 && roomDto.getBaseRuleType() != RuleTypeEnum.DND2024) {
             return List.of();
         }
-        List<BackgroundDto> list = new ArrayList<>(backgroundRepository.getFull2024BackgroundsForRoom());
-        list.addAll(backgroundRepository.getFullEberronBackgroundsForRoom());
-        return list.stream().peek(dto -> dto.setRoomId(roomId)).toList();
+        if (roomDto.getRuleType().equals(RuleTypeEnum.DND2024)) {
+            List<BackgroundDto> list = new ArrayList<>(backgroundRepository.getFull2024BackgroundsForRoom());
+            list.addAll(backgroundRepository.getFullEberronBackgroundsForRoom());
+            return list.stream().peek(dto -> dto.setRoomId(roomId)).toList();
+        } else {
+            List<BackgroundDto> list = new ArrayList<>(backgroundRepository.getFullBackgroundsForRoom(roomId));
+            return list.stream().peek(dto -> dto.setRoomId(roomId)).toList();
+        }
     }
 
     public BackgroundDto fetchByCode(String code, UUID roomId) {
@@ -50,7 +64,7 @@ public class BackgroundService {
     public BackgroundDto create(BackgroundDto backgroundDto) throws JsonProcessingException {
         RoomDto roomDto = roomService.getById(backgroundDto.getRoomId());
         backgroundDto.setId(UUID.randomUUID());
-        backgroundDto.setImgUrl(backgroundDto.getId().toString());
+        backgroundDto.setImgUrl(backgroundDto.getImgUrl() == null ? backgroundDto.getId().toString() : backgroundDto.getImgUrl());
         backgroundDto.setCode(backgroundDto.getId().toString());
         backgroundDto.getStats().setId(UUID.randomUUID());
         final BackgroundStatsDto backgroundStatsDto = backgroundStatsRepository.create(backgroundDto.getStats());

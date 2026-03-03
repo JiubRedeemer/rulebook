@@ -33,7 +33,7 @@ public class RaceController {
     public List<RaceDto> getRacesForRoom(
             @Parameter(description = "Идентификатор комнаты, для которой необходимо получить список рас", required = true)
             @RequestBody RoomIdRequestBody request) {
-        return raceService.fetchAvailableRacesForRoom(request.getRoomId());
+        return raceService.fetchAvailableRacesForRoom(request.getRoomId(), request.getForceRuleType());
     }
 
     @Operation(summary = "Получение доступных корневых рас для комнаты",
@@ -47,7 +47,7 @@ public class RaceController {
     public List<RaceDto> getRootRacesForRoom(
             @Parameter(description = "Идентификатор комнаты, для которой необходимо получить список рас", required = true)
             @RequestBody RoomIdRequestBody request) {
-        return raceService.fetchAvailableRootRacesForRoom(request.getRoomId());
+        return raceService.fetchAvailableRootRacesForRoom(request.getRoomId(), request.getForceRuleType());
     }
 
 
@@ -78,7 +78,7 @@ public class RaceController {
             @Parameter(description = "Идентификатор комнаты, для которой необходимо получить подрасы", required = true)
             @RequestBody RoomIdRequestBody request,
             @PathVariable String code) {
-        return raceService.fetchSubspeciesByCode(code, request.getRoomId());
+        return raceService.fetchSubspeciesByCode(code, request.getRoomId(), request.getForceRuleType());
     }
 
     @Operation(summary = "Создание расы",

@@ -33,7 +33,7 @@ public class BackgroundController {
     public List<BackgroundDto> getBackgroundsForRoom(
             @Parameter(description = "Идентификатор комнаты", required = true)
             @RequestBody RoomIdRequestBody request) {
-        return backgroundService.fetchAvailableBackgroundsForRoom(request.getRoomId());
+        return backgroundService.fetchAvailableBackgroundsForRoom(request.getRoomId(), request.getForceRuleType());
     }
 
     @Operation(summary = "Получение предыстории по коду",

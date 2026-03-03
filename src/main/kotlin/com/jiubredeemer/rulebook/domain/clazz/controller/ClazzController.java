@@ -33,7 +33,7 @@ public class ClazzController {
     public List<ClazzDto> getClassesForRoom(
             @Parameter(description = "Идентификатор комнаты, для которой нужно получить список классов", required = true)
             @RequestBody ClassesByRoomRequest request) {
-        return clazzService.fetchAvailableClassesForRoom(request.getRoomId());
+        return clazzService.fetchAvailableClassesForRoom(request.getRoomId(), request.getForceRuleType());
     }
 
     @Operation(summary = "Получение доступных корневых классов для комнаты",
@@ -47,7 +47,7 @@ public class ClazzController {
     public List<ClazzDto> getRootClassesForRoom(
             @Parameter(description = "Идентификатор комнаты, для которой нужно получить список корневых классов", required = true)
             @RequestBody ClassesByRoomRequest request) {
-        return clazzService.fetchAvailableRootClassesForRoom(request.getRoomId());
+        return clazzService.fetchAvailableRootClassesForRoom(request.getRoomId(), request.getForceRuleType());
     }
 
     @Operation(summary = "Получение доступных подклассов для комнаты",
@@ -62,7 +62,7 @@ public class ClazzController {
             @Parameter(description = "Идентификатор комнаты, для которой нужно получить список подклассов", required = true)
             @RequestBody ClassesByRoomRequest request,
             @PathVariable String code) {
-        return clazzService.fetchAvailableSubClassesForRoom(request.getRoomId(), code);
+        return clazzService.fetchAvailableSubClassesForRoom(request.getRoomId(), code, request.getForceRuleType());
     }
 
     @Operation(summary = "Получение доступных классов для комнаты",

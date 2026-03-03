@@ -33,8 +33,9 @@ public class BackgroundRepository {
                 .map(default2024BackgroundMapper);
     }
 
-    public List<BackgroundDto> getFullBackgroundsForRoom() {
+    public List<BackgroundDto> getFullBackgroundsForRoom(UUID roomId) {
         return dsl.selectFrom(Background.BACKGROUND)
+                .where(Background.BACKGROUND.ROOMID.eq(roomId))
                 .fetch()
                 .map(backgroundMapper);
     }

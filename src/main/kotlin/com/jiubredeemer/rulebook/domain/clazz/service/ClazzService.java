@@ -7,6 +7,7 @@ import com.jiubredeemer.rulebook.domain.clazz.dto.ClazzDto;
 import com.jiubredeemer.rulebook.domain.clazz.dto.ClazzGroupDto;
 import com.jiubredeemer.rulebook.domain.clazz.dto.ClazzStatsDto;
 import com.jiubredeemer.rulebook.domain.room.dto.RoomDto;
+import com.jiubredeemer.rulebook.domain.room.dto.RuleTypeEnum;
 import com.jiubredeemer.rulebook.domain.room.service.RoomService;
 import com.jiubredeemer.rulebook.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +21,21 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class ClazzService {
+    public static final UUID ZERO_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
+
     private final ClassRepository classRepository;
     private final ClassStatsRepository classStatsRepository;
     private final RoomService roomService;
 
-    public List<ClazzDto> fetchAvailableClassesForRoom(UUID roomId) {
-        final RoomDto roomDto = roomService.getById(roomId);
+    public List<ClazzDto> fetchAvailableClassesForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
+        RoomDto roomDto;
+        if (roomId.equals(ZERO_UUID)) {
+            roomDto = new RoomDto();
+            roomDto.setRuleType(forceRuleType);
+            roomDto.setBaseRuleType(forceRuleType);
+        } else {
+            roomDto = roomService.getById(roomId);
+        }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> classRepository.getFull5eClassesForRoom();
             case DND2024 -> classRepository.getFull2024ClassesForRoom();
@@ -57,8 +67,16 @@ public class ClazzService {
         }).orElseThrow(() -> new NotFoundException("Class not found by code"));
     }
 
+    public List<ClazzGroupDto> fetchGroupedClassesForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
+        return fetchAvailableClassesForRoom(roomId, forceRuleType).stream()
+                .collect(java.util.stream.Collectors.groupingBy(this::resolveGroupingKey))
+                .values().stream()
+                .map(this::toClazzGroup)
+                .toList();
+    }
+
     public List<ClazzGroupDto> fetchGroupedClassesForRoom(UUID roomId) {
-        return fetchAvailableClassesForRoom(roomId).stream()
+        return fetchAvailableClassesForRoom(roomId, null).stream()
                 .collect(java.util.stream.Collectors.groupingBy(this::resolveGroupingKey))
                 .values().stream()
                 .map(this::toClazzGroup)
@@ -88,8 +106,15 @@ public class ClazzService {
         return group;
     }
 
-    public List<ClazzDto> fetchAvailableRootClassesForRoom(UUID roomId) {
-        final RoomDto roomDto = roomService.getById(roomId);
+    public List<ClazzDto> fetchAvailableRootClassesForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
+        RoomDto roomDto;
+        if (roomId.equals(ZERO_UUID)) {
+            roomDto = new RoomDto();
+            roomDto.setRuleType(forceRuleType);
+            roomDto.setBaseRuleType(forceRuleType);
+        } else {
+            roomDto = roomService.getById(roomId);
+        }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> classRepository.getFull5eRootClassesForRoom();
             case DND2024 -> classRepository.getFull2024RootClassesForRoom();
@@ -97,8 +122,15 @@ public class ClazzService {
         }).stream().peek(classDto -> classDto.setRoomId(roomId)).toList();
     }
 
-    public List<ClazzDto> fetchAvailableSubClassesForRoom(UUID roomId, String code) {
-        final RoomDto roomDto = roomService.getById(roomId);
+    public List<ClazzDto> fetchAvailableSubClassesForRoom(UUID roomId, String code, RuleTypeEnum forceRuleType) {
+        RoomDto roomDto;
+        if (roomId.equals(ZERO_UUID)) {
+            roomDto = new RoomDto();
+            roomDto.setRuleType(forceRuleType);
+            roomDto.setBaseRuleType(forceRuleType);
+        } else {
+            roomDto = roomService.getById(roomId);
+        }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> classRepository.getFull5eSubClassesForRoom(code);
             case DND2024 -> classRepository.getFull2024SubClassesForRoom(code);
@@ -108,7 +140,11 @@ public class ClazzService {
 
     public ClazzDto createClass(ClazzDto clazzDto) throws JsonProcessingException {
         clazzDto.setId(UUID.randomUUID());
-        clazzDto.setImgUrl(clazzDto.getId().toString());
+        if (clazzDto.getImgUrl() != null) {
+            clazzDto.setImgUrl(clazzDto.getImgUrl());
+        } else {
+            clazzDto.setImgUrl(clazzDto.getId().toString());
+        }
         clazzDto.setCode(clazzDto.getId().toString());
 
         clazzDto.getStats().setId(UUID.randomUUID());
