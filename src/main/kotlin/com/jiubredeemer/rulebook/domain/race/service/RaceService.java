@@ -1,8 +1,11 @@
 package com.jiubredeemer.rulebook.domain.race.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jiubredeemer.rulebook.dal.repository.race.RaceRepository;
+import com.jiubredeemer.rulebook.dal.repository.race.RaceStatsRepository;
 import com.jiubredeemer.rulebook.domain.race.dto.RaceDto;
 import com.jiubredeemer.rulebook.domain.race.dto.RaceGroupDto;
+import com.jiubredeemer.rulebook.domain.race.dto.RaceStatsDto;
 import com.jiubredeemer.rulebook.domain.room.dto.RoomDto;
 import com.jiubredeemer.rulebook.domain.room.service.RoomService;
 import com.jiubredeemer.rulebook.exception.NotFoundException;
@@ -18,6 +21,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RaceService {
     private final RaceRepository raceRepository;
+    private final RaceStatsRepository raceStatsRepository;
     private final RoomService roomService;
 
     public List<RaceDto> fetchAvailableRacesForRoom(UUID roomId) {
@@ -26,6 +30,15 @@ public class RaceService {
             case DND5E -> raceRepository.getFull5eRacesForRoom();
             case DND2024 -> raceRepository.getFull2024RacesForRoom();
             default -> raceRepository.getFullRacesForRoom(roomId);
+        }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
+    }
+
+    public List<RaceDto> fetchAvailableRootRacesForRoom(UUID roomId) {
+        final RoomDto roomDto = roomService.getById(roomId);
+        return (switch (roomDto.getRuleType()) {
+            case DND5E -> raceRepository.getFull5eRootRacesForRoom();
+            case DND2024 -> raceRepository.getFull2024RootRacesForRoom();
+            default -> raceRepository.getFullRootRacesForRoom(roomId);
         }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }
 
@@ -39,6 +52,15 @@ public class RaceService {
             raceDto.setRoomId(roomId);
             return raceDto;
         }).orElseThrow(() -> new NotFoundException("Race not found by code"));
+    }
+
+    public List<RaceDto> fetchSubspeciesByCode(String raceCode, UUID roomId) {
+        final RoomDto roomDto = roomService.getById(roomId);
+        return (switch (roomDto.getRuleType()) {
+            case DND5E -> raceRepository.getFull5eRaceSubspeciesByCode(raceCode);
+            case DND2024 -> raceRepository.getFull2024RaceSubspeciesByCode(raceCode);
+            default -> raceRepository.getFullRaceSubspeciesByCode(raceCode, roomId);
+        }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }
 
     public List<RaceGroupDto> fetchGroupedRacesForRoom(UUID roomId) {
@@ -56,7 +78,7 @@ public class RaceService {
     }
 
     private RaceGroupDto toRaceGroup(List<RaceDto> raceDtos) {
-        final String groupCode = resolveGroupingKey(raceDtos.get(0));
+        final String groupCode = resolveGroupingKey(raceDtos.getFirst());
         final List<RaceDto> sorted = raceDtos.stream()
                 .sorted(Comparator
                         .comparing((RaceDto raceDto) -> !groupCode.equals(raceDto.getCode()))
@@ -67,8 +89,20 @@ public class RaceService {
                 .toList();
 
         final RaceGroupDto group = new RaceGroupDto();
-        group.setSpecies(sorted.get(0));
+        group.setSpecies(sorted.getFirst());
         group.setSubspecies(sorted.stream().skip(1).toList());
         return group;
+    }
+
+    public RaceDto createRace(RaceDto raceDto) throws JsonProcessingException {
+        roomService.getById(raceDto.getRoomId());
+        raceDto.setId(UUID.randomUUID());
+        raceDto.setCode(raceDto.getId().toString());
+        raceDto.setSpeciesCode(raceDto.getSpeciesCode() == null ? raceDto.getCode() : raceDto.getSpeciesCode());
+        raceDto.setImgUrl(raceDto.getId().toString());
+        raceDto.getStats().setId(UUID.randomUUID());
+        final RaceStatsDto raceStatsDto = raceStatsRepository.create(raceDto.getStats());
+        raceDto.setStats(raceStatsDto);
+        return raceRepository.createRace(raceDto);
     }
 }

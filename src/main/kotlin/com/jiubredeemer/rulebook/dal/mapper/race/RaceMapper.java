@@ -19,4 +19,17 @@ public class RaceMapper implements RecordMapper<RaceRecord, RaceDto> {
         raceDto.setStats(raceStatsRepository.findById(record.getRaceStatsId()));
         return raceDto;
     }
+
+    public RaceRecord mapToRecord(RaceDto raceDto) {
+        RaceRecord raceRecord = new RaceRecord();
+        raceRecord.setId(raceDto.getId());
+        raceRecord.setRoomId(raceDto.getRoomId());
+        raceRecord.setName(raceDto.getName());
+        raceRecord.setDescription(raceDto.getDescription());
+        raceRecord.setCode(raceDto.getCode());
+        raceRecord.setSpeciesCode(raceDto.getSpeciesCode());
+        raceRecord.setImgUrl(raceDto.getImgUrl());
+        raceRecord.setRaceStatsId(raceDto.getStats().getId());
+        return raceRecord;
+    }
 }

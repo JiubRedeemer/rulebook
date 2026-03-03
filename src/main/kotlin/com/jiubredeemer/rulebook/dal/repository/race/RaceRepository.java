@@ -1,5 +1,6 @@
 package com.jiubredeemer.rulebook.dal.repository.race;
 
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Race;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eRace;
 import com.jiubredeemer.rulebook.dal.entity.tables.Race;
 import com.jiubredeemer.rulebook.dal.mapper.race.Default2024RaceMapper;
@@ -14,6 +15,7 @@ import org.jooq.Table;
 import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -68,5 +70,66 @@ public class RaceRepository {
                 .and(Race.RACE.CODE.eq(raceCode))
                 .fetchOptional()
                 .map(raceMapper);
+    }
+
+    public Collection<RaceDto> getFull5eRootRacesForRoom() {
+        return dsl.selectFrom(Default_5eRace.DEFAULT_5E_RACE)
+                .where(Default_5eRace.DEFAULT_5E_RACE.CODE.eq(Default_5eRace.DEFAULT_5E_RACE.SPECIES_CODE)
+                        .or(Default_5eRace.DEFAULT_5E_RACE.SPECIES_CODE.isNull()))
+                .fetch()
+                .map(default5eRaceMapper);
+    }
+
+    public Collection<RaceDto> getFull2024RootRacesForRoom() {
+        return dsl.selectFrom(Default_2024Race.DEFAULT_2024_RACE)
+                .where(Default_2024Race.DEFAULT_2024_RACE.CODE.eq(Default_2024Race.DEFAULT_2024_RACE.SPECIES_CODE)
+                        .or(Default_2024Race.DEFAULT_2024_RACE.SPECIES_CODE.isNull()))
+                .fetch()
+                .map(default2024RaceMapper);
+    }
+
+    public Collection<RaceDto> getFullRootRacesForRoom(UUID roomId) {
+        return dsl.selectFrom(Race.RACE)
+                .where(Race.RACE.ROOM_ID.eq(roomId))
+                .and(Race.RACE.CODE.eq(Race.RACE.SPECIES_CODE)
+                        .or(Race.RACE.SPECIES_CODE.isNull()))
+                .fetch()
+                .map(raceMapper);
+    }
+
+    public Collection<RaceDto> getFull5eRaceSubspeciesByCode(String raceCode) {
+        return dsl.selectFrom(Default_5eRace.DEFAULT_5E_RACE)
+                .where(Default_5eRace.DEFAULT_5E_RACE.SPECIES_CODE.eq(raceCode))
+                .and(Default_5eRace.DEFAULT_5E_RACE.CODE.notEqual(raceCode))
+                .fetch()
+                .map(default5eRaceMapper);
+    }
+
+    public Collection<RaceDto> getFull2024RaceSubspeciesByCode(String raceCode) {
+        return dsl.selectFrom(Default_2024Race.DEFAULT_2024_RACE)
+                .where(Default_2024Race.DEFAULT_2024_RACE.SPECIES_CODE.eq(raceCode))
+                .and(Default_2024Race.DEFAULT_2024_RACE.CODE.notEqual(raceCode))
+                .fetch()
+                .map(default2024RaceMapper);
+    }
+
+    public Collection<RaceDto> getFullRaceSubspeciesByCode(String raceCode, UUID roomId) {
+        return dsl.selectFrom(Race.RACE)
+                .where(Race.RACE.ROOM_ID.eq(roomId))
+                .and(Race.RACE.SPECIES_CODE.eq(raceCode))
+                .and(Race.RACE.CODE.notEqual(raceCode))
+                .fetch()
+                .map(raceMapper);
+    }
+
+    public RaceDto createRace(RaceDto raceDto) {
+        dsl.insertInto(Race.RACE)
+                .set(raceMapper.mapToRecord(raceDto))
+                .execute();
+        return dsl.selectFrom(Race.RACE)
+                .where(Race.RACE.ID.eq(raceDto.getId()))
+                .fetchOptional()
+                .map(raceMapper)
+                .orElseThrow();
     }
 }
