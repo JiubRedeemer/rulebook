@@ -179,19 +179,7 @@ public class Clazz extends TableImpl<ClazzRecord> {
 
     @Override
     public List<ForeignKey<ClazzRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.CLAZZ__FKCLAZZ862752, Keys.CLAZZ__FKCLAZZ375368);
-    }
-
-    private transient RoomPath _room;
-
-    /**
-     * Get the implicit join path to the <code>rules.room</code> table.
-     */
-    public RoomPath room() {
-        if (_room == null)
-            _room = new RoomPath(this, Keys.CLAZZ__FKCLAZZ862752, null);
-
-        return _room;
+        return Arrays.asList(Keys.CLAZZ__FKCLAZZ375368, Keys.CLAZZ__FKCLAZZ862752);
     }
 
     private transient ClazzStatsPath _clazzStats;
@@ -204,6 +192,18 @@ public class Clazz extends TableImpl<ClazzRecord> {
             _clazzStats = new ClazzStatsPath(this, Keys.CLAZZ__FKCLAZZ375368, null);
 
         return _clazzStats;
+    }
+
+    private transient RoomPath _room;
+
+    /**
+     * Get the implicit join path to the <code>rules.room</code> table.
+     */
+    public RoomPath room() {
+        if (_room == null)
+            _room = new RoomPath(this, Keys.CLAZZ__FKCLAZZ862752, null);
+
+        return _room;
     }
 
     @Override

@@ -5,8 +5,13 @@ package com.jiubredeemer.rulebook.dal.entity;
 
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
+import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundProficiency;
+import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundStats;
+import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClazzStats;
+import com.jiubredeemer.rulebook.dal.entity.tables.DefaultEberronBackground;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Race;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eAbility;
@@ -20,8 +25,13 @@ import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Room;
 import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.AbilityRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.BackgroundProficiencyRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.BackgroundStatsRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.BackgroundTraitRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.ClazzRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.ClazzStatsRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.DefaultEberronBackgroundRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_2024BackgroundRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_2024ClazzRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_2024RaceRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_5eAbilityRecord;
@@ -54,14 +64,19 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<AbilityRecord> ABILITY_PKEY = Internal.createUniqueKey(Ability.ABILITY, DSL.name("ability_pkey"), new TableField[] { Ability.ABILITY.ID }, true);
+    public static final UniqueKey<BackgroundProficiencyRecord> BACKGROUND_PROFICIENCY_PKEY = Internal.createUniqueKey(BackgroundProficiency.BACKGROUND_PROFICIENCY, DSL.name("background_proficiency_pkey"), new TableField[] { BackgroundProficiency.BACKGROUND_PROFICIENCY.ID }, true);
+    public static final UniqueKey<BackgroundStatsRecord> BACKGROUND_STATS_PKEY = Internal.createUniqueKey(BackgroundStats.BACKGROUND_STATS, DSL.name("background_stats_pkey"), new TableField[] { BackgroundStats.BACKGROUND_STATS.ID }, true);
+    public static final UniqueKey<BackgroundTraitRecord> BACKGROUND_TRAIT_PKEY = Internal.createUniqueKey(BackgroundTrait.BACKGROUND_TRAIT, DSL.name("background_trait_pkey"), new TableField[] { BackgroundTrait.BACKGROUND_TRAIT.ID }, true);
     public static final UniqueKey<ClazzRecord> CLAZZ_PKEY = Internal.createUniqueKey(Clazz.CLAZZ, DSL.name("clazz_pkey"), new TableField[] { Clazz.CLAZZ.ID }, true);
     public static final UniqueKey<ClazzStatsRecord> CLAZZ_STATS_PKEY = Internal.createUniqueKey(ClazzStats.CLAZZ_STATS, DSL.name("clazz_stats_pkey"), new TableField[] { ClazzStats.CLAZZ_STATS.ID }, true);
+    public static final UniqueKey<Default_2024BackgroundRecord> DEFAULT_2024_BACKGROUND_PKEY = Internal.createUniqueKey(Default_2024Background.DEFAULT_2024_BACKGROUND, DSL.name("default_2024_background_pkey"), new TableField[] { Default_2024Background.DEFAULT_2024_BACKGROUND.ID }, true);
     public static final UniqueKey<Default_2024ClazzRecord> DEFAULT_2024_CLAZZ_PKEY = Internal.createUniqueKey(Default_2024Clazz.DEFAULT_2024_CLAZZ, DSL.name("default_2024_clazz_pkey"), new TableField[] { Default_2024Clazz.DEFAULT_2024_CLAZZ.ID }, true);
     public static final UniqueKey<Default_2024RaceRecord> DEFAULT_2024_RACE_PKEY = Internal.createUniqueKey(Default_2024Race.DEFAULT_2024_RACE, DSL.name("default_2024_race_pkey"), new TableField[] { Default_2024Race.DEFAULT_2024_RACE.ID }, true);
     public static final UniqueKey<Default_5eAbilityRecord> DEFAULT_5E_ABILITY_PKEY = Internal.createUniqueKey(Default_5eAbility.DEFAULT_5E_ABILITY, DSL.name("default_5e_ability_pkey"), new TableField[] { Default_5eAbility.DEFAULT_5E_ABILITY.ID }, true);
     public static final UniqueKey<Default_5eClazzRecord> DEFAULT_5E_CLAZZ_PKEY = Internal.createUniqueKey(Default_5eClazz.DEFAULT_5E_CLAZZ, DSL.name("default_5e_clazz_pkey"), new TableField[] { Default_5eClazz.DEFAULT_5E_CLAZZ.ID }, true);
     public static final UniqueKey<Default_5eRaceRecord> DEFAULT_5E_RACE_PKEY = Internal.createUniqueKey(Default_5eRace.DEFAULT_5E_RACE, DSL.name("default_5e_race_pkey"), new TableField[] { Default_5eRace.DEFAULT_5E_RACE.ID }, true);
     public static final UniqueKey<Default_5eSkillRecord> DEFAULT_5E_SKILL_PKEY = Internal.createUniqueKey(Default_5eSkill.DEFAULT_5E_SKILL, DSL.name("default_5e_skill_pkey"), new TableField[] { Default_5eSkill.DEFAULT_5E_SKILL.ID }, true);
+    public static final UniqueKey<DefaultEberronBackgroundRecord> DEFAULT_EBERRON_BACKGROUND_PKEY = Internal.createUniqueKey(DefaultEberronBackground.DEFAULT_EBERRON_BACKGROUND, DSL.name("default_eberron_background_pkey"), new TableField[] { DefaultEberronBackground.DEFAULT_EBERRON_BACKGROUND.ID }, true);
     public static final UniqueKey<RaceRecord> RACE_PKEY = Internal.createUniqueKey(Race.RACE, DSL.name("race_pkey"), new TableField[] { Race.RACE.ID }, true);
     public static final UniqueKey<RaceProficiencyRecord> RACE_PROFICIENCY_PKEY = Internal.createUniqueKey(RaceProficiency.RACE_PROFICIENCY, DSL.name("race_proficiency_pkey"), new TableField[] { RaceProficiency.RACE_PROFICIENCY.ID }, true);
     public static final UniqueKey<RaceStatsRecord> RACE_STATS_PKEY = Internal.createUniqueKey(RaceStats.RACE_STATS, DSL.name("race_stats_pkey"), new TableField[] { RaceStats.RACE_STATS.ID }, true);
@@ -76,11 +91,13 @@ public class Keys {
     public static final ForeignKey<AbilityRecord, RoomRecord> ABILITY__FKABILITY898405 = Internal.createForeignKey(Ability.ABILITY, DSL.name("fkability898405"), new TableField[] { Ability.ABILITY.ROOM_ID }, Keys.ROOM_PKEY, new TableField[] { Room.ROOM.ROOM_ID }, true);
     public static final ForeignKey<ClazzRecord, ClazzStatsRecord> CLAZZ__FKCLAZZ375368 = Internal.createForeignKey(Clazz.CLAZZ, DSL.name("fkclazz375368"), new TableField[] { Clazz.CLAZZ.CLAZZ_STATS_ID }, Keys.CLAZZ_STATS_PKEY, new TableField[] { ClazzStats.CLAZZ_STATS.ID }, true);
     public static final ForeignKey<ClazzRecord, RoomRecord> CLAZZ__FKCLAZZ862752 = Internal.createForeignKey(Clazz.CLAZZ, DSL.name("fkclazz862752"), new TableField[] { Clazz.CLAZZ.ROOM_ID }, Keys.ROOM_PKEY, new TableField[] { Room.ROOM.ROOM_ID }, true);
+    public static final ForeignKey<Default_2024BackgroundRecord, BackgroundStatsRecord> DEFAULT_2024_BACKGROUND__FK_DEFAULT_2024_BACKGROUND_STATS = Internal.createForeignKey(Default_2024Background.DEFAULT_2024_BACKGROUND, DSL.name("fk_default_2024_background_stats"), new TableField[] { Default_2024Background.DEFAULT_2024_BACKGROUND.BACKGROUND_STATS_ID }, Keys.BACKGROUND_STATS_PKEY, new TableField[] { BackgroundStats.BACKGROUND_STATS.ID }, true);
     public static final ForeignKey<Default_2024ClazzRecord, ClazzStatsRecord> DEFAULT_2024_CLAZZ__FKDEFAULT_2024_CLAZZ_STATS = Internal.createForeignKey(Default_2024Clazz.DEFAULT_2024_CLAZZ, DSL.name("fkdefault_2024_clazz_stats"), new TableField[] { Default_2024Clazz.DEFAULT_2024_CLAZZ.CLAZZ_STATS_ID }, Keys.CLAZZ_STATS_PKEY, new TableField[] { ClazzStats.CLAZZ_STATS.ID }, true);
     public static final ForeignKey<Default_2024RaceRecord, RaceStatsRecord> DEFAULT_2024_RACE__FKDEFAULT_2024_RACE_STATS = Internal.createForeignKey(Default_2024Race.DEFAULT_2024_RACE, DSL.name("fkdefault_2024_race_stats"), new TableField[] { Default_2024Race.DEFAULT_2024_RACE.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
     public static final ForeignKey<Default_5eClazzRecord, ClazzStatsRecord> DEFAULT_5E_CLAZZ__FKDEFAULT_5E174476 = Internal.createForeignKey(Default_5eClazz.DEFAULT_5E_CLAZZ, DSL.name("fkdefault_5e174476"), new TableField[] { Default_5eClazz.DEFAULT_5E_CLAZZ.CLAZZ_STATS_ID }, Keys.CLAZZ_STATS_PKEY, new TableField[] { ClazzStats.CLAZZ_STATS.ID }, true);
     public static final ForeignKey<Default_5eRaceRecord, RaceStatsRecord> DEFAULT_5E_RACE__FKDEFAULT_5E40267 = Internal.createForeignKey(Default_5eRace.DEFAULT_5E_RACE, DSL.name("fkdefault_5e40267"), new TableField[] { Default_5eRace.DEFAULT_5E_RACE.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
     public static final ForeignKey<Default_5eSkillRecord, Default_5eAbilityRecord> DEFAULT_5E_SKILL__FKDEFAULT_5E869303 = Internal.createForeignKey(Default_5eSkill.DEFAULT_5E_SKILL, DSL.name("fkdefault_5e869303"), new TableField[] { Default_5eSkill.DEFAULT_5E_SKILL.DEPEND_ON_ABILITY }, Keys.DEFAULT_5E_ABILITY_PKEY, new TableField[] { Default_5eAbility.DEFAULT_5E_ABILITY.ID }, true);
+    public static final ForeignKey<DefaultEberronBackgroundRecord, BackgroundStatsRecord> DEFAULT_EBERRON_BACKGROUND__FK_DEFAULT_EBERRON_BACKGROUND_STATS = Internal.createForeignKey(DefaultEberronBackground.DEFAULT_EBERRON_BACKGROUND, DSL.name("fk_default_eberron_background_stats"), new TableField[] { DefaultEberronBackground.DEFAULT_EBERRON_BACKGROUND.BACKGROUND_STATS_ID }, Keys.BACKGROUND_STATS_PKEY, new TableField[] { BackgroundStats.BACKGROUND_STATS.ID }, true);
     public static final ForeignKey<RaceRecord, RoomRecord> RACE__FKRACE214766 = Internal.createForeignKey(Race.RACE, DSL.name("fkrace214766"), new TableField[] { Race.RACE.ROOM_ID }, Keys.ROOM_PKEY, new TableField[] { Room.ROOM.ROOM_ID }, true);
     public static final ForeignKey<RaceRecord, RaceStatsRecord> RACE__FKRACE292535 = Internal.createForeignKey(Race.RACE, DSL.name("fkrace292535"), new TableField[] { Race.RACE.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
     public static final ForeignKey<RaceProficiencyRecord, RaceStatsRecord> RACE_PROFICIENCY__FKRACE_PROFI169598 = Internal.createForeignKey(RaceProficiency.RACE_PROFICIENCY, DSL.name("fkrace_profi169598"), new TableField[] { RaceProficiency.RACE_PROFICIENCY.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);

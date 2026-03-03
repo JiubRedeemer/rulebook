@@ -38,8 +38,7 @@ public class AbilityService {
     public AbilityDto fetchByCodeAndRoomId(UUID roomId, String code) {
         final RoomDto roomDto = roomService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
-            case DND5E -> abilityRepository.get5eByCode(code);
-            case DND2024 -> abilityRepository.get5eByCode(code);
+            case DND5E, DND2024 -> abilityRepository.get5eByCode(code);
             default -> abilityRepository.getByRoomIdAndCode(roomId, code);
         }).map(abilityDto -> {
             abilityDto.setRoomId(roomId);
@@ -49,8 +48,7 @@ public class AbilityService {
 
     public List<AbilityDto> fetchByIds(RoomDto roomDto, Set<UUID> abilityIds) {
         return (switch (roomDto.getRuleType()) {
-            case DND5E -> abilityRepository.get5eByIds(abilityIds);
-            case DND2024 -> abilityRepository.get5eByIds(abilityIds);
+            case DND5E, DND2024 -> abilityRepository.get5eByIds(abilityIds);
             default -> abilityRepository.getByIds(abilityIds);
         }).stream().peek(abilityDto -> abilityDto.setRoomId(roomDto.getRoomId())).toList();
     }

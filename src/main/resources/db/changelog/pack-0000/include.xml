@@ -25,5 +25,11 @@
     <include file="016-PRO-80-fix-grouping-for-2024-subclasses.sql" relativeToChangelogFile="true"/>
     <include file="017-PRO-80-normalize-class-grouping-by-base.sql" relativeToChangelogFile="true"/>
     <include file="018-PRO-80-force-normalize-class-groups.sql" relativeToChangelogFile="true"/>
+    <include file="020-PRO-80-init-2024-backgrounds.sql" relativeToChangelogFile="true"/>
+    <include file="021-PRO-80-background-stats-traits-proficiencies.sql" relativeToChangelogFile="true"/>
+    <include file="022-PRO-80-background-descriptions-from-dnd-su.sql" relativeToChangelogFile="true"/>
+    <include file="023-PRO-80-background-ability-modifiers-from-dnd-su.sql" relativeToChangelogFile="true"/>
+    <include file="024-PRO-80-init-eberron-backgrounds.sql" relativeToChangelogFile="true"/>
+    <include file="025-PRO-80-eberron-backgrounds-from-next-dnd-su.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

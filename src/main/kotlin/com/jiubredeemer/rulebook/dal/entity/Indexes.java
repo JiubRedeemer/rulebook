@@ -5,6 +5,8 @@ package com.jiubredeemer.rulebook.dal.entity;
 
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
+import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundProficiency;
+import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eSkill;
 import com.jiubredeemer.rulebook.dal.entity.tables.Race;
@@ -31,6 +33,8 @@ public class Indexes {
     public static final Index ABILITY_ROOM_ID = Internal.createIndex(DSL.name("ability_room_id"), Ability.ABILITY, new OrderField[] { Ability.ABILITY.ROOM_ID }, false);
     public static final Index CLAZZ_ROOM_ID = Internal.createIndex(DSL.name("clazz_room_id"), Clazz.CLAZZ, new OrderField[] { Clazz.CLAZZ.ROOM_ID }, false);
     public static final Index DEFAULT_5E_SKILL_DEPEND_ON_ABILITY = Internal.createIndex(DSL.name("default_5e_skill_depend_on_ability"), Default_5eSkill.DEFAULT_5E_SKILL, new OrderField[] { Default_5eSkill.DEFAULT_5E_SKILL.DEPEND_ON_ABILITY }, false);
+    public static final Index IDX_BACKGROUND_PROFICIENCY_STATS_ID = Internal.createIndex(DSL.name("idx_background_proficiency_stats_id"), BackgroundProficiency.BACKGROUND_PROFICIENCY, new OrderField[] { BackgroundProficiency.BACKGROUND_PROFICIENCY.BACKGROUND_STATS_ID }, false);
+    public static final Index IDX_BACKGROUND_TRAIT_STATS_ID = Internal.createIndex(DSL.name("idx_background_trait_stats_id"), BackgroundTrait.BACKGROUND_TRAIT, new OrderField[] { BackgroundTrait.BACKGROUND_TRAIT.BACKGROUND_STATS_ID }, false);
     public static final Index RACE_PROFICIENCY_RACE_STATS_ID = Internal.createIndex(DSL.name("race_proficiency_race_stats_id"), RaceProficiency.RACE_PROFICIENCY, new OrderField[] { RaceProficiency.RACE_PROFICIENCY.RACE_STATS_ID }, false);
     public static final Index RACE_ROOM_ID = Internal.createIndex(DSL.name("race_room_id"), Race.RACE, new OrderField[] { Race.RACE.ROOM_ID }, false);
     public static final Index RACE_TRAIT_RACE_STATS_ID = Internal.createIndex(DSL.name("race_trait_race_stats_id"), RaceTrait.RACE_TRAIT, new OrderField[] { RaceTrait.RACE_TRAIT.RACE_STATS_ID }, false);

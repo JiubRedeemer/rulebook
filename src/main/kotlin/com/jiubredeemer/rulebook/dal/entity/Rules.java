@@ -5,8 +5,13 @@ package com.jiubredeemer.rulebook.dal.entity;
 
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
+import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundProficiency;
+import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundStats;
+import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClazzStats;
+import com.jiubredeemer.rulebook.dal.entity.tables.DefaultEberronBackground;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Race;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eAbility;
@@ -47,6 +52,22 @@ public class Rules extends SchemaImpl {
     public final Ability ABILITY = Ability.ABILITY;
 
     /**
+     * Владение навыком или инструментом от предыстории
+     */
+    public final BackgroundProficiency BACKGROUND_PROFICIENCY = BackgroundProficiency.BACKGROUND_PROFICIENCY;
+
+    /**
+     * Характеристики предыстории: три характеристики на выбор (+2/+1 или
+     * +1/+1/+1)
+     */
+    public final BackgroundStats BACKGROUND_STATS = BackgroundStats.BACKGROUND_STATS;
+
+    /**
+     * Черта происхождения (Origin Feat), даруемая предысторией
+     */
+    public final BackgroundTrait BACKGROUND_TRAIT = BackgroundTrait.BACKGROUND_TRAIT;
+
+    /**
      * The table <code>rules.clazz</code>.
      */
     public final Clazz CLAZZ = Clazz.CLAZZ;
@@ -55,6 +76,11 @@ public class Rules extends SchemaImpl {
      * The table <code>rules.clazz_stats</code>.
      */
     public final ClazzStats CLAZZ_STATS = ClazzStats.CLAZZ_STATS;
+
+    /**
+     * Предыстории по умолчанию для D&amp;D 2024 (PHB)
+     */
+    public final Default_2024Background DEFAULT_2024_BACKGROUND = Default_2024Background.DEFAULT_2024_BACKGROUND;
 
     /**
      * The table <code>rules.default_2024_clazz</code>.
@@ -85,6 +111,12 @@ public class Rules extends SchemaImpl {
      * Навыки по дефолтным правилам DnD 5e
      */
     public final Default_5eSkill DEFAULT_5E_SKILL = Default_5eSkill.DEFAULT_5E_SKILL;
+
+    /**
+     * Предыстории по умолчанию для сеттинга Eberron (Eberron: Rising from the
+     * Last War)
+     */
+    public final DefaultEberronBackground DEFAULT_EBERRON_BACKGROUND = DefaultEberronBackground.DEFAULT_EBERRON_BACKGROUND;
 
     /**
      * The table <code>rules.race</code>.
@@ -133,14 +165,19 @@ public class Rules extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             Ability.ABILITY,
+            BackgroundProficiency.BACKGROUND_PROFICIENCY,
+            BackgroundStats.BACKGROUND_STATS,
+            BackgroundTrait.BACKGROUND_TRAIT,
             Clazz.CLAZZ,
             ClazzStats.CLAZZ_STATS,
+            Default_2024Background.DEFAULT_2024_BACKGROUND,
             Default_2024Clazz.DEFAULT_2024_CLAZZ,
             Default_2024Race.DEFAULT_2024_RACE,
             Default_5eAbility.DEFAULT_5E_ABILITY,
             Default_5eClazz.DEFAULT_5E_CLAZZ,
             Default_5eRace.DEFAULT_5E_RACE,
             Default_5eSkill.DEFAULT_5E_SKILL,
+            DefaultEberronBackground.DEFAULT_EBERRON_BACKGROUND,
             Race.RACE,
             RaceProficiency.RACE_PROFICIENCY,
             RaceStats.RACE_STATS,

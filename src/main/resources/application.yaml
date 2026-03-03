@@ -6,7 +6,7 @@ spring:
     name: rulebook
   datasource:
     password: pd
-    url: jdbc:postgresql://80.93.62.19:5432/rule_book
+    url: jdbc:postgresql://localhost:5432/rule_book
     username: pd
     driver-class-name: org.postgresql.Driver
   jpa:

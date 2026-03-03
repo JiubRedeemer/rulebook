@@ -5,8 +5,13 @@ package com.jiubredeemer.rulebook.dal.entity;
 
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
+import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundProficiency;
+import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundStats;
+import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClazzStats;
+import com.jiubredeemer.rulebook.dal.entity.tables.DefaultEberronBackground;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Race;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eAbility;
@@ -33,6 +38,22 @@ public class Tables {
     public static final Ability ABILITY = Ability.ABILITY;
 
     /**
+     * Владение навыком или инструментом от предыстории
+     */
+    public static final BackgroundProficiency BACKGROUND_PROFICIENCY = BackgroundProficiency.BACKGROUND_PROFICIENCY;
+
+    /**
+     * Характеристики предыстории: три характеристики на выбор (+2/+1 или
+     * +1/+1/+1)
+     */
+    public static final BackgroundStats BACKGROUND_STATS = BackgroundStats.BACKGROUND_STATS;
+
+    /**
+     * Черта происхождения (Origin Feat), даруемая предысторией
+     */
+    public static final BackgroundTrait BACKGROUND_TRAIT = BackgroundTrait.BACKGROUND_TRAIT;
+
+    /**
      * The table <code>rules.clazz</code>.
      */
     public static final Clazz CLAZZ = Clazz.CLAZZ;
@@ -41,6 +62,11 @@ public class Tables {
      * The table <code>rules.clazz_stats</code>.
      */
     public static final ClazzStats CLAZZ_STATS = ClazzStats.CLAZZ_STATS;
+
+    /**
+     * Предыстории по умолчанию для D&amp;D 2024 (PHB)
+     */
+    public static final Default_2024Background DEFAULT_2024_BACKGROUND = Default_2024Background.DEFAULT_2024_BACKGROUND;
 
     /**
      * The table <code>rules.default_2024_clazz</code>.
@@ -71,6 +97,12 @@ public class Tables {
      * Навыки по дефолтным правилам DnD 5e
      */
     public static final Default_5eSkill DEFAULT_5E_SKILL = Default_5eSkill.DEFAULT_5E_SKILL;
+
+    /**
+     * Предыстории по умолчанию для сеттинга Eberron (Eberron: Rising from the
+     * Last War)
+     */
+    public static final DefaultEberronBackground DEFAULT_EBERRON_BACKGROUND = DefaultEberronBackground.DEFAULT_EBERRON_BACKGROUND;
 
     /**
      * The table <code>rules.race</code>.
