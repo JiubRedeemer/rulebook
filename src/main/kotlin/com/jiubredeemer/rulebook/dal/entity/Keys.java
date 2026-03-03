@@ -5,6 +5,7 @@ package com.jiubredeemer.rulebook.dal.entity;
 
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
+import com.jiubredeemer.rulebook.dal.entity.tables.Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundProficiency;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
@@ -26,6 +27,7 @@ import com.jiubredeemer.rulebook.dal.entity.tables.Room;
 import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.AbilityRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.BackgroundProficiencyRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.BackgroundRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.BackgroundStatsRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.BackgroundTraitRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.ClazzRecord;
@@ -64,6 +66,7 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<AbilityRecord> ABILITY_PKEY = Internal.createUniqueKey(Ability.ABILITY, DSL.name("ability_pkey"), new TableField[] { Ability.ABILITY.ID }, true);
+    public static final UniqueKey<BackgroundRecord> BACKGROUND_PKEY = Internal.createUniqueKey(Background.BACKGROUND, DSL.name("background_pkey"), new TableField[] { Background.BACKGROUND.ID }, true);
     public static final UniqueKey<BackgroundProficiencyRecord> BACKGROUND_PROFICIENCY_PKEY = Internal.createUniqueKey(BackgroundProficiency.BACKGROUND_PROFICIENCY, DSL.name("background_proficiency_pkey"), new TableField[] { BackgroundProficiency.BACKGROUND_PROFICIENCY.ID }, true);
     public static final UniqueKey<BackgroundStatsRecord> BACKGROUND_STATS_PKEY = Internal.createUniqueKey(BackgroundStats.BACKGROUND_STATS, DSL.name("background_stats_pkey"), new TableField[] { BackgroundStats.BACKGROUND_STATS.ID }, true);
     public static final UniqueKey<BackgroundTraitRecord> BACKGROUND_TRAIT_PKEY = Internal.createUniqueKey(BackgroundTrait.BACKGROUND_TRAIT, DSL.name("background_trait_pkey"), new TableField[] { BackgroundTrait.BACKGROUND_TRAIT.ID }, true);

@@ -5,6 +5,7 @@ package com.jiubredeemer.rulebook.dal.entity;
 
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
+import com.jiubredeemer.rulebook.dal.entity.tables.Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundProficiency;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
@@ -36,6 +37,11 @@ public class Tables {
      * Кастомные характеристики существ (для homebrew игр)
      */
     public static final Ability ABILITY = Ability.ABILITY;
+
+    /**
+     * Предыстории
+     */
+    public static final Background BACKGROUND = Background.BACKGROUND;
 
     /**
      * Владение навыком или инструментом от предыстории

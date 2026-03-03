@@ -1,0 +1,1 @@
+ALTER TABLE rules.room ADD COLUMN base_rule_type TEXT NULL;

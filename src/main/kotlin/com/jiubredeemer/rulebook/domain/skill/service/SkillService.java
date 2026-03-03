@@ -24,7 +24,8 @@ public class SkillService {
 
     public List<SkillDto> fetchAvailableForRoomId(UUID roomId) {
         final RoomDto roomDto = roomService.getById(roomId);
-        return switch (roomDto.getRuleType()) {
+        RuleTypeEnum selector = chooseRuleType(roomDto);
+        return switch (selector) {
             case DND5E, DND2024 -> skillRepository.getFull5eForRoom();
             default -> skillRepository.getFullForRoom(roomId);
         };
@@ -32,7 +33,8 @@ public class SkillService {
 
     public SkillDto fetchByRoomIdAndCode(UUID roomId, String code) {
         final RoomDto roomDto = roomService.getById(roomId);
-        return (switch (roomDto.getRuleType()) {
+        RuleTypeEnum selector = chooseRuleType(roomDto);
+        return (switch (selector) {
             case DND5E, DND2024 -> skillRepository.get5eByCode(code);
             default -> skillRepository.getByRoomIdAndCode(roomId, code);
         }).orElseThrow();
@@ -40,6 +42,7 @@ public class SkillService {
 
     public List<SkillDto> fetchByRoomIdAndClassCode(UUID roomId, String classCode) {
         final RoomDto roomDto = roomService.getById(roomId);
+        RuleTypeEnum selector = chooseRuleType(roomDto);
         final ClazzDto clazzDto = clazzService.fetchByRoomAndCode(roomId, classCode);
         final List<String> availableSkillCodes =
                 clazzDto.getStats().getAvailableSkills()
@@ -47,7 +50,7 @@ public class SkillService {
                         .filter(availableSkillDto -> availableSkillDto.getType().equals(SkillTypeEnum.ABILITY))
                         .flatMap(availableSkillDto -> availableSkillDto.getOf().stream())
                         .toList();
-        return switch (roomDto.getRuleType()) {
+        return switch (selector) {
             case DND5E, DND2024 -> !availableSkillCodes.contains(ANY) ?
                     skillRepository.get5eByCodes(availableSkillCodes) :
                     skillRepository.getFull5eForRoom();
@@ -62,5 +65,15 @@ public class SkillService {
             case DND5E, DND2024 -> skillRepository.get5eByAbilityIdIn(abilityIds);
             default -> skillRepository.getByAbilityIdIn(abilityIds);
         };
+    }
+
+    private RuleTypeEnum chooseRuleType(RoomDto roomDto) {
+        RuleTypeEnum selector;
+        if (roomDto.getBaseRuleType() != null) {
+            selector = roomDto.getBaseRuleType();
+        } else {
+            selector = roomDto.getRuleType();
+        }
+        return selector;
     }
 }

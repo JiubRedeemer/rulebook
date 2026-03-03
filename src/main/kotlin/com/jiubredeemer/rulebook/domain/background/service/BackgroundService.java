@@ -1,7 +1,10 @@
 package com.jiubredeemer.rulebook.domain.background.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jiubredeemer.rulebook.dal.repository.background.BackgroundRepository;
+import com.jiubredeemer.rulebook.dal.repository.background.BackgroundStatsRepository;
 import com.jiubredeemer.rulebook.domain.background.dto.BackgroundDto;
+import com.jiubredeemer.rulebook.domain.background.dto.BackgroundStatsDto;
 import com.jiubredeemer.rulebook.domain.room.dto.RoomDto;
 import com.jiubredeemer.rulebook.domain.room.dto.RuleTypeEnum;
 import com.jiubredeemer.rulebook.domain.room.service.RoomService;
@@ -17,6 +20,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class BackgroundService {
     private final BackgroundRepository backgroundRepository;
+    private final BackgroundStatsRepository backgroundStatsRepository;
     private final RoomService roomService;
 
     public List<BackgroundDto> fetchAvailableBackgroundsForRoom(UUID roomId) {
@@ -41,5 +45,16 @@ public class BackgroundService {
                     return dto;
                 })
                 .orElseThrow(() -> new NotFoundException("Background not found by code"));
+    }
+
+    public BackgroundDto create(BackgroundDto backgroundDto) throws JsonProcessingException {
+        RoomDto roomDto = roomService.getById(backgroundDto.getRoomId());
+        backgroundDto.setId(UUID.randomUUID());
+        backgroundDto.setImgUrl(backgroundDto.getId().toString());
+        backgroundDto.setCode(backgroundDto.getId().toString());
+        backgroundDto.getStats().setId(UUID.randomUUID());
+        final BackgroundStatsDto backgroundStatsDto = backgroundStatsRepository.create(backgroundDto.getStats());
+        backgroundDto.setStats(backgroundStatsDto);
+        return backgroundRepository.create(backgroundDto);
     }
 }

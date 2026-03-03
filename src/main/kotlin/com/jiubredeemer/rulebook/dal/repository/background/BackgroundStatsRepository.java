@@ -1,15 +1,14 @@
 package com.jiubredeemer.rulebook.dal.repository.background;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jiubredeemer.rulebook.dal.mapper.background.BackgroundStatsMapper;
 import com.jiubredeemer.rulebook.domain.background.dto.BackgroundStatsDto;
 import com.jiubredeemer.rulebook.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.jooq.DSLContext;
-import org.jooq.Field;
-import org.jooq.JSONB;
+import org.jooq.*;
 import org.jooq.Record;
-import org.jooq.Table;
 import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +25,7 @@ public class BackgroundStatsRepository {
     private final DSLContext dsl;
     private final BackgroundTraitsRepository backgroundTraitsRepository;
     private final BackgroundProficienciesRepository backgroundProficienciesRepository;
+    private final BackgroundStatsMapper backgroundStatsMapper;
     private final ObjectMapper objectMapper;
 
     public BackgroundStatsDto findById(UUID backgroundStatsId) {
@@ -55,9 +55,17 @@ public class BackgroundStatsRepository {
             } else {
                 json = objectMapper.writeValueAsString(value);
             }
-            return objectMapper.readValue(json, new TypeReference<>() {});
+            return objectMapper.readValue(json, new TypeReference<>() {
+            });
         } catch (Exception e) {
             return List.of();
         }
+    }
+
+    public BackgroundStatsDto create(BackgroundStatsDto stats) throws JsonProcessingException {
+        dsl.insertInto(BACKGROUND_STATS)
+                .set(backgroundStatsMapper.mapToRecord(stats))
+                .execute();
+        return findById(stats.getId());
     }
 }

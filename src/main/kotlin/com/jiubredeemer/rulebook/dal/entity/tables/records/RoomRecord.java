@@ -64,6 +64,20 @@ public class RoomRecord extends UpdatableRecordImpl<RoomRecord> {
         return (String) get(2);
     }
 
+    /**
+     * Setter for <code>rules.room.base_rule_type</code>.
+     */
+    public void setBaseRuleType(String value) {
+        set(3, value);
+    }
+
+    /**
+     * Getter for <code>rules.room.base_rule_type</code>.
+     */
+    public String getBaseRuleType() {
+        return (String) get(3);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -87,12 +101,13 @@ public class RoomRecord extends UpdatableRecordImpl<RoomRecord> {
     /**
      * Create a detached, initialised RoomRecord
      */
-    public RoomRecord(UUID roomId, UUID ownerId, String ruleType) {
+    public RoomRecord(UUID roomId, UUID ownerId, String ruleType, String baseRuleType) {
         super(Room.ROOM);
 
         setRoomId(roomId);
         setOwnerId(ownerId);
         setRuleType(ruleType);
+        setBaseRuleType(baseRuleType);
         resetChangedOnNotNull();
     }
 }

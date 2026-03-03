@@ -5,6 +5,7 @@ package com.jiubredeemer.rulebook.dal.entity;
 
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
+import com.jiubredeemer.rulebook.dal.entity.tables.Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundProficiency;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
@@ -50,6 +51,11 @@ public class Rules extends SchemaImpl {
      * Кастомные характеристики существ (для homebrew игр)
      */
     public final Ability ABILITY = Ability.ABILITY;
+
+    /**
+     * Предыстории
+     */
+    public final Background BACKGROUND = Background.BACKGROUND;
 
     /**
      * Владение навыком или инструментом от предыстории
@@ -165,6 +171,7 @@ public class Rules extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             Ability.ABILITY,
+            Background.BACKGROUND,
             BackgroundProficiency.BACKGROUND_PROFICIENCY,
             BackgroundStats.BACKGROUND_STATS,
             BackgroundTrait.BACKGROUND_TRAIT,

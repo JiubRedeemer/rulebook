@@ -22,7 +22,8 @@ public class AbilityService {
 
     public List<AbilityDto> fetchAvailableAbilitiesForRoom(UUID roomId) {
         final RoomDto roomDto = roomService.getById(roomId);
-        return (switch (roomDto.getRuleType()) {
+        RuleTypeEnum selector = chooseRuleType(roomDto);
+        return (switch (selector) {
             case DND5E -> Stream.of(abilityRepository.getFull5eAbilitiesForRoom())
                     .map(abilities -> abilityBuilder.enrichSkills(abilities, RuleTypeEnum.DND5E))
                     .findAny();
@@ -37,7 +38,8 @@ public class AbilityService {
 
     public AbilityDto fetchByCodeAndRoomId(UUID roomId, String code) {
         final RoomDto roomDto = roomService.getById(roomId);
-        return (switch (roomDto.getRuleType()) {
+        RuleTypeEnum selector = chooseRuleType(roomDto);
+        return (switch (selector) {
             case DND5E, DND2024 -> abilityRepository.get5eByCode(code);
             default -> abilityRepository.getByRoomIdAndCode(roomId, code);
         }).map(abilityDto -> {
@@ -47,9 +49,20 @@ public class AbilityService {
     }
 
     public List<AbilityDto> fetchByIds(RoomDto roomDto, Set<UUID> abilityIds) {
-        return (switch (roomDto.getRuleType()) {
+        RuleTypeEnum selector = chooseRuleType(roomDto);
+        return (switch (selector) {
             case DND5E, DND2024 -> abilityRepository.get5eByIds(abilityIds);
             default -> abilityRepository.getByIds(abilityIds);
         }).stream().peek(abilityDto -> abilityDto.setRoomId(roomDto.getRoomId())).toList();
+    }
+
+    private RuleTypeEnum chooseRuleType(RoomDto roomDto) {
+        RuleTypeEnum selector;
+        if (roomDto.getBaseRuleType() != null) {
+            selector = roomDto.getBaseRuleType();
+        } else {
+            selector = roomDto.getRuleType();
+        }
+        return selector;
     }
 }

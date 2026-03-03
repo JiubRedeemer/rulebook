@@ -1,0 +1,1 @@
+UPDATE rules.room SET base_rule_type = rule_type

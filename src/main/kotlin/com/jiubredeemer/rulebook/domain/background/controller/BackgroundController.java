@@ -1,5 +1,6 @@
 package com.jiubredeemer.rulebook.domain.background.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jiubredeemer.rulebook.domain.background.dto.BackgroundDto;
 import com.jiubredeemer.rulebook.domain.background.service.BackgroundService;
 import com.jiubredeemer.rulebook.domain.race.dto.request.RoomIdRequestBody;
@@ -48,5 +49,10 @@ public class BackgroundController {
             @RequestBody RoomIdRequestBody request,
             @PathVariable String code) {
         return backgroundService.fetchByCode(code, request.getRoomId());
+    }
+
+    @PutMapping
+    public BackgroundDto createBackground(@RequestBody BackgroundDto backgroundDto) throws JsonProcessingException {
+        return backgroundService.create(backgroundDto);
     }
 }

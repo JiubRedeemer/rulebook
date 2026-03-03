@@ -31,5 +31,8 @@
     <include file="023-PRO-80-background-ability-modifiers-from-dnd-su.sql" relativeToChangelogFile="true"/>
     <include file="024-PRO-80-init-eberron-backgrounds.sql" relativeToChangelogFile="true"/>
     <include file="025-PRO-80-eberron-backgrounds-from-next-dnd-su.sql" relativeToChangelogFile="true"/>
+    <include file="026-PRO-93-homebrew_base_rule_type.sql" relativeToChangelogFile="true"/>
+    <include file="027-PRO-93-migrate_base_rule_type.sql" relativeToChangelogFile="true"/>
+    <include file="028-PRO-94_add_backgrounds.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

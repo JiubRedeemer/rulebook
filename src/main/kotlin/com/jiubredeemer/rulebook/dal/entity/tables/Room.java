@@ -73,6 +73,11 @@ public class Room extends TableImpl<RoomRecord> {
      */
     public final TableField<RoomRecord, String> RULE_TYPE = createField(DSL.name("rule_type"), SQLDataType.CLOB.nullable(false), this, "Тип правил, например: 4e, 5e, homebrew");
 
+    /**
+     * The column <code>rules.room.base_rule_type</code>.
+     */
+    public final TableField<RoomRecord, String> BASE_RULE_TYPE = createField(DSL.name("base_rule_type"), SQLDataType.CLOB, this, "");
+
     private Room(Name alias, Table<RoomRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }
