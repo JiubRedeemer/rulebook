@@ -1,5 +1,6 @@
 package com.jiubredeemer.rulebook.dal.mapper.clazz;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.ClazzStatsRecord;
 import com.jiubredeemer.rulebook.dal.repository.ability.AbilityRepository;
@@ -7,6 +8,7 @@ import com.jiubredeemer.rulebook.domain.clazz.dto.AbilityShortDto;
 import com.jiubredeemer.rulebook.domain.clazz.dto.ClazzStatsDto;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.jooq.JSONB;
 import org.jooq.RecordMapper;
 import org.springframework.stereotype.Component;
 
@@ -33,5 +35,15 @@ public class ClassStatsMapper implements RecordMapper<ClazzStatsRecord, ClazzSta
         ClazzStatsDto result = record.into(ClazzStatsDto.class);
         result.setSavingThrowsAbilities(savingThrowsMapped);
         return result;
+    }
+
+    public ClazzStatsRecord mapToRecord(ClazzStatsDto dto) throws JsonProcessingException {
+        final ClazzStatsRecord record = new ClazzStatsRecord();
+        record.setId(dto.getId());
+        record.setHpDice(dto.getHpDice());
+        record.setStartHp(dto.getHpDice());
+        record.setSavingThrowsAbility(JSONB.jsonb(objectMapper.writeValueAsString(dto.getSavingThrowsAbilities().stream().map(AbilityShortDto::getCode).toList())));
+        record.setAvailableSkills(JSONB.jsonb(objectMapper.writeValueAsString(dto.getAvailableSkills())));
+        return record;
     }
 }

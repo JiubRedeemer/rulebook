@@ -1,5 +1,6 @@
 package com.jiubredeemer.rulebook.domain.clazz.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jiubredeemer.rulebook.domain.clazz.dto.ClazzDto;
 import com.jiubredeemer.rulebook.domain.clazz.dto.request.ClassesByRoomRequest;
 import com.jiubredeemer.rulebook.domain.clazz.service.ClazzService;
@@ -35,6 +36,35 @@ public class ClazzController {
         return clazzService.fetchAvailableClassesForRoom(request.getRoomId());
     }
 
+    @Operation(summary = "Получение доступных корневых классов для комнаты",
+            description = "Возвращает список доступных корневых классов на основе идентификатора комнаты")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Список классов успешно получен"),
+            @ApiResponse(responseCode = "400", description = "Некорректный идентификатор комнаты"),
+            @ApiResponse(responseCode = "404", description = "Комната не найдена")
+    })
+    @PostMapping("/root")
+    public List<ClazzDto> getRootClassesForRoom(
+            @Parameter(description = "Идентификатор комнаты, для которой нужно получить список корневых классов", required = true)
+            @RequestBody ClassesByRoomRequest request) {
+        return clazzService.fetchAvailableRootClassesForRoom(request.getRoomId());
+    }
+
+    @Operation(summary = "Получение доступных подклассов для комнаты",
+            description = "Возвращает список доступных подклассов на основе идентификатора комнаты")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Список подклассов успешно получен"),
+            @ApiResponse(responseCode = "400", description = "Некорректный идентификатор комнаты"),
+            @ApiResponse(responseCode = "404", description = "Комната не найдена")
+    })
+    @PostMapping("/{code}/subclasses")
+    public List<ClazzDto> getSubClassesForRoom(
+            @Parameter(description = "Идентификатор комнаты, для которой нужно получить список подклассов", required = true)
+            @RequestBody ClassesByRoomRequest request,
+            @PathVariable String code) {
+        return clazzService.fetchAvailableSubClassesForRoom(request.getRoomId(), code);
+    }
+
     @Operation(summary = "Получение доступных классов для комнаты",
             description = "Возвращает список доступных классов на основе идентификатора комнаты")
     @ApiResponses(value = {
@@ -48,5 +78,10 @@ public class ClazzController {
             @RequestBody ClassesByRoomRequest request,
             @PathVariable String code) {
         return clazzService.fetchByCode(request.getRoomId(), code);
+    }
+
+    @PutMapping()
+    public ClazzDto create(@RequestBody ClazzDto clazzDto) throws JsonProcessingException {
+        return clazzService.createClass(clazzDto);
     }
 }

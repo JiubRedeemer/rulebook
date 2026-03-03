@@ -1,6 +1,7 @@
 package com.jiubredeemer.rulebook.dal.repository.clazz;
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
+import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eClazz;
 import com.jiubredeemer.rulebook.dal.mapper.clazz.ClassMapper;
 import com.jiubredeemer.rulebook.dal.mapper.clazz.Default2024ClassMapper;
@@ -14,6 +15,7 @@ import org.jooq.Table;
 import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -83,5 +85,64 @@ public class ClassRepository {
                 .and(Clazz.CLAZZ.CODE.eq(code))
                 .fetchOptional()
                 .map(classMapper);
+    }
+
+    public Collection<ClazzDto> getFull5eRootClassesForRoom() {
+        return dsl.selectFrom(Default_5eClazz.DEFAULT_5E_CLAZZ)
+                .where(Default_5eClazz.DEFAULT_5E_CLAZZ.GROUP_CODE
+                        .eq(Default_5eClazz.DEFAULT_5E_CLAZZ.CODE))
+                .or(Default_5eClazz.DEFAULT_5E_CLAZZ.GROUP_CODE.isNull())
+                .fetch()
+                .map(default5eClassMapper);
+    }
+
+    public Collection<ClazzDto> getFull2024RootClassesForRoom() {
+        return dsl.selectFrom(Default_2024Clazz.DEFAULT_2024_CLAZZ)
+                .where(Default_2024Clazz.DEFAULT_2024_CLAZZ.GROUP_CODE
+                        .eq(Default_2024Clazz.DEFAULT_2024_CLAZZ.CODE))
+                .or(Default_2024Clazz.DEFAULT_2024_CLAZZ.GROUP_CODE.isNull())
+                .fetch()
+                .map(default2024ClassMapper);
+    }
+
+    public Collection<ClazzDto> getFullRootClassesForRoom(UUID roomId) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(Clazz.CLAZZ.ROOM_ID.eq(roomId))
+                .and(Clazz.CLAZZ.GROUP_CODE.eq(Clazz.CLAZZ.CODE)
+                        .or(Clazz.CLAZZ.GROUP_CODE.isNull()))
+                .fetch()
+                .map(classMapper);
+    }
+
+    public Collection<ClazzDto> getFullSubClassesForRoom(UUID roomId, String code) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(Clazz.CLAZZ.ROOM_ID.eq(roomId))
+                .and(Clazz.CLAZZ.GROUP_CODE.eq(code))
+                .fetch()
+                .map(classMapper);
+    }
+
+    public Collection<ClazzDto> getFull5eSubClassesForRoom(String code) {
+        return dsl.selectFrom(Default_5eClazz.DEFAULT_5E_CLAZZ)
+                .where(Default_5eClazz.DEFAULT_5E_CLAZZ.GROUP_CODE.eq(code))
+                .fetch()
+                .map(default5eClassMapper);
+    }
+
+    public Collection<ClazzDto> getFull2024SubClassesForRoom(String code) {
+        return dsl.selectFrom(Default_2024Clazz.DEFAULT_2024_CLAZZ)
+                .where(Default_2024Clazz.DEFAULT_2024_CLAZZ.GROUP_CODE.eq(code))
+                .fetch()
+                .map(default2024ClassMapper);
+    }
+
+    public ClazzDto createClass(ClazzDto clazzDto) {
+        dsl.insertInto(Clazz.CLAZZ)
+                .set(classMapper.mapToRecord(clazzDto))
+                .execute();
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(Clazz.CLAZZ.ID.eq(clazzDto.getId()))
+                .fetchOptional()
+                .map(classMapper).orElseThrow();
     }
 }

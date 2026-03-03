@@ -20,4 +20,17 @@ public class ClassMapper implements RecordMapper<ClazzRecord, ClazzDto> {
         clazzDto.setStats(classStatsRepository.findById(record.getClazzStatsId()));
         return clazzDto;
     }
+
+    public ClazzRecord mapToRecord(ClazzDto clazzDto) {
+        final ClazzRecord clazzRecord = new ClazzRecord();
+        clazzRecord.setId(clazzDto.getId());
+        clazzRecord.setRoomId(clazzDto.getRoomId());
+        clazzRecord.setName(clazzDto.getName());
+        clazzRecord.setDescription(clazzDto.getDescription());
+        clazzRecord.setCode(clazzDto.getCode());
+        clazzRecord.setGroupCode(clazzDto.getGroupCode());
+        clazzRecord.setImgUrl(clazzDto.getImgUrl());
+        clazzRecord.setClazzStatsId(clazzDto.getStats().getId());
+        return clazzRecord;
+    }
 }

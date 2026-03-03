@@ -1,5 +1,6 @@
 package com.jiubredeemer.rulebook.dal.repository.clazz;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClazzStats;
 import com.jiubredeemer.rulebook.dal.mapper.clazz.ClassStatsMapper;
 import com.jiubredeemer.rulebook.domain.clazz.dto.ClazzStatsDto;
@@ -22,5 +23,12 @@ public class ClassStatsRepository {
                         .where(ClazzStats.CLAZZ_STATS.ID.eq(classStatsId))
                         .fetchOptional()).map(classStatsMapper)
                 .orElseThrow(() -> new NotFoundException("ClassStats not found by classStatsId"));
+    }
+
+    public ClazzStatsDto create(ClazzStatsDto stats) throws JsonProcessingException {
+        dsl.insertInto(ClazzStats.CLAZZ_STATS)
+                .set(classStatsMapper.mapToRecord(stats))
+                .execute();
+        return findById(stats.getId());
     }
 }
