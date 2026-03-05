@@ -6,6 +6,7 @@ package com.jiubredeemer.rulebook.dal.entity.tables.records;
 
 import com.jiubredeemer.rulebook.dal.entity.tables.Room;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.jooq.Record1;
@@ -78,6 +79,20 @@ public class RoomRecord extends UpdatableRecordImpl<RoomRecord> {
         return (String) get(3);
     }
 
+    /**
+     * Setter for <code>rules.room.deleted_at</code>.
+     */
+    public void setDeletedAt(LocalDateTime value) {
+        set(4, value);
+    }
+
+    /**
+     * Getter for <code>rules.room.deleted_at</code>.
+     */
+    public LocalDateTime getDeletedAt() {
+        return (LocalDateTime) get(4);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -101,13 +116,14 @@ public class RoomRecord extends UpdatableRecordImpl<RoomRecord> {
     /**
      * Create a detached, initialised RoomRecord
      */
-    public RoomRecord(UUID roomId, UUID ownerId, String ruleType, String baseRuleType) {
+    public RoomRecord(UUID roomId, UUID ownerId, String ruleType, String baseRuleType, LocalDateTime deletedAt) {
         super(Room.ROOM);
 
         setRoomId(roomId);
         setOwnerId(ownerId);
         setRuleType(ruleType);
         setBaseRuleType(baseRuleType);
+        setDeletedAt(deletedAt);
         resetChangedOnNotNull();
     }
 }

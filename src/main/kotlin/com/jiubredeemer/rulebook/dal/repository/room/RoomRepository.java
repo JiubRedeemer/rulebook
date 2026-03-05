@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,6 +40,12 @@ public class RoomRepository {
 
     public void deleteById(UUID roomId) {
         dsl.deleteFrom(Room.ROOM)
+                .where(Room.ROOM.ROOM_ID.eq(roomId))
+                .execute();
+    }
+
+    public void logicDeleteById(UUID roomId) {
+        dsl.update(Room.ROOM).set(Room.ROOM.DELETED_AT, LocalDateTime.now())
                 .where(Room.ROOM.ROOM_ID.eq(roomId))
                 .execute();
     }

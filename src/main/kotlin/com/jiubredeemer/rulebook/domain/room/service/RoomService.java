@@ -24,4 +24,8 @@ public class RoomService {
     public void deleteRoom(UUID roomId) {
         roomRepository.deleteById(roomId);
     }
+
+    public void logicDeleteById(UUID roomId) {
+        roomRepository.logicDeleteById(roomId);
+    }
 }

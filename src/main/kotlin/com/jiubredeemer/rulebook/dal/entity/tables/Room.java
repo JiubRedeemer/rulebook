@@ -11,6 +11,7 @@ import com.jiubredeemer.rulebook.dal.entity.tables.Clazz.ClazzPath;
 import com.jiubredeemer.rulebook.dal.entity.tables.Race.RacePath;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.RoomRecord;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -77,6 +78,11 @@ public class Room extends TableImpl<RoomRecord> {
      * The column <code>rules.room.base_rule_type</code>.
      */
     public final TableField<RoomRecord, String> BASE_RULE_TYPE = createField(DSL.name("base_rule_type"), SQLDataType.CLOB, this, "");
+
+    /**
+     * The column <code>rules.room.deleted_at</code>.
+     */
+    public final TableField<RoomRecord, LocalDateTime> DELETED_AT = createField(DSL.name("deleted_at"), SQLDataType.LOCALDATETIME(6), this, "");
 
     private Room(Name alias, Table<RoomRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
