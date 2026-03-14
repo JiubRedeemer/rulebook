@@ -35,5 +35,6 @@
     <include file="027-PRO-93-migrate_base_rule_type.sql" relativeToChangelogFile="true"/>
     <include file="028-PRO-94_add_backgrounds.sql" relativeToChangelogFile="true"/>
     <include file="029-PRO-31_delete_room.sql" relativeToChangelogFile="true"/>
+    <include file="030-PRO-80-add-eberron-background-descriptions.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -47,7 +47,7 @@ public class RoomController {
     }
 
     @GetMapping("{roomId}/rules")
-    public RoomDto getRoomRules(@Parameter(description = "ID комнаты для удаления", required = true)
+    public RoomDto getRoomRules(@Parameter(description = "ID комнаты для поиска правил", required = true)
                                 @PathVariable("roomId") UUID roomId) {
         return roomService.getById(roomId);
     }
