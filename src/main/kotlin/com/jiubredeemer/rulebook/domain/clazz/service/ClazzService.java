@@ -145,7 +145,9 @@ public class ClazzService {
         } else {
             clazzDto.setImgUrl(clazzDto.getId().toString());
         }
-        clazzDto.setCode(clazzDto.getId().toString());
+        if (clazzDto.getCode() == null) {
+            clazzDto.setCode(clazzDto.getId().toString());
+        }
 
         clazzDto.getStats().setId(UUID.randomUUID());
         final ClazzStatsDto clazzStatsDto = classStatsRepository.create(clazzDto.getStats());
