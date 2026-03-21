@@ -145,6 +145,7 @@ public class ClazzService {
         } else {
             clazzDto.setImgUrl(clazzDto.getId().toString());
         }
+
         if (clazzDto.getCode() == null) {
             clazzDto.setCode(clazzDto.getId().toString());
         }
