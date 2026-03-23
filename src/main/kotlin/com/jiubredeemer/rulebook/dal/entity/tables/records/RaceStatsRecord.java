@@ -105,6 +105,20 @@ public class RaceStatsRecord extends UpdatableRecordImpl<RaceStatsRecord> {
         return (JSONB) get(5);
     }
 
+    /**
+     * Setter for <code>rules.race_stats.race_traits</code>.
+     */
+    public void setRaceTraits(JSONB value) {
+        set(6, value);
+    }
+
+    /**
+     * Getter for <code>rules.race_stats.race_traits</code>.
+     */
+    public JSONB getRaceTraits() {
+        return (JSONB) get(6);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -128,7 +142,7 @@ public class RaceStatsRecord extends UpdatableRecordImpl<RaceStatsRecord> {
     /**
      * Create a detached, initialised RaceStatsRecord
      */
-    public RaceStatsRecord(UUID id, Integer maxAge, Integer maxHeight, Integer maxWeight, Integer baseSpeed, JSONB abilityModifiers) {
+    public RaceStatsRecord(UUID id, Integer maxAge, Integer maxHeight, Integer maxWeight, Integer baseSpeed, JSONB abilityModifiers, JSONB raceTraits) {
         super(RaceStats.RACE_STATS);
 
         setId(id);
@@ -137,6 +151,7 @@ public class RaceStatsRecord extends UpdatableRecordImpl<RaceStatsRecord> {
         setMaxWeight(maxWeight);
         setBaseSpeed(baseSpeed);
         setAbilityModifiers(abilityModifiers);
+        setRaceTraits(raceTraits);
         resetChangedOnNotNull();
     }
 }
