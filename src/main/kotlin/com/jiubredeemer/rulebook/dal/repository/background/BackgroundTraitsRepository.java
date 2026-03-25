@@ -31,6 +31,23 @@ public class BackgroundTraitsRepository {
                 .map(this::toDto);
     }
 
+    public List<BackgroundTraitDto> create(List<BackgroundTraitDto> traits, UUID backgroundStatsId) {
+        if (traits == null || traits.isEmpty()) {
+            return List.of();
+        }
+
+        traits.forEach(trait -> {
+            trait.setId(trait.getId() == null ? UUID.randomUUID() : trait.getId());
+            trait.setBackgroundStatsId(backgroundStatsId);
+            dsl.insertInto(BACKGROUND_TRAIT)
+                    .columns(ID, BACKGROUND_STATS_ID, NAME, CODE, DESCRIPTION)
+                    .values(trait.getId(), trait.getBackgroundStatsId(), trait.getName(), trait.getCode(), trait.getDescription())
+                    .execute();
+        });
+
+        return findByBackgroundStatsId(backgroundStatsId);
+    }
+
     private BackgroundTraitDto toDto(Record r) {
         BackgroundTraitDto dto = new BackgroundTraitDto();
         dto.setId(r.get(ID));

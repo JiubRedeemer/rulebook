@@ -90,6 +90,11 @@ public class RaceStats extends TableImpl<RaceStatsRecord> {
      */
     public final TableField<RaceStatsRecord, JSONB> ABILITY_MODIFIERS = createField(DSL.name("ability_modifiers"), SQLDataType.JSONB.nullable(false), this, "");
 
+    /**
+     * The column <code>rules.race_stats.race_traits</code>.
+     */
+    public final TableField<RaceStatsRecord, JSONB> RACE_TRAITS = createField(DSL.name("race_traits"), SQLDataType.JSONB.nullable(false).defaultValue(DSL.field(DSL.raw("'[]'::jsonb"), SQLDataType.JSONB)), this, "");
+
     private RaceStats(Name alias, Table<RaceStatsRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }

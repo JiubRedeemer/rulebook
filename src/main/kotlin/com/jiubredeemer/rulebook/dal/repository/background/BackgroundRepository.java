@@ -48,6 +48,13 @@ public class BackgroundRepository {
                 .orElseThrow();
     }
 
+    public Optional<BackgroundDto> getFullBackgroundByCode(String code) {
+        return dsl.selectFrom(Background.BACKGROUND)
+                .where(Background.BACKGROUND.CODE.eq(code))
+                .fetchOptional()
+                .map(backgroundMapper);
+    }
+
     public Optional<BackgroundDto> getFull2024BackgroundByCode(String code) {
         return dsl.selectFrom(DEFAULT_2024_BACKGROUND)
                 .where(CODE.eq(code))
