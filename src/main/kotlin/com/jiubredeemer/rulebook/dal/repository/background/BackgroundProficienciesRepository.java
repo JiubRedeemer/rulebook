@@ -31,6 +31,28 @@ public class BackgroundProficienciesRepository {
                 .map(this::toDto);
     }
 
+    public List<BackgroundProficiencyDto> create(List<BackgroundProficiencyDto> proficiencies, UUID backgroundStatsId) {
+        if (proficiencies == null || proficiencies.isEmpty()) {
+            return List.of();
+        }
+
+        proficiencies.forEach(proficiency -> {
+            proficiency.setId(proficiency.getId() == null ? UUID.randomUUID() : proficiency.getId());
+            proficiency.setBackgroundStatsId(backgroundStatsId);
+            dsl.insertInto(BACKGROUND_PROFICIENCY)
+                    .columns(ID, BACKGROUND_STATS_ID, TYPE, CODE)
+                    .values(
+                            proficiency.getId(),
+                            proficiency.getBackgroundStatsId(),
+                            proficiency.getType() == null ? null : proficiency.getType().name(),
+                            proficiency.getCode()
+                    )
+                    .execute();
+        });
+
+        return findByBackgroundStatsId(backgroundStatsId);
+    }
+
     private BackgroundProficiencyDto toDto(Record r) {
         BackgroundProficiencyDto dto = new BackgroundProficiencyDto();
         dto.setId(r.get(ID));

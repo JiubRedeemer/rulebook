@@ -40,17 +40,29 @@ public class BackgroundService {
         if (roomDto.getRuleType().equals(RuleTypeEnum.DND2024)) {
             List<BackgroundDto> list = new ArrayList<>(backgroundRepository.getFull2024BackgroundsForRoom());
             list.addAll(backgroundRepository.getFullEberronBackgroundsForRoom());
-            return list.stream().peek(dto -> dto.setRoomId(roomId)).toList();
+            return list.stream()
+                    .map(dto -> enrichOnRead(dto, roomId))
+                    .toList();
         } else {
             List<BackgroundDto> list = new ArrayList<>(backgroundRepository.getFullBackgroundsForRoom(roomId));
-            return list.stream().peek(dto -> dto.setRoomId(roomId)).toList();
+            return list.stream()
+                    .map(dto -> enrichOnRead(dto, roomId))
+                    .toList();
         }
     }
 
     public BackgroundDto fetchByCode(String code, UUID roomId) {
         RoomDto roomDto = roomService.getById(roomId);
-        if (roomDto.getRuleType() != RuleTypeEnum.DND2024) {
+        if (roomDto.getRuleType() != RuleTypeEnum.DND2024 && roomDto.getBaseRuleType() != RuleTypeEnum.DND2024) {
             throw new NotFoundException("Backgrounds are only available for D&D 2024 rules");
+        }
+        if (roomDto.getRuleType().equals(RuleTypeEnum.HOMEBREW)) {
+            return backgroundRepository.getFullBackgroundByCode(code)
+                    .map(dto -> {
+                        dto.setRoomId(roomId);
+                        return dto;
+                    })
+                    .orElseThrow(() -> new NotFoundException("Background not found by code"));
         }
         return backgroundRepository.getFull2024BackgroundByCode(code)
                 .or(() -> backgroundRepository.getFullEberronBackgroundByCode(code))
@@ -66,9 +78,21 @@ public class BackgroundService {
         backgroundDto.setId(UUID.randomUUID());
         backgroundDto.setImgUrl(backgroundDto.getImgUrl() == null ? backgroundDto.getId().toString() : backgroundDto.getImgUrl());
         backgroundDto.setCode(backgroundDto.getId().toString());
-        backgroundDto.getStats().setId(UUID.randomUUID());
-        final BackgroundStatsDto backgroundStatsDto = backgroundStatsRepository.create(backgroundDto.getStats());
-        backgroundDto.setStats(backgroundStatsDto);
+        if (backgroundDto.getStats().getId() != null) {
+            backgroundDto.getStats().setId(backgroundDto.getStats().getId());
+        } else {
+            backgroundDto.getStats().setId(UUID.randomUUID());
+            final BackgroundStatsDto backgroundStatsDto = backgroundStatsRepository.create(backgroundDto.getStats());
+            backgroundDto.setStats(backgroundStatsDto);
+        }
         return backgroundRepository.create(backgroundDto);
+    }
+
+    private BackgroundDto enrichOnRead(BackgroundDto dto, UUID roomId) {
+        dto.setRoomId(roomId);
+        if (dto.getStats() != null && dto.getStats().getId() != null) {
+            dto.setStats(backgroundStatsRepository.findById(dto.getStats().getId()));
+        }
+        return dto;
     }
 }

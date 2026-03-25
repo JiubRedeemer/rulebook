@@ -66,6 +66,8 @@ public class BackgroundStatsRepository {
         dsl.insertInto(BACKGROUND_STATS)
                 .set(backgroundStatsMapper.mapToRecord(stats))
                 .execute();
+        stats.setTraits(backgroundTraitsRepository.create(stats.getTraits(), stats.getId()));
+        stats.setProficiencies(backgroundProficienciesRepository.create(stats.getProficiencies(), stats.getId()));
         return findById(stats.getId());
     }
 }
