@@ -131,9 +131,13 @@ public class RaceService {
         raceDto.setCode(raceDto.getId().toString());
         raceDto.setSpeciesCode(raceDto.getSpeciesCode() == null ? raceDto.getCode() : raceDto.getSpeciesCode());
         raceDto.setImgUrl(raceDto.getImgUrl() == null ? raceDto.getId().toString() : raceDto.getImgUrl());
-        raceDto.getStats().setId(UUID.randomUUID());
-        final RaceStatsDto raceStatsDto = raceStatsRepository.create(raceDto.getStats());
-        raceDto.setStats(raceStatsDto);
+        if (raceDto.getStats().getId() != null) {
+            raceDto.setStats(raceDto.getStats());
+        } else {
+            raceDto.getStats().setId(UUID.randomUUID());
+            final RaceStatsDto raceStatsDto = raceStatsRepository.create(raceDto.getStats());
+            raceDto.setStats(raceStatsDto);
+        }
         return raceRepository.createRace(raceDto);
     }
 }
