@@ -38,6 +38,7 @@ public class BackgroundTraitsRepository {
 
         traits.forEach(trait -> {
             trait.setId(trait.getId() == null ? UUID.randomUUID() : trait.getId());
+            trait.setCode(trait.getCode() == null ? trait.getId().toString() : trait.getCode());
             trait.setBackgroundStatsId(backgroundStatsId);
             dsl.insertInto(BACKGROUND_TRAIT)
                     .columns(ID, BACKGROUND_STATS_ID, NAME, CODE, DESCRIPTION)

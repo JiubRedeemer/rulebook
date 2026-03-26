@@ -21,6 +21,7 @@ import java.util.UUID;
 public class RaceStatsRepository {
     private final DSLContext dsl;
     private final RaceStatsMapper raceStatsMapper;
+    private final RaceTraitsRepository raceTraitsRepository;
     private final ObjectMapper objectMapper;
     private static final Field<JSONB> RACE_STATS_RACE_TRAITS =
             DSL.field(DSL.name("race_traits"), JSONB.class);
@@ -40,6 +41,7 @@ public class RaceStatsRepository {
                 .set(raceStatsMapper.mapToRecord(raceStatsDto))
                 .set(RACE_STATS_RACE_TRAITS, JSONB.jsonb(serializedTraits))
                 .execute();
+        raceStatsDto.setTraits(raceTraitsRepository.create(raceStatsDto.getTraits(), raceStatsDto.getId()));
 
         return dsl.selectFrom(RaceStats.RACE_STATS)
                 .where(RaceStats.RACE_STATS.ID.eq(raceStatsDto.getId()))
