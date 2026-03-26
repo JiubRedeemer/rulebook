@@ -16,7 +16,6 @@ public class ClassMapper implements RecordMapper<ClazzRecord, ClazzDto> {
     @Override
     public ClazzDto map(ClazzRecord record) {
         ClazzDto clazzDto = record.into(ClazzDto.class);
-        clazzDto.setGroupCode(record.getCode());
         clazzDto.setStats(classStatsRepository.findById(record.getClazzStatsId()));
         return clazzDto;
     }
