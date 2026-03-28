@@ -77,7 +77,7 @@ public class BackgroundService {
         RoomDto roomDto = roomService.getById(backgroundDto.getRoomId());
         backgroundDto.setId(UUID.randomUUID());
         backgroundDto.setImgUrl(backgroundDto.getImgUrl() == null ? backgroundDto.getId().toString() : backgroundDto.getImgUrl());
-        backgroundDto.setCode(backgroundDto.getId().toString());
+        backgroundDto.setCode(backgroundDto.getCode() == null ? backgroundDto.getId().toString() : backgroundDto.getCode());
         if (backgroundDto.getStats().getId() != null) {
             backgroundDto.getStats().setId(backgroundDto.getStats().getId());
         } else {
