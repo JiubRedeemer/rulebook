@@ -21,3 +21,8 @@ jooq:
     target:
       package-name: com.jiubredeemer.rulebook.dal.entity
       directory: D:/Work/Pets/ProjectD/rulebook/src/main/kotlin
+
+
+rulebook:
+  license-mode:
+    cc-by-4: false

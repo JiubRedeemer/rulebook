@@ -25,6 +25,8 @@ import java.util.UUID;
 public class ClassRepository {
     private static final Table<Record> DEFAULT_2024_CLAZZ = DSL.table(DSL.name("rules", "default_2024_clazz"));
     private static final Field<String> DEFAULT_2024_CLAZZ_CODE = DSL.field(DSL.name("code"), String.class);
+    private static final Table<Record> SRD_2024_CLAZZ = DSL.table(DSL.name("rules", "srd_2024_clazz"));
+    private static final Field<String> SRD_2024_CLAZZ_CODE = DSL.field(DSL.name("code"), String.class);
 
     private final DSLContext dsl;
     private final ClassMapper classMapper;
@@ -50,6 +52,12 @@ public class ClassRepository {
                 .map(default2024ClassMapper);
     }
 
+    public List<ClazzDto> getFull2024SrdClassesForRoom() {
+        return dsl.selectFrom(SRD_2024_CLAZZ)
+                .fetch()
+                .map(default2024ClassMapper);
+    }
+
     public Optional<ClazzDto> getFullClassByCode(UUID roomId, String code) {
         return dsl.selectFrom(Clazz.CLAZZ)
                 .where(Clazz.CLAZZ.ROOM_ID.eq(roomId))
@@ -68,6 +76,13 @@ public class ClassRepository {
     public Optional<ClazzDto> getFull2024ClassByCode(String code) {
         return dsl.selectFrom(DEFAULT_2024_CLAZZ)
                 .where(DEFAULT_2024_CLAZZ_CODE.eq(code))
+                .fetchOptional()
+                .map(default2024ClassMapper);
+    }
+
+    public Optional<ClazzDto> getFull2024SrdClassByCode(String code) {
+        return dsl.selectFrom(SRD_2024_CLAZZ)
+                .where(SRD_2024_CLAZZ_CODE.eq(code))
                 .fetchOptional()
                 .map(default2024ClassMapper);
     }
@@ -105,6 +120,16 @@ public class ClassRepository {
                 .map(default2024ClassMapper);
     }
 
+    public Collection<ClazzDto> getFull2024SrdRootClassesForRoom() {
+        Field<String> groupCode = DSL.field(DSL.name("group_code"), String.class);
+        Field<String> code = DSL.field(DSL.name("code"), String.class);
+        return dsl.selectFrom(SRD_2024_CLAZZ)
+                .where(groupCode.eq(code))
+                .or(groupCode.isNull())
+                .fetch()
+                .map(default2024ClassMapper);
+    }
+
     public Collection<ClazzDto> getFullRootClassesForRoom(UUID roomId) {
         return dsl.selectFrom(Clazz.CLAZZ)
                 .where(Clazz.CLAZZ.ROOM_ID.eq(roomId))
@@ -132,6 +157,14 @@ public class ClassRepository {
     public Collection<ClazzDto> getFull2024SubClassesForRoom(String code) {
         return dsl.selectFrom(Default_2024Clazz.DEFAULT_2024_CLAZZ)
                 .where(Default_2024Clazz.DEFAULT_2024_CLAZZ.GROUP_CODE.eq(code))
+                .fetch()
+                .map(default2024ClassMapper);
+    }
+
+    public Collection<ClazzDto> getFull2024SrdSubClassesForRoom(String code) {
+        Field<String> groupCode = DSL.field(DSL.name("group_code"), String.class);
+        return dsl.selectFrom(SRD_2024_CLAZZ)
+                .where(groupCode.eq(code))
                 .fetch()
                 .map(default2024ClassMapper);
     }

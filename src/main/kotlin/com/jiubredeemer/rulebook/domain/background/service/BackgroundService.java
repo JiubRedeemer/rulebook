@@ -1,6 +1,7 @@
 package com.jiubredeemer.rulebook.domain.background.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.jiubredeemer.rulebook.configuration.LicenseMode;
 import com.jiubredeemer.rulebook.dal.repository.background.BackgroundRepository;
 import com.jiubredeemer.rulebook.dal.repository.background.BackgroundStatsRepository;
 import com.jiubredeemer.rulebook.domain.background.dto.BackgroundDto;
@@ -24,6 +25,7 @@ public class BackgroundService {
     private final BackgroundRepository backgroundRepository;
     private final BackgroundStatsRepository backgroundStatsRepository;
     private final RoomService roomService;
+    private final LicenseMode licenseMode;
 
     public List<BackgroundDto> fetchAvailableBackgroundsForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
         RoomDto roomDto;
@@ -38,8 +40,13 @@ public class BackgroundService {
             return List.of();
         }
         if (roomDto.getRuleType().equals(RuleTypeEnum.DND2024)) {
-            List<BackgroundDto> list = new ArrayList<>(backgroundRepository.getFull2024BackgroundsForRoom());
-            list.addAll(backgroundRepository.getFullEberronBackgroundsForRoom());
+            List<BackgroundDto> list;
+            if (licenseMode.getCcBy4()) {
+                list = new ArrayList<>(backgroundRepository.getFull2024SrdBackgroundsForRoom());
+            } else {
+                list = new ArrayList<>(backgroundRepository.getFull2024BackgroundsForRoom());
+                list.addAll(backgroundRepository.getFullEberronBackgroundsForRoom());
+            }
             return list.stream()
                     .map(dto -> enrichOnRead(dto, roomId))
                     .toList();
@@ -64,8 +71,10 @@ public class BackgroundService {
                     })
                     .orElseThrow(() -> new NotFoundException("Background not found by code"));
         }
-        return backgroundRepository.getFull2024BackgroundByCode(code)
-                .or(() -> backgroundRepository.getFullEberronBackgroundByCode(code))
+        return (licenseMode.getCcBy4()
+                ? backgroundRepository.getFull2024SrdBackgroundByCode(code)
+                : backgroundRepository.getFull2024BackgroundByCode(code)
+                .or(() -> backgroundRepository.getFullEberronBackgroundByCode(code)))
                 .map(dto -> {
                     dto.setRoomId(roomId);
                     return dto;
