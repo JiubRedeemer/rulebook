@@ -25,6 +25,9 @@ import com.jiubredeemer.rulebook.dal.entity.tables.RaceStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Room;
 import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
+import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Background;
+import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Clazz;
+import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Race;
 
 import java.util.Arrays;
 import java.util.List;
@@ -155,6 +158,21 @@ public class Rules extends SchemaImpl {
     public final Skill SKILL = Skill.SKILL;
 
     /**
+     * The table <code>rules.srd_2024_background</code>.
+     */
+    public final Srd_2024Background SRD_2024_BACKGROUND = Srd_2024Background.SRD_2024_BACKGROUND;
+
+    /**
+     * The table <code>rules.srd_2024_clazz</code>.
+     */
+    public final Srd_2024Clazz SRD_2024_CLAZZ = Srd_2024Clazz.SRD_2024_CLAZZ;
+
+    /**
+     * The table <code>rules.srd_2024_race</code>.
+     */
+    public final Srd_2024Race SRD_2024_RACE = Srd_2024Race.SRD_2024_RACE;
+
+    /**
      * No further instances allowed
      */
     private Rules() {
@@ -190,7 +208,10 @@ public class Rules extends SchemaImpl {
             RaceStats.RACE_STATS,
             RaceTrait.RACE_TRAIT,
             Room.ROOM,
-            Skill.SKILL
+            Skill.SKILL,
+            Srd_2024Background.SRD_2024_BACKGROUND,
+            Srd_2024Clazz.SRD_2024_CLAZZ,
+            Srd_2024Race.SRD_2024_RACE
         );
     }
 }

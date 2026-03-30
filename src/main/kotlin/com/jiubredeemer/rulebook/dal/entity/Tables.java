@@ -25,6 +25,9 @@ import com.jiubredeemer.rulebook.dal.entity.tables.RaceStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Room;
 import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
+import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Background;
+import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Clazz;
+import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Race;
 
 
 /**
@@ -139,4 +142,19 @@ public class Tables {
      * Кастомные навыки существ (для homebrew игр)
      */
     public static final Skill SKILL = Skill.SKILL;
+
+    /**
+     * The table <code>rules.srd_2024_background</code>.
+     */
+    public static final Srd_2024Background SRD_2024_BACKGROUND = Srd_2024Background.SRD_2024_BACKGROUND;
+
+    /**
+     * The table <code>rules.srd_2024_clazz</code>.
+     */
+    public static final Srd_2024Clazz SRD_2024_CLAZZ = Srd_2024Clazz.SRD_2024_CLAZZ;
+
+    /**
+     * The table <code>rules.srd_2024_race</code>.
+     */
+    public static final Srd_2024Race SRD_2024_RACE = Srd_2024Race.SRD_2024_RACE;
 }

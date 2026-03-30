@@ -1,6 +1,7 @@
 package com.jiubredeemer.rulebook.domain.race.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.jiubredeemer.rulebook.configuration.LicenseMode;
 import com.jiubredeemer.rulebook.dal.repository.race.RaceRepository;
 import com.jiubredeemer.rulebook.dal.repository.race.RaceStatsRepository;
 import com.jiubredeemer.rulebook.domain.race.dto.RaceDto;
@@ -26,6 +27,8 @@ public class RaceService {
     private final RaceStatsRepository raceStatsRepository;
     private final RoomService roomService;
 
+    private final LicenseMode licenseMode;
+
     public List<RaceDto> fetchAvailableRacesForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
         RoomDto roomDto;
         if (roomId.equals(ZERO_UUID)) {
@@ -37,7 +40,13 @@ public class RaceService {
         }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> raceRepository.getFull5eRacesForRoom();
-            case DND2024 -> raceRepository.getFull2024RacesForRoom();
+            case DND2024 -> {
+                if (licenseMode.getCcBy4()) {
+                    yield raceRepository.getFull2024SrdRacesForRoom();
+                } else {
+                    yield raceRepository.getFull2024RacesForRoom();
+                }
+            }
             default -> raceRepository.getFullRacesForRoom(roomId);
         }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }
@@ -53,7 +62,13 @@ public class RaceService {
         }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> raceRepository.getFull5eRootRacesForRoom();
-            case DND2024 -> raceRepository.getFull2024RootRacesForRoom();
+            case DND2024 -> {
+                if (licenseMode.getCcBy4()) {
+                    yield raceRepository.getFull2024SrdRacesForRoom();
+                } else {
+                    yield raceRepository.getFull2024RacesForRoom();
+                }
+            }
             default -> raceRepository.getFullRootRacesForRoom(roomId);
         }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }
@@ -62,7 +77,13 @@ public class RaceService {
         final RoomDto roomDto = roomService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
             case DND5E -> raceRepository.getFull5eRaceByCode(raceCode);
-            case DND2024 -> raceRepository.getFull2024RaceByCode(raceCode);
+            case DND2024 -> {
+                if (licenseMode.getCcBy4()) {
+                    yield raceRepository.getFull2024SrdRaceByCode(raceCode);
+                } else {
+                    yield raceRepository.getFull2024RaceByCode(raceCode);
+                }
+            }
             default -> raceRepository.getFullRaceByCode(raceCode, roomId);
         }).map(raceDto -> {
             raceDto.setRoomId(roomId);
@@ -81,7 +102,13 @@ public class RaceService {
         }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> raceRepository.getFull5eRaceSubspeciesByCode(raceCode);
-            case DND2024 -> raceRepository.getFull2024RaceSubspeciesByCode(raceCode);
+            case DND2024 -> {
+                if (licenseMode.getCcBy4()) {
+                    yield raceRepository.getFull2024SrdRaceSubspeciesByCode(raceCode);
+                } else {
+                    yield raceRepository.getFull2024RaceSubspeciesByCode(raceCode);
+                }
+            }
             default -> raceRepository.getFullRaceSubspeciesByCode(raceCode, roomId);
         }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }

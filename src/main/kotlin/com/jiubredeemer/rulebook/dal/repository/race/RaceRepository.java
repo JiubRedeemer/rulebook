@@ -3,8 +3,10 @@ package com.jiubredeemer.rulebook.dal.repository.race;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Race;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eRace;
 import com.jiubredeemer.rulebook.dal.entity.tables.Race;
+import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Race;
 import com.jiubredeemer.rulebook.dal.mapper.race.Default2024RaceMapper;
 import com.jiubredeemer.rulebook.dal.mapper.race.Default5eRaceMapper;
+import com.jiubredeemer.rulebook.dal.mapper.race.DefaultSrd2024RaceMapper;
 import com.jiubredeemer.rulebook.dal.mapper.race.RaceMapper;
 import com.jiubredeemer.rulebook.domain.race.dto.RaceDto;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,7 @@ public class RaceRepository {
     private final RaceMapper raceMapper;
     private final Default5eRaceMapper default5eRaceMapper;
     private final Default2024RaceMapper default2024RaceMapper;
+    private final DefaultSrd2024RaceMapper default2024SrdRaceMapper;
 
     public List<RaceDto> getFullRacesForRoom(UUID roomId) {
         return dsl.selectFrom(Race.RACE)
@@ -50,6 +53,12 @@ public class RaceRepository {
                 .map(default2024RaceMapper);
     }
 
+    public List<RaceDto> getFull2024SrdRacesForRoom() {
+        return dsl.selectFrom(Srd_2024Race.SRD_2024_RACE)
+                .fetch()
+                .map(default2024SrdRaceMapper);
+    }
+
     public Optional<RaceDto> getFull5eRaceByCode(String raceCode) {
         return dsl.selectFrom(Default_5eRace.DEFAULT_5E_RACE)
                 .where(Default_5eRace.DEFAULT_5E_RACE.CODE.eq(raceCode))
@@ -62,6 +71,13 @@ public class RaceRepository {
                 .where(DEFAULT_2024_RACE_CODE.eq(raceCode))
                 .fetchOptional()
                 .map(default2024RaceMapper);
+    }
+
+    public Optional<RaceDto> getFull2024SrdRaceByCode(String raceCode) {
+        return dsl.selectFrom(Srd_2024Race.SRD_2024_RACE)
+                .where(Srd_2024Race.SRD_2024_RACE.CODE.eq(raceCode))
+                .fetchOptional()
+                .map(default2024SrdRaceMapper);
     }
 
     public Optional<RaceDto> getFullRaceByCode(String raceCode, UUID roomId) {
@@ -112,6 +128,13 @@ public class RaceRepository {
                 .fetch()
                 .map(default2024RaceMapper);
     }
+    public Collection<RaceDto> getFull2024SrdRaceSubspeciesByCode(String raceCode) {
+        return dsl.selectFrom(Srd_2024Race.SRD_2024_RACE)
+                .where(Srd_2024Race.SRD_2024_RACE.SPECIES_CODE.eq(raceCode))
+                .and(Srd_2024Race.SRD_2024_RACE.CODE.notEqual(raceCode))
+                .fetch()
+                .map(default2024SrdRaceMapper);
+    }
 
     public Collection<RaceDto> getFullRaceSubspeciesByCode(String raceCode, UUID roomId) {
         return dsl.selectFrom(Race.RACE)
@@ -132,4 +155,6 @@ public class RaceRepository {
                 .map(raceMapper)
                 .orElseThrow();
     }
+
+
 }

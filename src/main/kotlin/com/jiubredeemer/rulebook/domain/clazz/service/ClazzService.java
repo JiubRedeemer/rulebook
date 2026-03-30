@@ -1,6 +1,7 @@
 package com.jiubredeemer.rulebook.domain.clazz.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.jiubredeemer.rulebook.configuration.LicenseMode;
 import com.jiubredeemer.rulebook.dal.repository.clazz.ClassRepository;
 import com.jiubredeemer.rulebook.dal.repository.clazz.ClassStatsRepository;
 import com.jiubredeemer.rulebook.domain.clazz.dto.ClazzDto;
@@ -26,6 +27,7 @@ public class ClazzService {
     private final ClassRepository classRepository;
     private final ClassStatsRepository classStatsRepository;
     private final RoomService roomService;
+    private final LicenseMode licenseMode;
 
     public List<ClazzDto> fetchAvailableClassesForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
         RoomDto roomDto;
@@ -38,7 +40,13 @@ public class ClazzService {
         }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> classRepository.getFull5eClassesForRoom();
-            case DND2024 -> classRepository.getFull2024ClassesForRoom();
+            case DND2024 -> {
+                if (licenseMode.getCcBy4()) {
+                    yield classRepository.getFull2024SrdClassesForRoom();
+                } else {
+                    yield classRepository.getFull2024ClassesForRoom();
+                }
+            }
             default -> classRepository.getFullClassesForRoom(roomId);
         }).stream().peek(classDto -> classDto.setRoomId(roomId)).toList();
     }
@@ -47,7 +55,13 @@ public class ClazzService {
         final RoomDto roomDto = roomService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
             case DND5E -> classRepository.getFull5eClassByCode(code);
-            case DND2024 -> classRepository.getFull2024ClassByCode(code);
+            case DND2024 -> {
+                if (licenseMode.getCcBy4()) {
+                    yield classRepository.getFull2024SrdClassByCode(code);
+                } else {
+                    yield classRepository.getFull2024ClassByCode(code);
+                }
+            }
             default -> classRepository.getFullClassByCode(roomId, code);
         }).map(classDto -> {
             classDto.setRoomId(roomId);
@@ -59,7 +73,13 @@ public class ClazzService {
         final RoomDto roomDto = roomService.getById(roomId);
         return (switch (roomDto.getRuleType()) {
             case DND5E -> classRepository.getFull5eRaceByCode(code);
-            case DND2024 -> classRepository.getFull2024ClassByCode(code);
+            case DND2024 -> {
+                if (licenseMode.getCcBy4()) {
+                    yield classRepository.getFull2024SrdClassByCode(code);
+                } else {
+                    yield classRepository.getFull2024ClassByCode(code);
+                }
+            }
             default -> classRepository.getFullRaceByCode(code, roomId);
         }).map(classDto -> {
             classDto.setRoomId(roomId);
@@ -117,7 +137,13 @@ public class ClazzService {
         }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> classRepository.getFull5eRootClassesForRoom();
-            case DND2024 -> classRepository.getFull2024RootClassesForRoom();
+            case DND2024 -> {
+                if (licenseMode.getCcBy4()) {
+                    yield classRepository.getFull2024SrdRootClassesForRoom();
+                } else {
+                    yield classRepository.getFull2024RootClassesForRoom();
+                }
+            }
             default -> classRepository.getFullRootClassesForRoom(roomId);
         }).stream().peek(classDto -> classDto.setRoomId(roomId)).toList();
     }
@@ -133,7 +159,13 @@ public class ClazzService {
         }
         return (switch (roomDto.getRuleType()) {
             case DND5E -> classRepository.getFull5eSubClassesForRoom(code);
-            case DND2024 -> classRepository.getFull2024SubClassesForRoom(code);
+            case DND2024 -> {
+                if (licenseMode.getCcBy4()) {
+                    yield classRepository.getFull2024SrdSubClassesForRoom(code);
+                } else {
+                    yield classRepository.getFull2024SubClassesForRoom(code);
+                }
+            }
             default -> classRepository.getFullSubClassesForRoom(roomId, code);
         }).stream().peek(classDto -> classDto.setRoomId(roomId)).toList();
     }

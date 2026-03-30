@@ -25,6 +25,9 @@ import com.jiubredeemer.rulebook.dal.entity.tables.RaceStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Room;
 import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
+import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Background;
+import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Clazz;
+import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Race;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.AbilityRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.BackgroundProficiencyRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.BackgroundRecord;
@@ -46,6 +49,9 @@ import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceStatsRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceTraitRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.RoomRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.SkillRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.Srd_2024BackgroundRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.Srd_2024ClazzRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.Srd_2024RaceRecord;
 
 import org.jooq.ForeignKey;
 import org.jooq.TableField;
@@ -86,6 +92,9 @@ public class Keys {
     public static final UniqueKey<RaceTraitRecord> RACE_TRAIT_PKEY = Internal.createUniqueKey(RaceTrait.RACE_TRAIT, DSL.name("race_trait_pkey"), new TableField[] { RaceTrait.RACE_TRAIT.ID }, true);
     public static final UniqueKey<RoomRecord> ROOM_PKEY = Internal.createUniqueKey(Room.ROOM, DSL.name("room_pkey"), new TableField[] { Room.ROOM.ROOM_ID }, true);
     public static final UniqueKey<SkillRecord> SKILL_PKEY = Internal.createUniqueKey(Skill.SKILL, DSL.name("skill_pkey"), new TableField[] { Skill.SKILL.ID }, true);
+    public static final UniqueKey<Srd_2024BackgroundRecord> SRD_2024_BACKGROUND_PKEY = Internal.createUniqueKey(Srd_2024Background.SRD_2024_BACKGROUND, DSL.name("srd_2024_background_pkey"), new TableField[] { Srd_2024Background.SRD_2024_BACKGROUND.ID }, true);
+    public static final UniqueKey<Srd_2024ClazzRecord> SRD_2024_CLAZZ_PKEY = Internal.createUniqueKey(Srd_2024Clazz.SRD_2024_CLAZZ, DSL.name("srd_2024_clazz_pkey"), new TableField[] { Srd_2024Clazz.SRD_2024_CLAZZ.ID }, true);
+    public static final UniqueKey<Srd_2024RaceRecord> SRD_2024_RACE_PKEY = Internal.createUniqueKey(Srd_2024Race.SRD_2024_RACE, DSL.name("srd_2024_race_pkey"), new TableField[] { Srd_2024Race.SRD_2024_RACE.ID }, true);
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions

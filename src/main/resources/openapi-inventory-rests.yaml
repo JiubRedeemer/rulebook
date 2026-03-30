@@ -1,0 +1,708 @@
+openapi: 3.0.3
+info:
+  title: Inventory API
+  version: 1.0.0
+  description: API управления инвентарем и предметами в комнате.
+
+servers:
+  - url: /
+
+tags:
+  - name: Инвентарь
+    description: API для управления инвентарем
+
+paths:
+  /api/rooms/{roomId}/inventory/{characterId}:
+    get:
+      tags: [Инвентарь]
+      summary: Получить инвентарь персонажа
+      operationId: getInventory
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+        - $ref: '#/components/parameters/CharacterId'
+      responses:
+        '200':
+          description: Инвентарь персонажа
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryDto'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/inventory/{characterId}/items/{itemId}:
+    get:
+      tags: [Инвентарь]
+      summary: Получить предмет инвентаря персонажа
+      operationId: getInventoryItem
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+        - $ref: '#/components/parameters/CharacterId'
+        - $ref: '#/components/parameters/ItemId'
+      responses:
+        '200':
+          description: Предмет инвентаря персонажа
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryItemDto'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/items/search:
+    post:
+      tags: [Инвентарь]
+      summary: Получить предметы из общей базы предметов и из списка комнаты
+      operationId: searchByNameRoomAndCommunityItems
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchItemParams'
+      responses:
+        '200':
+          description: Список предметов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemDto'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/items/search/owned:
+    post:
+      tags: [Инвентарь]
+      summary: Получить предметы из общей базы предметов и из списка комнаты принадлежащих юзеру
+      operationId: searchByNameRoomAndCommunityItemsOwnedUsers
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchItemParams'
+      responses:
+        '200':
+          description: Список предметов
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemDto'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/inventory/{characterId}/equip/{itemId}:
+    patch:
+      tags: [Инвентарь]
+      summary: Экипировать/снять предмет с персонажа
+      operationId: equipItemByCharacterIdAndItemId
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+        - $ref: '#/components/parameters/CharacterId'
+        - $ref: '#/components/parameters/ItemId'
+      responses:
+        '200':
+          description: Инвентарь персонажа
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryDto'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/inventory/{characterId}/items/{itemId}/attack/bonus:
+    patch:
+      tags: [Инвентарь]
+      summary: Изменить бонусное значение атаки у предмета
+      operationId: addBonusAttackToItemById
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+        - $ref: '#/components/parameters/CharacterId'
+        - $ref: '#/components/parameters/ItemId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BonusValueUpdateRequest'
+      responses:
+        '200':
+          description: Инвентарь персонажа
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryDto'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/inventory/{characterId}/items/{itemId}/damage/bonus:
+    patch:
+      tags: [Инвентарь]
+      summary: Изменить бонусное значение урона у предмета
+      operationId: addBonusDamageToItemById
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+        - $ref: '#/components/parameters/CharacterId'
+        - $ref: '#/components/parameters/ItemId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BonusValueUpdateRequest'
+      responses:
+        '200':
+          description: Инвентарь персонажа
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryDto'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/inventory/{characterId}/{itemId}/count/{count}:
+    patch:
+      tags: [Инвентарь]
+      summary: Изменить количество предмета в инвентаре персонажа
+      operationId: changeItemCountByCharacterIdAndItemId
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+        - $ref: '#/components/parameters/CharacterId'
+        - $ref: '#/components/parameters/ItemId'
+        - $ref: '#/components/parameters/Count'
+      responses:
+        '200':
+          description: Инвентарь персонажа
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryDto'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/inventory/{characterId}/{itemId}:
+    delete:
+      tags: [Инвентарь]
+      summary: Удалить предмет из инвентаря персонажа
+      operationId: deleteItemFromInventory
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+        - $ref: '#/components/parameters/CharacterId'
+        - $ref: '#/components/parameters/ItemId'
+      responses:
+        '200':
+          description: Инвентарь персонажа
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryDto'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/inventory/{characterId}/{itemId}/{count}:
+    put:
+      tags: [Инвентарь]
+      summary: Добавить предмет в инвентарь персонажа
+      operationId: addItemToInventory
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+        - $ref: '#/components/parameters/CharacterId'
+        - $ref: '#/components/parameters/ItemId'
+        - $ref: '#/components/parameters/Count'
+      responses:
+        '200':
+          description: Инвентарь персонажа
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InventoryDto'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/items:
+    put:
+      tags: [Инвентарь]
+      summary: Добавить предмет в базу знаний
+      operationId: addItem
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemDto'
+      responses:
+        '200':
+          description: Добавленный предмет
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemDto'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/items/{itemId}:
+    delete:
+      tags: [Инвентарь]
+      summary: Удалить предмет из базы знаний
+      operationId: deleteItem
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+        - $ref: '#/components/parameters/ItemId'
+      responses:
+        '200':
+          description: Удален предмет
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/inventory/{characterId}/bonus:
+    get:
+      tags: [Инвентарь]
+      summary: Получить список бонусных характеристик надетых на персонажа предметов
+      operationId: getEquippedItemStats
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+        - $ref: '#/components/parameters/CharacterId'
+      responses:
+        '200':
+          description: Список бонусов надетых предметов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EquippedItemsStatsResponse'
+        '403':
+          description: Недостаточно прав
+
+  /api/rooms/{roomId}/inventory/{characterId}/items/{itemId}/skills/{skillId}/use:
+    post:
+      tags: [Инвентарь]
+      summary: Использовать навык предмета из инвентаря
+      operationId: useInventoryItemSkill
+      parameters:
+        - $ref: '#/components/parameters/RoomId'
+        - $ref: '#/components/parameters/CharacterId'
+        - $ref: '#/components/parameters/ItemId'
+        - name: skillId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Навык использован
+        '403':
+          description: Недостаточно прав
+
+components:
+  parameters:
+    RoomId:
+      name: roomId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    CharacterId:
+      name: characterId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    ItemId:
+      name: itemId
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    Count:
+      name: count
+      in: path
+      required: true
+      schema:
+        type: integer
+        format: int64
+
+  schemas:
+    BonusValueUpdateRequest:
+      type: object
+      properties:
+        bonusValue:
+          type: integer
+          format: int64
+          nullable: true
+
+    SearchItemParams:
+      type: object
+      required: [searchQuery, limit]
+      description: >
+        Курсорная пагинация. Для первой страницы передавайте только searchQuery и limit.
+        Для следующей страницы обязательно передавайте оба поля курсора одновременно:
+        lastSeenCreatedAt и lastSeenId.
+      properties:
+        searchQuery:
+          type: string
+          default: ""
+          description: Начальный запрос должен отправляться пустой строкой.
+        limit:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 100
+          default: 20
+        lastSeenCreatedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Метка времени createdAt последнего элемента предыдущей страницы.
+        lastSeenId:
+          type: string
+          format: uuid
+          nullable: true
+          description: ID последнего элемента предыдущей страницы (используется вместе с lastSeenCreatedAt).
+      examples:
+        firstPage:
+          summary: Первая страница
+          value:
+            searchQuery: ""
+            limit: 20
+        nextPage:
+          summary: Следующая страница
+          value:
+            searchQuery: ""
+            limit: 20
+            lastSeenCreatedAt: "2026-03-26T10:15:30"
+            lastSeenId: "8a54fca7-4f6d-44ce-a6fd-cb8fc31ad2bb"
+
+    InventoryDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        roomId:
+          type: string
+          format: uuid
+          nullable: true
+        characterId:
+          type: string
+          format: uuid
+          nullable: true
+        totalWeight:
+          type: integer
+          format: int64
+          nullable: true
+        items:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/InventoryItemDto'
+
+    InventoryItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        inventoryId:
+          type: string
+          format: uuid
+          nullable: true
+        itemId:
+          type: string
+          format: uuid
+          nullable: true
+        item:
+          $ref: '#/components/schemas/ItemDto'
+        count:
+          type: integer
+          format: int64
+          nullable: true
+        inUse:
+          type: boolean
+          nullable: true
+        attackBonusValue:
+          type: integer
+          format: int64
+          nullable: true
+        damageBonusValue:
+          type: integer
+          format: int64
+          nullable: true
+        skills:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/InventoryItemSkillDto'
+
+    InventoryItemSkillDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        inventoryItemId:
+          type: string
+          format: uuid
+          nullable: true
+        itemSkillId:
+          type: string
+          format: uuid
+          nullable: true
+        currentCharges:
+          type: integer
+          format: int32
+          nullable: true
+        skill:
+          $ref: '#/components/schemas/ItemSkillsDto'
+
+    ItemDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        name:
+          $ref: '#/components/schemas/MultilingualField'
+        type:
+          $ref: '#/components/schemas/ItemTypeEnum'
+        typeName:
+          type: string
+          nullable: true
+        subtype:
+          $ref: '#/components/schemas/ItemSubTypeEnum'
+        subtypeName:
+          type: string
+          nullable: true
+        customization:
+          type: boolean
+          nullable: true
+        rarity:
+          $ref: '#/components/schemas/RarityEnum'
+        description:
+          type: string
+          nullable: true
+        stats:
+          $ref: '#/components/schemas/ItemStatsDto'
+        skills:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/ItemSkillsDto'
+        createdAt:
+          type: string
+          format: date-time
+          nullable: true
+        roomId:
+          type: string
+          format: uuid
+          nullable: true
+        creatorId:
+          type: string
+          format: uuid
+          nullable: true
+        imgUrl:
+          type: string
+          nullable: true
+        visibleForPlayers:
+          type: boolean
+          nullable: true
+        creator:
+          type: string
+          nullable: true
+
+    ItemStatsDto:
+      type: object
+      properties:
+        defaultPrice:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/PriceObject'
+        weight:
+          type: integer
+          format: int64
+          nullable: true
+        damage:
+          $ref: '#/components/schemas/DamageObject'
+        armorClass:
+          type: string
+          nullable: true
+        armorClassMaxDexterityBonus:
+          type: string
+          nullable: true
+        requirement:
+          type: string
+          nullable: true
+        tags:
+          type: array
+          nullable: true
+          items:
+            type: string
+
+    ItemSkillsDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          nullable: true
+        itemId:
+          type: string
+          format: uuid
+          nullable: true
+        name:
+          $ref: '#/components/schemas/MultilingualField'
+        description:
+          type: string
+          nullable: true
+        shortDescription:
+          type: string
+          nullable: true
+        charges:
+          type: integer
+          format: int32
+          nullable: true
+        castTime:
+          type: string
+          nullable: true
+        distance:
+          type: string
+          nullable: true
+        chargesRefill:
+          $ref: '#/components/schemas/ChargesRefillEnum'
+        imgUrl:
+          type: string
+          nullable: true
+
+    MultilingualField:
+      type: object
+      properties:
+        rus:
+          type: string
+          nullable: true
+        eng:
+          type: string
+          nullable: true
+
+    PriceObject:
+      type: object
+      required: [value]
+      properties:
+        value:
+          type: integer
+          format: int64
+        coinType:
+          $ref: '#/components/schemas/CoinTypeEnum'
+
+    DamageObject:
+      type: object
+      properties:
+        value:
+          type: string
+          nullable: true
+        damageType:
+          $ref: '#/components/schemas/DamageTypeEnum'
+        damageTypeName:
+          type: string
+          nullable: true
+
+    EquippedItemsStatsResponse:
+      type: object
+      properties:
+        armoryClassBonus:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/StatsDto'
+        speedBonus:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatsDto'
+        hpBonus:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/StatsDto'
+
+    StatsDto:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ItemStatsEnum'
+        options:
+          type: array
+          nullable: true
+          items:
+            type: string
+        value:
+          nullable: true
+
+    ItemTypeEnum:
+      type: string
+      enum: [MAGIC_ITEM, WEAPON, ARMOR, OTHER]
+
+    ItemSubTypeEnum:
+      type: string
+      enum:
+        - SHW
+        - SRW
+        - AHW
+        - ARW
+        - EHW
+        - ERW
+        - HEAVY_ARMOR
+        - MEDIUM_ARMOR
+        - LIGHT_ARMOR
+        - SHIELD
+        - NO
+
+    RarityEnum:
+      type: string
+      enum: [COMMON, UNCOMMON, RARE, VERY_RARE, LEGENDARY]
+
+    CoinTypeEnum:
+      type: string
+      enum: [GOLDEN, SILVER, COPPER, NO]
+
+    DamageTypeEnum:
+      type: string
+      enum: [CRUSHING, STABBING, CHOPPING, NO]
+
+    ChargesRefillEnum:
+      type: string
+      enum: [SHORT_REST, LONG_REST]
+
+    ItemStatsEnum:
+      type: string
+      enum:
+        - ARMORY_CLASS
+        - SPEED
+        - HP
+        - SAVING_THROW
+        - ADVANTAGE
+        - INTERFERENCE
+        - RESISTANCE
+        - VULNERABILITY
+        - IMMUNITY
+        - ABILITY_SCORE
+        - PROFICIENCY_SKILL
+        - ATTACK_BONUS
+        - DAMAGE_BONUS
+        - ON_HIT_CONDITION
+        - LIMITATION
