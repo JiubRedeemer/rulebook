@@ -27,6 +27,7 @@ import java.util.UUID;
 public class RaceRepository {
     private static final Table<Record> DEFAULT_2024_RACE = DSL.table(DSL.name("rules", "default_2024_race"));
     private static final Field<String> DEFAULT_2024_RACE_CODE = DSL.field(DSL.name("code"), String.class);
+    private static final Field<Boolean> HIDDEN = DSL.field(DSL.name("hidden"), Boolean.class);
 
     private final DSLContext dsl;
     private final RaceMapper raceMapper;
@@ -86,6 +87,17 @@ public class RaceRepository {
                 .and(Race.RACE.CODE.eq(raceCode))
                 .fetchOptional()
                 .map(raceMapper);
+    }
+
+    public Optional<RaceDto> getFullRaceById(UUID raceId) {
+        return dsl.selectFrom(Race.RACE)
+                .where(Race.RACE.ID.eq(raceId))
+                .fetchOptional()
+                .map(raceMapper)
+                .map(dto -> {
+                    dto.setHidden(fetchHiddenById(raceId));
+                    return dto;
+                });
     }
 
     public Collection<RaceDto> getFull5eRootRacesForRoom() {
@@ -148,13 +160,47 @@ public class RaceRepository {
     public RaceDto createRace(RaceDto raceDto) {
         dsl.insertInto(Race.RACE)
                 .set(raceMapper.mapToRecord(raceDto))
+                .set(HIDDEN, raceDto.getHidden())
                 .execute();
-        return dsl.selectFrom(Race.RACE)
+        final RaceDto dto = dsl.selectFrom(Race.RACE)
                 .where(Race.RACE.ID.eq(raceDto.getId()))
                 .fetchOptional()
                 .map(raceMapper)
                 .orElseThrow();
+        dto.setHidden(fetchHiddenById(raceDto.getId()));
+        return dto;
     }
 
 
+    public RaceDto updateRace(RaceDto raceDto) {
+        dsl.update(Race.RACE)
+                .set(raceMapper.mapToRecord(raceDto))
+                .set(HIDDEN, raceDto.getHidden())
+                .where(Race.RACE.ID.eq(raceDto.getId()))
+                .execute();
+        final RaceDto dto = dsl.selectFrom(Race.RACE)
+                .where(Race.RACE.ID.eq(raceDto.getId()))
+                .fetchOptional()
+                .map(raceMapper)
+                .orElseThrow();
+        dto.setHidden(fetchHiddenById(raceDto.getId()));
+        return dto;
+    }
+
+    public RaceDto setHidden(UUID id, Boolean hidden) {
+        dsl.update(Race.RACE)
+                .set(HIDDEN, hidden)
+                .where(Race.RACE.ID.eq(id))
+                .execute();
+        final RaceDto dto = getFullRaceById(id).orElseThrow();
+        dto.setHidden(fetchHiddenById(id));
+        return dto;
+    }
+
+    private Boolean fetchHiddenById(UUID id) {
+        return dsl.select(HIDDEN)
+                .from(Race.RACE)
+                .where(Race.RACE.ID.eq(id))
+                .fetchOne(HIDDEN);
+    }
 }

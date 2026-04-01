@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/backgrounds")
@@ -62,5 +63,33 @@ public class BackgroundController {
             @Parameter(description = "Данные предыстории для создания", required = true)
             @RequestBody BackgroundDto backgroundDto) throws JsonProcessingException {
         return backgroundService.create(backgroundDto);
+    }
+
+    @Operation(summary = "Обновление предыстории",
+            description = "Обновляет предысторию (D&D 2024)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Предыстория успешно изменена"),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
+    })
+    @PatchMapping
+    public BackgroundDto updateBackground(
+            @Parameter(description = "Данные предыстории для обновления", required = true)
+            @RequestBody BackgroundDto backgroundDto) throws JsonProcessingException {
+        return backgroundService.update(backgroundDto);
+    }
+
+    @Operation(summary = "Установить флаг скрытия предыстории",
+            description = "Устанавливает значение hidden для предыстории")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Флаг hidden успешно обновлён"),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
+    })
+    @PatchMapping("/hidden/{id}")
+    public BackgroundDto setHidden(
+            @Parameter(description = "Идентификатор предыстории", required = true)
+            @PathVariable UUID id,
+            @Parameter(description = "Флаг скрытия", required = true)
+            @RequestParam Boolean hidden) {
+        return backgroundService.setHidden(id, hidden);
     }
 }

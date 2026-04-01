@@ -100,6 +100,11 @@ public class Race extends TableImpl<RaceRecord> {
      */
     public final TableField<RaceRecord, String> SPECIES_CODE = createField(DSL.name("species_code"), SQLDataType.VARCHAR, this, "");
 
+    /**
+     * The column <code>rules.race.hidden</code>.
+     */
+    public final TableField<RaceRecord, Boolean> HIDDEN = createField(DSL.name("hidden"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("false"), SQLDataType.BOOLEAN)), this, "");
+
     private Race(Name alias, Table<RaceRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }

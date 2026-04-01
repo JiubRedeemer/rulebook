@@ -172,6 +172,7 @@ public class ClazzService {
 
     public ClazzDto createClass(ClazzDto clazzDto) throws JsonProcessingException {
         clazzDto.setId(UUID.randomUUID());
+        clazzDto.setHidden(clazzDto.getHidden() != null ? clazzDto.getHidden() : false);
         if (clazzDto.getImgUrl() != null) {
             clazzDto.setImgUrl(clazzDto.getImgUrl());
         } else {
@@ -187,5 +188,34 @@ public class ClazzService {
         clazzDto.setStats(clazzStatsDto);
 
         return classRepository.createClass(clazzDto);
+    }
+
+    public ClazzDto updateClass(ClazzDto clazzDto) throws JsonProcessingException {
+        final ClazzDto existing = classRepository.getFullClassById(clazzDto.getId())
+                .orElseThrow(() -> new NotFoundException("Class not found by id"));
+        final UUID roomId = clazzDto.getRoomId() != null ? clazzDto.getRoomId() : existing.getRoomId();
+        roomService.getById(roomId);
+
+        clazzDto.setRoomId(roomId);
+        clazzDto.setName(clazzDto.getName() != null ? clazzDto.getName() : existing.getName());
+        clazzDto.setDescription(clazzDto.getDescription() != null ? clazzDto.getDescription() : existing.getDescription());
+        clazzDto.setHidden(clazzDto.getHidden() != null ? clazzDto.getHidden() : existing.getHidden());
+        clazzDto.setCode(clazzDto.getCode() != null ? clazzDto.getCode() : existing.getCode());
+        clazzDto.setGroupCode(clazzDto.getGroupCode() != null ? clazzDto.getGroupCode() : existing.getGroupCode());
+        clazzDto.setImgUrl(clazzDto.getImgUrl() != null ? clazzDto.getImgUrl() : existing.getImgUrl());
+
+        final ClazzStatsDto statsForUpdate = clazzDto.getStats() != null ? clazzDto.getStats() : existing.getStats();
+        if (statsForUpdate == null) {
+            throw new NotFoundException("Class stats not found");
+        }
+        statsForUpdate.setId(UUID.randomUUID());
+        final ClazzStatsDto clazzStatsDto = classStatsRepository.create(statsForUpdate);
+        clazzDto.setStats(clazzStatsDto);
+
+        return classRepository.updateClass(clazzDto);
+    }
+
+    public ClazzDto setHidden(UUID id, Boolean hidden) {
+        return classRepository.setHidden(id, hidden);
     }
 }

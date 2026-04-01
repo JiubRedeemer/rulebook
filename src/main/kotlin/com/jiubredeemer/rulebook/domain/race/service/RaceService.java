@@ -155,6 +155,7 @@ public class RaceService {
     public RaceDto createRace(RaceDto raceDto) throws JsonProcessingException {
         roomService.getById(raceDto.getRoomId());
         raceDto.setId(UUID.randomUUID());
+        raceDto.setHidden(raceDto.getHidden() != null ? raceDto.getHidden() : false);
         raceDto.setCode(raceDto.getId().toString());
         raceDto.setSpeciesCode(raceDto.getSpeciesCode() == null ? raceDto.getCode() : raceDto.getSpeciesCode());
         raceDto.setImgUrl(raceDto.getImgUrl() == null ? raceDto.getId().toString() : raceDto.getImgUrl());
@@ -166,5 +167,34 @@ public class RaceService {
             raceDto.setStats(raceStatsDto);
         }
         return raceRepository.createRace(raceDto);
+    }
+
+    public RaceDto updateRace(RaceDto raceDto) throws JsonProcessingException {
+        final RaceDto existing = raceRepository.getFullRaceById(raceDto.getId())
+                .orElseThrow(() -> new NotFoundException("Race not found by id"));
+        final UUID roomId = raceDto.getRoomId() != null ? raceDto.getRoomId() : existing.getRoomId();
+        roomService.getById(roomId);
+
+        raceDto.setRoomId(roomId);
+        raceDto.setName(raceDto.getName() != null ? raceDto.getName() : existing.getName());
+        raceDto.setDescription(raceDto.getDescription() != null ? raceDto.getDescription() : existing.getDescription());
+        raceDto.setHidden(raceDto.getHidden() != null ? raceDto.getHidden() : existing.getHidden());
+        raceDto.setCode(raceDto.getCode() != null ? raceDto.getCode() : existing.getCode());
+        raceDto.setSpeciesCode(raceDto.getSpeciesCode() != null ? raceDto.getSpeciesCode() : existing.getSpeciesCode());
+        raceDto.setImgUrl(raceDto.getImgUrl() != null ? raceDto.getImgUrl() : existing.getImgUrl());
+
+        final RaceStatsDto statsForUpdate = raceDto.getStats() != null ? raceDto.getStats() : existing.getStats();
+        if (statsForUpdate == null) {
+            throw new NotFoundException("Race stats not found");
+        }
+        statsForUpdate.setId(UUID.randomUUID());
+        final RaceStatsDto raceStatsDto = raceStatsRepository.create(statsForUpdate);
+        raceDto.setStats(raceStatsDto);
+
+        return raceRepository.updateRace(raceDto);
+    }
+
+    public RaceDto setHidden(UUID id, Boolean hidden) {
+        return raceRepository.setHidden(id, hidden);
     }
 }

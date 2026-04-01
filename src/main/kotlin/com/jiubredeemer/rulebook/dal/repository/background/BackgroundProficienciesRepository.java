@@ -37,7 +37,7 @@ public class BackgroundProficienciesRepository {
         }
 
         proficiencies.forEach(proficiency -> {
-            proficiency.setId(proficiency.getId() == null ? UUID.randomUUID() : proficiency.getId());
+            proficiency.setId(UUID.randomUUID());
             proficiency.setBackgroundStatsId(backgroundStatsId);
             dsl.insertInto(BACKGROUND_PROFICIENCY)
                     .columns(ID, BACKGROUND_STATS_ID, TYPE, CODE)

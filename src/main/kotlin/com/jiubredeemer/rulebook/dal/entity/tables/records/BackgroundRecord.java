@@ -118,6 +118,20 @@ public class BackgroundRecord extends UpdatableRecordImpl<BackgroundRecord> {
         return (UUID) get(6);
     }
 
+    /**
+     * Setter for <code>rules.background.hidden</code>.
+     */
+    public void setHidden(Boolean value) {
+        set(7, value);
+    }
+
+    /**
+     * Getter for <code>rules.background.hidden</code>.
+     */
+    public Boolean getHidden() {
+        return (Boolean) get(7);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -141,7 +155,7 @@ public class BackgroundRecord extends UpdatableRecordImpl<BackgroundRecord> {
     /**
      * Create a detached, initialised BackgroundRecord
      */
-    public BackgroundRecord(UUID id, UUID roomid, String name, String description, String code, String imgUrl, UUID backgroundStatsId) {
+    public BackgroundRecord(UUID id, UUID roomid, String name, String description, String code, String imgUrl, UUID backgroundStatsId, Boolean hidden) {
         super(Background.BACKGROUND);
 
         setId(id);
@@ -151,6 +165,7 @@ public class BackgroundRecord extends UpdatableRecordImpl<BackgroundRecord> {
         setCode(code);
         setImgUrl(imgUrl);
         setBackgroundStatsId(backgroundStatsId);
+        setHidden(hidden);
         resetChangedOnNotNull();
     }
 }

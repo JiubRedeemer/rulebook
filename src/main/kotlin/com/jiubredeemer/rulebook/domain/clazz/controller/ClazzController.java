@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/classes")
@@ -91,5 +92,33 @@ public class ClazzController {
             @Parameter(description = "Данные класса для создания", required = true)
             @RequestBody ClazzDto clazzDto) throws JsonProcessingException {
         return clazzService.createClass(clazzDto);
+    }
+
+    @Operation(summary = "Обновление класса",
+            description = "Изменяет класс или подкласс")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Класс успешно обновлён"),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
+    })
+    @PatchMapping()
+    public ClazzDto update(
+            @Parameter(description = "Данные класса для обновления", required = true)
+            @RequestBody ClazzDto clazzDto) throws JsonProcessingException {
+        return clazzService.updateClass(clazzDto);
+    }
+
+    @Operation(summary = "Установить флаг скрытия класса",
+            description = "Устанавливает значение hidden для класса")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Флаг hidden успешно обновлён"),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
+    })
+    @PatchMapping("/hidden/{id}")
+    public ClazzDto setHidden(
+            @Parameter(description = "Идентификатор класса", required = true)
+            @PathVariable UUID id,
+            @Parameter(description = "Флаг скрытия", required = true)
+            @RequestParam Boolean hidden) {
+        return clazzService.setHidden(id, hidden);
     }
 }

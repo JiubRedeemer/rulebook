@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/races")
@@ -92,5 +93,33 @@ public class RaceController {
             @Parameter(description = "Данные расы для создания", required = true)
             @RequestBody RaceDto raceDto) throws JsonProcessingException {
         return raceService.createRace(raceDto);
+    }
+
+    @Operation(summary = "Обновление расы",
+            description = "Обновляет расу (вид или подвид)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Раса успешно обновлена"),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
+    })
+    @PatchMapping()
+    public RaceDto updateRace(
+            @Parameter(description = "Данные расы для обновления", required = true)
+            @RequestBody RaceDto raceDto) throws JsonProcessingException {
+        return raceService.updateRace(raceDto);
+    }
+
+    @Operation(summary = "Установить флаг скрытия расы",
+            description = "Устанавливает значение hidden для расы")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Флаг hidden успешно обновлён"),
+            @ApiResponse(responseCode = "400", description = "Некорректные данные запроса")
+    })
+    @PatchMapping("/hidden/{id}")
+    public RaceDto setHidden(
+            @Parameter(description = "Идентификатор расы", required = true)
+            @PathVariable UUID id,
+            @Parameter(description = "Флаг скрытия", required = true)
+            @RequestParam Boolean hidden) {
+        return raceService.setHidden(id, hidden);
     }
 }
