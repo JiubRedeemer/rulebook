@@ -8,6 +8,7 @@ import java.util.UUID;
 public class ClazzDto {
     private UUID id;
     private UUID roomId;
+    private Boolean hidden;
     private String name;
     private String description;
     private String code;

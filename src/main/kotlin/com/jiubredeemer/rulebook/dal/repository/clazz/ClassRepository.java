@@ -27,6 +27,7 @@ public class ClassRepository {
     private static final Field<String> DEFAULT_2024_CLAZZ_CODE = DSL.field(DSL.name("code"), String.class);
     private static final Table<Record> SRD_2024_CLAZZ = DSL.table(DSL.name("rules", "srd_2024_clazz"));
     private static final Field<String> SRD_2024_CLAZZ_CODE = DSL.field(DSL.name("code"), String.class);
+    private static final Field<Boolean> HIDDEN = DSL.field(DSL.name("hidden"), Boolean.class);
 
     private final DSLContext dsl;
     private final ClassMapper classMapper;
@@ -64,6 +65,17 @@ public class ClassRepository {
                 .and(Clazz.CLAZZ.CODE.eq(code))
                 .fetchOptional()
                 .map(classMapper);
+    }
+
+    public Optional<ClazzDto> getFullClassById(UUID clazzId) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(Clazz.CLAZZ.ID.eq(clazzId))
+                .fetchOptional()
+                .map(classMapper)
+                .map(dto -> {
+                    dto.setHidden(fetchHiddenById(clazzId));
+                    return dto;
+                });
     }
 
     public Optional<ClazzDto> getFull5eClassByCode(String code) {
@@ -172,10 +184,46 @@ public class ClassRepository {
     public ClazzDto createClass(ClazzDto clazzDto) {
         dsl.insertInto(Clazz.CLAZZ)
                 .set(classMapper.mapToRecord(clazzDto))
+                .set(HIDDEN, clazzDto.getHidden())
                 .execute();
-        return dsl.selectFrom(Clazz.CLAZZ)
+        final ClazzDto dto = dsl.selectFrom(Clazz.CLAZZ)
                 .where(Clazz.CLAZZ.ID.eq(clazzDto.getId()))
                 .fetchOptional()
                 .map(classMapper).orElseThrow();
+        dto.setHidden(fetchHiddenById(clazzDto.getId()));
+        return dto;
+    }
+
+    public ClazzDto updateClass(ClazzDto clazzDto) {
+        dsl.update(Clazz.CLAZZ)
+                .set(classMapper.mapToRecord(clazzDto))
+                .set(HIDDEN, clazzDto.getHidden())
+                .where(Clazz.CLAZZ.ID.eq(clazzDto.getId()))
+                .execute();
+
+
+        final ClazzDto dto = dsl.selectFrom(Clazz.CLAZZ)
+                .where(Clazz.CLAZZ.ID.eq(clazzDto.getId()))
+                .fetchOptional()
+                .map(classMapper).orElseThrow();
+        dto.setHidden(fetchHiddenById(clazzDto.getId()));
+        return dto;
+    }
+
+    public ClazzDto setHidden(UUID id, Boolean hidden) {
+        dsl.update(Clazz.CLAZZ)
+                .set(HIDDEN, hidden)
+                .where(Clazz.CLAZZ.ID.eq(id))
+                .execute();
+        final ClazzDto dto = getFullClassById(id).orElseThrow();
+        dto.setHidden(fetchHiddenById(id));
+        return dto;
+    }
+
+    private Boolean fetchHiddenById(UUID id) {
+        return dsl.select(HIDDEN)
+                .from(Clazz.CLAZZ)
+                .where(Clazz.CLAZZ.ID.eq(id))
+                .fetchOne(HIDDEN);
     }
 }

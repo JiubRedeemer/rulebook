@@ -40,5 +40,6 @@
     <include file="031-PRO-0-race_traits_fix.sql" relativeToChangelogFile="true"/>
     <include file="034-PRO-80-init-srd-classes.sql" relativeToChangelogFile="true"/>
     <include file="035-PRO-80-init-srd-backgrounds.sql" relativeToChangelogFile="true"/>
+    <include file="036-PRO-80-add-hidden-flag.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

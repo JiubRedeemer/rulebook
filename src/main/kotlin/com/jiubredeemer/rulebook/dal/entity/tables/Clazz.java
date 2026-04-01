@@ -100,6 +100,11 @@ public class Clazz extends TableImpl<ClazzRecord> {
      */
     public final TableField<ClazzRecord, String> GROUP_CODE = createField(DSL.name("group_code"), SQLDataType.VARCHAR, this, "");
 
+    /**
+     * The column <code>rules.clazz.hidden</code>.
+     */
+    public final TableField<ClazzRecord, Boolean> HIDDEN = createField(DSL.name("hidden"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("false"), SQLDataType.BOOLEAN)), this, "");
+
     private Clazz(Name alias, Table<ClazzRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }

@@ -37,7 +37,7 @@ public class RaceTraitsRepository {
         }
 
         traits.forEach(trait -> {
-            trait.setId(trait.getId() == null ? UUID.randomUUID() : trait.getId());
+            trait.setId(UUID.randomUUID());
             trait.setCode(trait.getCode() == null ? trait.getId().toString() : trait.getCode());
             trait.setRaceStatsId(raceStatsId);
             dsl.insertInto(RACE_TRAIT)

@@ -52,6 +52,27 @@ paths:
                 $ref: '#/components/schemas/ClazzDto'
         "400":
           description: Некорректные данные запроса
+    patch:
+      tags:
+        - Class
+      summary: Обновление класса
+      operationId: updateClass
+      description: Изменяет класс или подкласс
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClazzDto'
+      responses:
+        "200":
+          description: Класс успешно обновлён
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClazzDto'
+        "400":
+          description: Некорректные данные запроса
 
   /api/classes/root:
     post:
@@ -146,6 +167,35 @@ paths:
         "404":
           description: Комната не найдена
 
+  /api/classes/hidden/{id}:
+    patch:
+      tags:
+        - Class
+      summary: Установить флаг скрытия класса
+      operationId: setClassHidden
+      description: Устанавливает значение hidden для класса
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: hidden
+          in: query
+          required: true
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Флаг hidden успешно обновлён
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClazzDto'
+        "400":
+          description: Некорректные данные запроса
+
 components:
   schemas:
     ClassesByRoomRequest:
@@ -166,6 +216,8 @@ components:
         roomId:
           type: string
           format: uuid
+        hidden:
+          type: boolean
         name:
           type: string
         description:

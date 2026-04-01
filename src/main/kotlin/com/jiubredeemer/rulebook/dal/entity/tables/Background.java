@@ -85,6 +85,11 @@ public class Background extends TableImpl<BackgroundRecord> {
      */
     public final TableField<BackgroundRecord, UUID> BACKGROUND_STATS_ID = createField(DSL.name("background_stats_id"), SQLDataType.UUID.nullable(false), this, "");
 
+    /**
+     * The column <code>rules.background.hidden</code>.
+     */
+    public final TableField<BackgroundRecord, Boolean> HIDDEN = createField(DSL.name("hidden"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("false"), SQLDataType.BOOLEAN)), this, "");
+
     private Background(Name alias, Table<BackgroundRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
     }

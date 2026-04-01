@@ -85,6 +85,7 @@ public class BackgroundService {
     public BackgroundDto create(BackgroundDto backgroundDto) throws JsonProcessingException {
         RoomDto roomDto = roomService.getById(backgroundDto.getRoomId());
         backgroundDto.setId(UUID.randomUUID());
+        backgroundDto.setHidden(backgroundDto.getHidden() != null ? backgroundDto.getHidden() : false);
         backgroundDto.setImgUrl(backgroundDto.getImgUrl() == null ? backgroundDto.getId().toString() : backgroundDto.getImgUrl());
         backgroundDto.setCode(backgroundDto.getCode() == null ? backgroundDto.getId().toString() : backgroundDto.getCode());
         if (backgroundDto.getStats().getId() != null) {
@@ -95,6 +96,33 @@ public class BackgroundService {
             backgroundDto.setStats(backgroundStatsDto);
         }
         return backgroundRepository.create(backgroundDto);
+    }
+
+    public BackgroundDto update(BackgroundDto backgroundDto) throws JsonProcessingException {
+        final BackgroundDto existing = backgroundRepository.getFullBackgroundByIdForRoom(backgroundDto.getId());
+        final UUID roomId = backgroundDto.getRoomId() != null ? backgroundDto.getRoomId() : existing.getRoomId();
+        roomService.getById(roomId);
+
+        backgroundDto.setRoomId(roomId);
+        backgroundDto.setName(backgroundDto.getName() != null ? backgroundDto.getName() : existing.getName());
+        backgroundDto.setDescription(backgroundDto.getDescription() != null ? backgroundDto.getDescription() : existing.getDescription());
+        backgroundDto.setHidden(backgroundDto.getHidden() != null ? backgroundDto.getHidden() : existing.getHidden());
+        backgroundDto.setCode(backgroundDto.getCode() != null ? backgroundDto.getCode() : existing.getCode());
+        backgroundDto.setImgUrl(backgroundDto.getImgUrl() != null ? backgroundDto.getImgUrl() : existing.getImgUrl());
+
+        final BackgroundStatsDto statsForUpdate = backgroundDto.getStats() != null ? backgroundDto.getStats() : existing.getStats();
+        if (statsForUpdate == null) {
+            throw new NotFoundException("Background stats not found");
+        }
+        statsForUpdate.setId(UUID.randomUUID());
+        final BackgroundStatsDto backgroundStatsDto = backgroundStatsRepository.create(statsForUpdate);
+        backgroundDto.setStats(backgroundStatsDto);
+
+        return backgroundRepository.update(backgroundDto);
+    }
+
+    public BackgroundDto setHidden(UUID id, Boolean hidden) {
+        return backgroundRepository.setHidden(id, hidden);
     }
 
     private BackgroundDto enrichOnRead(BackgroundDto dto, UUID roomId) {

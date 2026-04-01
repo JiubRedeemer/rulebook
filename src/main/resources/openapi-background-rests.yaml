@@ -52,6 +52,27 @@ paths:
                 $ref: '#/components/schemas/BackgroundDto'
         "400":
           description: Некорректные данные запроса
+    patch:
+      tags:
+        - Background
+      summary: Обновление предыстории
+      operationId: updateBackground
+      description: Обновляет предысторию (D&D 2024)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackgroundDto'
+      responses:
+        "200":
+          description: Предыстория успешно изменена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackgroundDto'
+        "400":
+          description: Некорректные данные запроса
 
   /api/backgrounds/{code}:
     post:
@@ -85,6 +106,35 @@ paths:
         "404":
           description: Комната или предыстория не найдена
 
+  /api/backgrounds/hidden/{id}:
+    patch:
+      tags:
+        - Background
+      summary: Установить флаг скрытия предыстории
+      operationId: setBackgroundHidden
+      description: Устанавливает значение hidden для предыстории
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: hidden
+          in: query
+          required: true
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Флаг hidden успешно обновлён
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BackgroundDto'
+        "400":
+          description: Некорректные данные запроса
+
 components:
   schemas:
     RoomIdRequestBody:
@@ -105,6 +155,8 @@ components:
         roomId:
           type: string
           format: uuid
+        hidden:
+          type: boolean
         name:
           type: string
         description:
