@@ -64,7 +64,7 @@ public class BackgroundService {
             throw new NotFoundException("Backgrounds are only available for D&D 2024 rules");
         }
         if (roomDto.getRuleType().equals(RuleTypeEnum.HOMEBREW)) {
-            return backgroundRepository.getFullBackgroundByCode(code)
+            return backgroundRepository.getFullBackgroundByCode(code, roomId)
                     .map(dto -> {
                         dto.setRoomId(roomId);
                         return dto;

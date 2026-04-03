@@ -58,9 +58,12 @@ public class BackgroundRepository {
         return dto;
     }
 
-    public Optional<BackgroundDto> getFullBackgroundByCode(String code) {
+    public Optional<BackgroundDto> getFullBackgroundByCode(String code, UUID roomId) {
         return dsl.selectFrom(Background.BACKGROUND)
                 .where(Background.BACKGROUND.CODE.eq(code))
+                .and(Background.BACKGROUND.ROOMID.eq(roomId))
+                .orderBy(Background.BACKGROUND.ID.desc())
+                .limit(1)
                 .fetchOptional()
                 .map(backgroundMapper);
     }
