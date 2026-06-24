@@ -12,6 +12,7 @@ import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClazzStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.DefaultEberronBackground;
+import com.jiubredeemer.rulebook.dal.entity.tables.DefaultStates;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Race;
@@ -36,6 +37,7 @@ import com.jiubredeemer.rulebook.dal.entity.tables.records.BackgroundTraitRecord
 import com.jiubredeemer.rulebook.dal.entity.tables.records.ClazzRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.ClazzStatsRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.DefaultEberronBackgroundRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.DefaultStatesRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_2024BackgroundRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_2024ClazzRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.Default_2024RaceRecord;
@@ -86,6 +88,8 @@ public class Keys {
     public static final UniqueKey<Default_5eRaceRecord> DEFAULT_5E_RACE_PKEY = Internal.createUniqueKey(Default_5eRace.DEFAULT_5E_RACE, DSL.name("default_5e_race_pkey"), new TableField[] { Default_5eRace.DEFAULT_5E_RACE.ID }, true);
     public static final UniqueKey<Default_5eSkillRecord> DEFAULT_5E_SKILL_PKEY = Internal.createUniqueKey(Default_5eSkill.DEFAULT_5E_SKILL, DSL.name("default_5e_skill_pkey"), new TableField[] { Default_5eSkill.DEFAULT_5E_SKILL.ID }, true);
     public static final UniqueKey<DefaultEberronBackgroundRecord> DEFAULT_EBERRON_BACKGROUND_PKEY = Internal.createUniqueKey(DefaultEberronBackground.DEFAULT_EBERRON_BACKGROUND, DSL.name("default_eberron_background_pkey"), new TableField[] { DefaultEberronBackground.DEFAULT_EBERRON_BACKGROUND.ID }, true);
+    public static final UniqueKey<DefaultStatesRecord> DEFAULT_STATES_CODE_UQ = Internal.createUniqueKey(DefaultStates.DEFAULT_STATES, DSL.name("default_states_code_uq"), new TableField[] { DefaultStates.DEFAULT_STATES.CODE }, true);
+    public static final UniqueKey<DefaultStatesRecord> DEFAULT_STATES_PK = Internal.createUniqueKey(DefaultStates.DEFAULT_STATES, DSL.name("default_states_pk"), new TableField[] { DefaultStates.DEFAULT_STATES.ID }, true);
     public static final UniqueKey<RaceRecord> RACE_PKEY = Internal.createUniqueKey(Race.RACE, DSL.name("race_pkey"), new TableField[] { Race.RACE.ID }, true);
     public static final UniqueKey<RaceProficiencyRecord> RACE_PROFICIENCY_PKEY = Internal.createUniqueKey(RaceProficiency.RACE_PROFICIENCY, DSL.name("race_proficiency_pkey"), new TableField[] { RaceProficiency.RACE_PROFICIENCY.ID }, true);
     public static final UniqueKey<RaceStatsRecord> RACE_STATS_PKEY = Internal.createUniqueKey(RaceStats.RACE_STATS, DSL.name("race_stats_pkey"), new TableField[] { RaceStats.RACE_STATS.ID }, true);

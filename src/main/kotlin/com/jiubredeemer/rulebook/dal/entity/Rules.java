@@ -12,6 +12,7 @@ import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClazzStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.DefaultEberronBackground;
+import com.jiubredeemer.rulebook.dal.entity.tables.DefaultStates;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_2024Race;
@@ -128,6 +129,11 @@ public class Rules extends SchemaImpl {
     public final DefaultEberronBackground DEFAULT_EBERRON_BACKGROUND = DefaultEberronBackground.DEFAULT_EBERRON_BACKGROUND;
 
     /**
+     * The table <code>rules.default_states</code>.
+     */
+    public final DefaultStates DEFAULT_STATES = DefaultStates.DEFAULT_STATES;
+
+    /**
      * The table <code>rules.race</code>.
      */
     public final Race RACE = Race.RACE;
@@ -203,6 +209,7 @@ public class Rules extends SchemaImpl {
             Default_5eRace.DEFAULT_5E_RACE,
             Default_5eSkill.DEFAULT_5E_SKILL,
             DefaultEberronBackground.DEFAULT_EBERRON_BACKGROUND,
+            DefaultStates.DEFAULT_STATES,
             Race.RACE,
             RaceProficiency.RACE_PROFICIENCY,
             RaceStats.RACE_STATS,
