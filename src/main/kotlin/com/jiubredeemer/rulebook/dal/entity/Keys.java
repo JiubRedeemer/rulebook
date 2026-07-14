@@ -25,6 +25,9 @@ import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiency;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Room;
+import com.jiubredeemer.rulebook.dal.entity.tables.RoomRulebookBundle;
+import com.jiubredeemer.rulebook.dal.entity.tables.RoomRulebookContent;
+import com.jiubredeemer.rulebook.dal.entity.tables.RulebookBundle;
 import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Clazz;
@@ -50,6 +53,9 @@ import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceStatsRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.RaceTraitRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.RoomRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.RoomRulebookBundleRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.RoomRulebookContentRecord;
+import com.jiubredeemer.rulebook.dal.entity.tables.records.RulebookBundleRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.SkillRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.Srd_2024BackgroundRecord;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.Srd_2024ClazzRecord;
@@ -95,6 +101,9 @@ public class Keys {
     public static final UniqueKey<RaceStatsRecord> RACE_STATS_PKEY = Internal.createUniqueKey(RaceStats.RACE_STATS, DSL.name("race_stats_pkey"), new TableField[] { RaceStats.RACE_STATS.ID }, true);
     public static final UniqueKey<RaceTraitRecord> RACE_TRAIT_PKEY = Internal.createUniqueKey(RaceTrait.RACE_TRAIT, DSL.name("race_trait_pkey"), new TableField[] { RaceTrait.RACE_TRAIT.ID }, true);
     public static final UniqueKey<RoomRecord> ROOM_PKEY = Internal.createUniqueKey(Room.ROOM, DSL.name("room_pkey"), new TableField[] { Room.ROOM.ROOM_ID }, true);
+    public static final UniqueKey<RoomRulebookBundleRecord> ROOM_RULEBOOK_BUNDLE_PKEY = Internal.createUniqueKey(RoomRulebookBundle.ROOM_RULEBOOK_BUNDLE, DSL.name("room_rulebook_bundle_pkey"), new TableField[] { RoomRulebookBundle.ROOM_RULEBOOK_BUNDLE.ROOM_ID, RoomRulebookBundle.ROOM_RULEBOOK_BUNDLE.RULEBOOK_BUNDLE_ID }, true);
+    public static final UniqueKey<RoomRulebookContentRecord> ROOM_RULEBOOK_CONTENT_PKEY = Internal.createUniqueKey(RoomRulebookContent.ROOM_RULEBOOK_CONTENT, DSL.name("room_rulebook_content_pkey"), new TableField[] { RoomRulebookContent.ROOM_RULEBOOK_CONTENT.ROOM_ID, RoomRulebookContent.ROOM_RULEBOOK_CONTENT.CONTENT_ID }, true);
+    public static final UniqueKey<RulebookBundleRecord> RULEBOOK_BUNDLE_PKEY = Internal.createUniqueKey(RulebookBundle.RULEBOOK_BUNDLE, DSL.name("rulebook_bundle_pkey"), new TableField[] { RulebookBundle.RULEBOOK_BUNDLE.ID }, true);
     public static final UniqueKey<SkillRecord> SKILL_PKEY = Internal.createUniqueKey(Skill.SKILL, DSL.name("skill_pkey"), new TableField[] { Skill.SKILL.ID }, true);
     public static final UniqueKey<Srd_2024BackgroundRecord> SRD_2024_BACKGROUND_PKEY = Internal.createUniqueKey(Srd_2024Background.SRD_2024_BACKGROUND, DSL.name("srd_2024_background_pkey"), new TableField[] { Srd_2024Background.SRD_2024_BACKGROUND.ID }, true);
     public static final UniqueKey<Srd_2024ClazzRecord> SRD_2024_CLAZZ_PKEY = Internal.createUniqueKey(Srd_2024Clazz.SRD_2024_CLAZZ, DSL.name("srd_2024_clazz_pkey"), new TableField[] { Srd_2024Clazz.SRD_2024_CLAZZ.ID }, true);
@@ -118,5 +127,6 @@ public class Keys {
     public static final ForeignKey<RaceRecord, RaceStatsRecord> RACE__FKRACE292535 = Internal.createForeignKey(Race.RACE, DSL.name("fkrace292535"), new TableField[] { Race.RACE.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
     public static final ForeignKey<RaceProficiencyRecord, RaceStatsRecord> RACE_PROFICIENCY__FKRACE_PROFI169598 = Internal.createForeignKey(RaceProficiency.RACE_PROFICIENCY, DSL.name("fkrace_profi169598"), new TableField[] { RaceProficiency.RACE_PROFICIENCY.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
     public static final ForeignKey<RaceTraitRecord, RaceStatsRecord> RACE_TRAIT__FKRACE_TRAIT331219 = Internal.createForeignKey(RaceTrait.RACE_TRAIT, DSL.name("fkrace_trait331219"), new TableField[] { RaceTrait.RACE_TRAIT.RACE_STATS_ID }, Keys.RACE_STATS_PKEY, new TableField[] { RaceStats.RACE_STATS.ID }, true);
+    public static final ForeignKey<RoomRulebookBundleRecord, RulebookBundleRecord> ROOM_RULEBOOK_BUNDLE__FK_ROOM_RULEBOOK_BUNDLE = Internal.createForeignKey(RoomRulebookBundle.ROOM_RULEBOOK_BUNDLE, DSL.name("fk_room_rulebook_bundle"), new TableField[] { RoomRulebookBundle.ROOM_RULEBOOK_BUNDLE.RULEBOOK_BUNDLE_ID }, Keys.RULEBOOK_BUNDLE_PKEY, new TableField[] { RulebookBundle.RULEBOOK_BUNDLE.ID }, true);
     public static final ForeignKey<SkillRecord, AbilityRecord> SKILL__FKSKILL69995 = Internal.createForeignKey(Skill.SKILL, DSL.name("fkskill69995"), new TableField[] { Skill.SKILL.DEPEND_ON_ABILITY_ID }, Keys.ABILITY_PKEY, new TableField[] { Ability.ABILITY.ID }, true);
 }

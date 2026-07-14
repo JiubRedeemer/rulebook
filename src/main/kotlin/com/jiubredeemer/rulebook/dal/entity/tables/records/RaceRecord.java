@@ -146,6 +146,20 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> {
         return (Boolean) get(8);
     }
 
+    /**
+     * Setter for <code>rules.race.bundle_id</code>.
+     */
+    public void setBundleId(UUID value) {
+        set(9, value);
+    }
+
+    /**
+     * Getter for <code>rules.race.bundle_id</code>.
+     */
+    public UUID getBundleId() {
+        return (UUID) get(9);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -169,7 +183,7 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> {
     /**
      * Create a detached, initialised RaceRecord
      */
-    public RaceRecord(UUID id, UUID roomId, String name, String description, String code, UUID raceStatsId, String imgUrl, String speciesCode, Boolean hidden) {
+    public RaceRecord(UUID id, UUID roomId, String name, String description, String code, UUID raceStatsId, String imgUrl, String speciesCode, Boolean hidden, UUID bundleId) {
         super(Race.RACE);
 
         setId(id);
@@ -181,6 +195,7 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> {
         setImgUrl(imgUrl);
         setSpeciesCode(speciesCode);
         setHidden(hidden);
+        setBundleId(bundleId);
         resetChangedOnNotNull();
     }
 }

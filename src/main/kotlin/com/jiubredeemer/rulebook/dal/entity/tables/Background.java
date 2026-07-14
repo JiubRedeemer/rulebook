@@ -4,15 +4,19 @@
 package com.jiubredeemer.rulebook.dal.entity.tables;
 
 
+import com.jiubredeemer.rulebook.dal.entity.Indexes;
 import com.jiubredeemer.rulebook.dal.entity.Keys;
 import com.jiubredeemer.rulebook.dal.entity.Rules;
 import com.jiubredeemer.rulebook.dal.entity.tables.records.BackgroundRecord;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
@@ -58,7 +62,7 @@ public class Background extends TableImpl<BackgroundRecord> {
     /**
      * The column <code>rules.background.roomid</code>.
      */
-    public final TableField<BackgroundRecord, UUID> ROOMID = createField(DSL.name("roomid"), SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<BackgroundRecord, UUID> ROOMID = createField(DSL.name("roomid"), SQLDataType.UUID, this, "");
 
     /**
      * The column <code>rules.background.name</code>.
@@ -89,6 +93,11 @@ public class Background extends TableImpl<BackgroundRecord> {
      * The column <code>rules.background.hidden</code>.
      */
     public final TableField<BackgroundRecord, Boolean> HIDDEN = createField(DSL.name("hidden"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("false"), SQLDataType.BOOLEAN)), this, "");
+
+    /**
+     * The column <code>rules.background.bundle_id</code>.
+     */
+    public final TableField<BackgroundRecord, UUID> BUNDLE_ID = createField(DSL.name("bundle_id"), SQLDataType.UUID, this, "");
 
     private Background(Name alias, Table<BackgroundRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -122,6 +131,11 @@ public class Background extends TableImpl<BackgroundRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : Rules.RULES;
+    }
+
+    @Override
+    public List<Index> getIndexes() {
+        return Arrays.asList(Indexes.BACKGROUND_BUNDLE_ID_IDX);
     }
 
     @Override

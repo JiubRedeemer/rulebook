@@ -28,6 +28,7 @@ public class ClassRepository {
     private static final Table<Record> SRD_2024_CLAZZ = DSL.table(DSL.name("rules", "srd_2024_clazz"));
     private static final Field<String> SRD_2024_CLAZZ_CODE = DSL.field(DSL.name("code"), String.class);
     private static final Field<Boolean> HIDDEN = DSL.field(DSL.name("hidden"), Boolean.class);
+    private static final Field<UUID> BUNDLE_ID = DSL.field(DSL.name("bundle_id"), UUID.class);
 
     private final DSLContext dsl;
     private final ClassMapper classMapper;
@@ -39,6 +40,94 @@ public class ClassRepository {
                 .where(Clazz.CLAZZ.ROOM_ID.eq(roomId))
                 .fetch()
                 .map(classMapper);
+    }
+
+    /**
+     * Условие "контент комнаты": собственные (room_id) + из включённых бандлов (bundle_id)
+     * + точечно включённые элементы (id).
+     */
+    private org.jooq.Condition roomBundlesOrContent(UUID roomId, Collection<UUID> bundleIds, Collection<UUID> contentIds) {
+        org.jooq.Condition condition = Clazz.CLAZZ.ROOM_ID.eq(roomId);
+        if (bundleIds != null && !bundleIds.isEmpty()) {
+            condition = condition.or(BUNDLE_ID.in(bundleIds));
+        }
+        if (contentIds != null && !contentIds.isEmpty()) {
+            condition = condition.or(Clazz.CLAZZ.ID.in(contentIds));
+        }
+        return condition;
+    }
+
+    public List<ClazzDto> getClassesForRoomAndBundles(UUID roomId, Collection<UUID> bundleIds, Collection<UUID> contentIds) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(roomBundlesOrContent(roomId, bundleIds, contentIds))
+                .fetch()
+                .map(classMapper);
+    }
+
+    public Collection<ClazzDto> getRootClassesForRoomAndBundles(UUID roomId, Collection<UUID> bundleIds, Collection<UUID> contentIds) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(roomBundlesOrContent(roomId, bundleIds, contentIds))
+                .and(Clazz.CLAZZ.GROUP_CODE.eq(Clazz.CLAZZ.CODE).or(Clazz.CLAZZ.GROUP_CODE.isNull()))
+                .fetch()
+                .map(classMapper);
+    }
+
+    public Optional<ClazzDto> getClassByCodeForRoomAndBundles(UUID roomId, Collection<UUID> bundleIds, Collection<UUID> contentIds, String code) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(roomBundlesOrContent(roomId, bundleIds, contentIds))
+                .and(Clazz.CLAZZ.CODE.eq(code))
+                .limit(1)
+                .fetchOptional()
+                .map(classMapper);
+    }
+
+    public Collection<ClazzDto> getSubClassesForRoomAndBundles(UUID roomId, Collection<UUID> bundleIds, Collection<UUID> contentIds, String code) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(roomBundlesOrContent(roomId, bundleIds, contentIds))
+                .and(Clazz.CLAZZ.GROUP_CODE.eq(code))
+                .fetch()
+                .map(classMapper);
+    }
+
+    /**
+     * Поиск класса по коду в любом бандле (без учёта включённости в комнате) —
+     * для уже созданных персонажей, чей класс может быть из отключённого набора.
+     */
+    public Optional<ClazzDto> getClassByCodeInAnyBundle(String code) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(Clazz.CLAZZ.CODE.eq(code))
+                .and(BUNDLE_ID.isNotNull())
+                .limit(1)
+                .fetchOptional()
+                .map(classMapper);
+    }
+
+    // ---- Авторство: контент, привязанный к бандлу ----
+
+    public List<ClazzDto> getClassesByBundle(UUID bundleId) {
+        return dsl.selectFrom(Clazz.CLAZZ)
+                .where(BUNDLE_ID.eq(bundleId))
+                .fetch()
+                .map(classMapper);
+    }
+
+    public ClazzDto createClassForBundle(UUID bundleId, ClazzDto clazzDto) {
+        dsl.insertInto(Clazz.CLAZZ)
+                .set(classMapper.mapToRecord(clazzDto))
+                .set(HIDDEN, clazzDto.getHidden())
+                .set(BUNDLE_ID, bundleId)
+                .execute();
+        final ClazzDto dto = getFullClassById(clazzDto.getId()).orElseThrow();
+        dto.setHidden(clazzDto.getHidden());
+        return dto;
+    }
+
+    public void deleteById(UUID id) {
+        dsl.deleteFrom(Clazz.CLAZZ).where(Clazz.CLAZZ.ID.eq(id)).execute();
+    }
+
+    public void deleteByBundle(UUID bundleId) {
+        dsl.deleteFrom(Clazz.CLAZZ).where(BUNDLE_ID.eq(bundleId)).execute();
     }
 
     public List<ClazzDto> getFull5eClassesForRoom() {

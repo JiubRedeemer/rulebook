@@ -28,6 +28,7 @@ public class RaceRepository {
     private static final Table<Record> DEFAULT_2024_RACE = DSL.table(DSL.name("rules", "default_2024_race"));
     private static final Field<String> DEFAULT_2024_RACE_CODE = DSL.field(DSL.name("code"), String.class);
     private static final Field<Boolean> HIDDEN = DSL.field(DSL.name("hidden"), Boolean.class);
+    private static final Field<UUID> BUNDLE_ID = DSL.field(DSL.name("bundle_id"), UUID.class);
 
     private final DSLContext dsl;
     private final RaceMapper raceMapper;
@@ -40,6 +41,96 @@ public class RaceRepository {
                 .where(Race.RACE.ROOM_ID.eq(roomId))
                 .fetch()
                 .map(raceMapper);
+    }
+
+    /**
+     * Условие "контент комнаты": собственные (room_id) + из включённых бандлов (bundle_id)
+     * + точечно включённые элементы (id).
+     */
+    private org.jooq.Condition roomBundlesOrContent(UUID roomId, Collection<UUID> bundleIds, Collection<UUID> contentIds) {
+        org.jooq.Condition condition = Race.RACE.ROOM_ID.eq(roomId);
+        if (bundleIds != null && !bundleIds.isEmpty()) {
+            condition = condition.or(BUNDLE_ID.in(bundleIds));
+        }
+        if (contentIds != null && !contentIds.isEmpty()) {
+            condition = condition.or(Race.RACE.ID.in(contentIds));
+        }
+        return condition;
+    }
+
+    public List<RaceDto> getRacesForRoomAndBundles(UUID roomId, Collection<UUID> bundleIds, Collection<UUID> contentIds) {
+        return dsl.selectFrom(Race.RACE)
+                .where(roomBundlesOrContent(roomId, bundleIds, contentIds))
+                .fetch()
+                .map(raceMapper);
+    }
+
+    public Collection<RaceDto> getRootRacesForRoomAndBundles(UUID roomId, Collection<UUID> bundleIds, Collection<UUID> contentIds) {
+        return dsl.selectFrom(Race.RACE)
+                .where(roomBundlesOrContent(roomId, bundleIds, contentIds))
+                .and(Race.RACE.CODE.eq(Race.RACE.SPECIES_CODE).or(Race.RACE.SPECIES_CODE.isNull()))
+                .fetch()
+                .map(raceMapper);
+    }
+
+    public Optional<RaceDto> getRaceByCodeForRoomAndBundles(UUID roomId, Collection<UUID> bundleIds, Collection<UUID> contentIds, String code) {
+        return dsl.selectFrom(Race.RACE)
+                .where(roomBundlesOrContent(roomId, bundleIds, contentIds))
+                .and(Race.RACE.CODE.eq(code))
+                .limit(1)
+                .fetchOptional()
+                .map(raceMapper);
+    }
+
+    public Collection<RaceDto> getSubspeciesForRoomAndBundles(UUID roomId, Collection<UUID> bundleIds, Collection<UUID> contentIds, String code) {
+        return dsl.selectFrom(Race.RACE)
+                .where(roomBundlesOrContent(roomId, bundleIds, contentIds))
+                .and(Race.RACE.SPECIES_CODE.eq(code))
+                .and(Race.RACE.CODE.notEqual(code))
+                .fetch()
+                .map(raceMapper);
+    }
+
+    /**
+     * Поиск расы по коду в любом бандле (без учёта включённости в комнате).
+     * Нужен для уже созданных персонажей: их раса должна резолвиться, даже если
+     * набор в комнате отключён. Для выбора новым персонажам такие расы не показываются.
+     */
+    public Optional<RaceDto> getRaceByCodeInAnyBundle(String code) {
+        return dsl.selectFrom(Race.RACE)
+                .where(Race.RACE.CODE.eq(code))
+                .and(BUNDLE_ID.isNotNull())
+                .limit(1)
+                .fetchOptional()
+                .map(raceMapper);
+    }
+
+    // ---- Авторство: контент, привязанный к бандлу ----
+
+    public List<RaceDto> getRacesByBundle(UUID bundleId) {
+        return dsl.selectFrom(Race.RACE)
+                .where(BUNDLE_ID.eq(bundleId))
+                .fetch()
+                .map(raceMapper);
+    }
+
+    public RaceDto createRaceForBundle(UUID bundleId, RaceDto raceDto) {
+        dsl.insertInto(Race.RACE)
+                .set(raceMapper.mapToRecord(raceDto))
+                .set(HIDDEN, raceDto.getHidden())
+                .set(BUNDLE_ID, bundleId)
+                .execute();
+        final RaceDto dto = getFullRaceById(raceDto.getId()).orElseThrow();
+        dto.setHidden(fetchHiddenById(raceDto.getId()));
+        return dto;
+    }
+
+    public void deleteById(UUID id) {
+        dsl.deleteFrom(Race.RACE).where(Race.RACE.ID.eq(id)).execute();
+    }
+
+    public void deleteByBundle(UUID bundleId) {
+        dsl.deleteFrom(Race.RACE).where(BUNDLE_ID.eq(bundleId)).execute();
     }
 
     public List<RaceDto> getFull5eRacesForRoom() {

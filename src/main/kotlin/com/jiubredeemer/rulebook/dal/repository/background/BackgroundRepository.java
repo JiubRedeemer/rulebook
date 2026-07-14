@@ -24,10 +24,43 @@ public class BackgroundRepository {
     private static final Table<Record> SRD_2024_BACKGROUND = DSL.table(DSL.name("rules", "srd_2024_background"));
     private static final Field<String> CODE = DSL.field(DSL.name("code"), String.class);
     private static final Field<Boolean> HIDDEN = DSL.field(DSL.name("hidden"), Boolean.class);
+    private static final Field<UUID> BUNDLE_ID = DSL.field(DSL.name("bundle_id"), UUID.class);
 
     private final DSLContext dsl;
     private final Default2024BackgroundMapper default2024BackgroundMapper;
     private final BackgroundMapper backgroundMapper;
+
+    /**
+     * Условие "контент комнаты": собственные (roomid) + из включённых бандлов (bundle_id)
+     * + точечно включённые элементы (id).
+     */
+    private org.jooq.Condition roomBundlesOrContent(UUID roomId, java.util.Collection<UUID> bundleIds, java.util.Collection<UUID> contentIds) {
+        org.jooq.Condition condition = Background.BACKGROUND.ROOMID.eq(roomId);
+        if (bundleIds != null && !bundleIds.isEmpty()) {
+            condition = condition.or(BUNDLE_ID.in(bundleIds));
+        }
+        if (contentIds != null && !contentIds.isEmpty()) {
+            condition = condition.or(Background.BACKGROUND.ID.in(contentIds));
+        }
+        return condition;
+    }
+
+    public List<BackgroundDto> getBackgroundsForRoomAndBundles(UUID roomId, java.util.Collection<UUID> bundleIds, java.util.Collection<UUID> contentIds) {
+        return dsl.selectFrom(Background.BACKGROUND)
+                .where(roomBundlesOrContent(roomId, bundleIds, contentIds))
+                .fetch()
+                .map(backgroundMapper);
+    }
+
+    public Optional<BackgroundDto> getBackgroundByCodeForRoomAndBundles(UUID roomId, java.util.Collection<UUID> bundleIds, java.util.Collection<UUID> contentIds, String code) {
+        return dsl.selectFrom(Background.BACKGROUND)
+                .where(roomBundlesOrContent(roomId, bundleIds, contentIds))
+                .and(Background.BACKGROUND.CODE.eq(code))
+                .orderBy(Background.BACKGROUND.ID.desc())
+                .limit(1)
+                .fetchOptional()
+                .map(backgroundMapper);
+    }
 
     public List<BackgroundDto> getFull2024BackgroundsForRoom() {
         return dsl.selectFrom(DEFAULT_2024_BACKGROUND)
@@ -131,5 +164,47 @@ public class BackgroundRepository {
                 .from(Background.BACKGROUND)
                 .where(Background.BACKGROUND.ID.eq(id))
                 .fetchOne(HIDDEN);
+    }
+
+    /**
+     * Поиск предыстории по коду в любом бандле (без учёта включённости в комнате) —
+     * для уже созданных персонажей, чья предыстория может быть из отключённого набора.
+     */
+    public Optional<BackgroundDto> getBackgroundByCodeInAnyBundle(String code) {
+        return dsl.selectFrom(Background.BACKGROUND)
+                .where(Background.BACKGROUND.CODE.eq(code))
+                .and(BUNDLE_ID.isNotNull())
+                .orderBy(Background.BACKGROUND.ID.desc())
+                .limit(1)
+                .fetchOptional()
+                .map(backgroundMapper);
+    }
+
+    // ---- Авторство: контент, привязанный к бандлу ----
+
+    public List<BackgroundDto> getBackgroundsByBundle(UUID bundleId) {
+        return dsl.selectFrom(Background.BACKGROUND)
+                .where(BUNDLE_ID.eq(bundleId))
+                .fetch()
+                .map(backgroundMapper);
+    }
+
+    public BackgroundDto createBackgroundForBundle(UUID bundleId, BackgroundDto backgroundDto) {
+        dsl.insertInto(Background.BACKGROUND)
+                .set(backgroundMapper.mapToRecord(backgroundDto))
+                .set(HIDDEN, backgroundDto.getHidden())
+                .set(BUNDLE_ID, bundleId)
+                .execute();
+        final BackgroundDto dto = getFullBackgroundByIdForRoom(backgroundDto.getId());
+        dto.setHidden(fetchHiddenById(backgroundDto.getId()));
+        return dto;
+    }
+
+    public void deleteById(UUID id) {
+        dsl.deleteFrom(Background.BACKGROUND).where(Background.BACKGROUND.ID.eq(id)).execute();
+    }
+
+    public void deleteByBundle(UUID bundleId) {
+        dsl.deleteFrom(Background.BACKGROUND).where(BUNDLE_ID.eq(bundleId)).execute();
     }
 }

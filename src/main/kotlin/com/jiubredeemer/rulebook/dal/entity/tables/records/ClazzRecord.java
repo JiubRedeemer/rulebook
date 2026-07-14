@@ -146,6 +146,20 @@ public class ClazzRecord extends UpdatableRecordImpl<ClazzRecord> {
         return (Boolean) get(8);
     }
 
+    /**
+     * Setter for <code>rules.clazz.bundle_id</code>.
+     */
+    public void setBundleId(UUID value) {
+        set(9, value);
+    }
+
+    /**
+     * Getter for <code>rules.clazz.bundle_id</code>.
+     */
+    public UUID getBundleId() {
+        return (UUID) get(9);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -169,7 +183,7 @@ public class ClazzRecord extends UpdatableRecordImpl<ClazzRecord> {
     /**
      * Create a detached, initialised ClazzRecord
      */
-    public ClazzRecord(UUID id, UUID roomId, String name, String description, String code, UUID clazzStatsId, String imgUrl, String groupCode, Boolean hidden) {
+    public ClazzRecord(UUID id, UUID roomId, String name, String description, String code, UUID clazzStatsId, String imgUrl, String groupCode, Boolean hidden, UUID bundleId) {
         super(Clazz.CLAZZ);
 
         setId(id);
@@ -181,6 +195,7 @@ public class ClazzRecord extends UpdatableRecordImpl<ClazzRecord> {
         setImgUrl(imgUrl);
         setGroupCode(groupCode);
         setHidden(hidden);
+        setBundleId(bundleId);
         resetChangedOnNotNull();
     }
 }

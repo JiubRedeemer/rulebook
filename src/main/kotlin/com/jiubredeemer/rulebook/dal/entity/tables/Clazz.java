@@ -68,7 +68,7 @@ public class Clazz extends TableImpl<ClazzRecord> {
     /**
      * The column <code>rules.clazz.room_id</code>.
      */
-    public final TableField<ClazzRecord, UUID> ROOM_ID = createField(DSL.name("room_id"), SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<ClazzRecord, UUID> ROOM_ID = createField(DSL.name("room_id"), SQLDataType.UUID, this, "");
 
     /**
      * The column <code>rules.clazz.name</code>.
@@ -104,6 +104,11 @@ public class Clazz extends TableImpl<ClazzRecord> {
      * The column <code>rules.clazz.hidden</code>.
      */
     public final TableField<ClazzRecord, Boolean> HIDDEN = createField(DSL.name("hidden"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("false"), SQLDataType.BOOLEAN)), this, "");
+
+    /**
+     * The column <code>rules.clazz.bundle_id</code>.
+     */
+    public final TableField<ClazzRecord, UUID> BUNDLE_ID = createField(DSL.name("bundle_id"), SQLDataType.UUID, this, "");
 
     private Clazz(Name alias, Table<ClazzRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -174,7 +179,7 @@ public class Clazz extends TableImpl<ClazzRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.asList(Indexes.CLAZZ_ROOM_ID);
+        return Arrays.asList(Indexes.CLAZZ_BUNDLE_ID_IDX, Indexes.CLAZZ_ROOM_ID);
     }
 
     @Override

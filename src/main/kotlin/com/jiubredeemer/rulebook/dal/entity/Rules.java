@@ -25,6 +25,9 @@ import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiency;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Room;
+import com.jiubredeemer.rulebook.dal.entity.tables.RoomRulebookBundle;
+import com.jiubredeemer.rulebook.dal.entity.tables.RoomRulebookContent;
+import com.jiubredeemer.rulebook.dal.entity.tables.RulebookBundle;
 import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Clazz;
@@ -159,6 +162,21 @@ public class Rules extends SchemaImpl {
     public final Room ROOM = Room.ROOM;
 
     /**
+     * The table <code>rules.room_rulebook_bundle</code>.
+     */
+    public final RoomRulebookBundle ROOM_RULEBOOK_BUNDLE = RoomRulebookBundle.ROOM_RULEBOOK_BUNDLE;
+
+    /**
+     * The table <code>rules.room_rulebook_content</code>.
+     */
+    public final RoomRulebookContent ROOM_RULEBOOK_CONTENT = RoomRulebookContent.ROOM_RULEBOOK_CONTENT;
+
+    /**
+     * Наборы правил (издания) для рас/классов/предысторий
+     */
+    public final RulebookBundle RULEBOOK_BUNDLE = RulebookBundle.RULEBOOK_BUNDLE;
+
+    /**
      * Кастомные навыки существ (для homebrew игр)
      */
     public final Skill SKILL = Skill.SKILL;
@@ -215,6 +233,9 @@ public class Rules extends SchemaImpl {
             RaceStats.RACE_STATS,
             RaceTrait.RACE_TRAIT,
             Room.ROOM,
+            RoomRulebookBundle.ROOM_RULEBOOK_BUNDLE,
+            RoomRulebookContent.ROOM_RULEBOOK_CONTENT,
+            RulebookBundle.RULEBOOK_BUNDLE,
             Skill.SKILL,
             Srd_2024Background.SRD_2024_BACKGROUND,
             Srd_2024Clazz.SRD_2024_CLAZZ,

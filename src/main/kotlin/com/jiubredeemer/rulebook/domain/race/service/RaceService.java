@@ -1,19 +1,20 @@
 package com.jiubredeemer.rulebook.domain.race.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.jiubredeemer.rulebook.configuration.LicenseMode;
 import com.jiubredeemer.rulebook.dal.repository.race.RaceRepository;
 import com.jiubredeemer.rulebook.dal.repository.race.RaceStatsRepository;
+import com.jiubredeemer.rulebook.domain.bundle.dto.BundleCategoryEnum;
+import com.jiubredeemer.rulebook.domain.bundle.service.RulebookBundleService;
 import com.jiubredeemer.rulebook.domain.race.dto.RaceDto;
 import com.jiubredeemer.rulebook.domain.race.dto.RaceGroupDto;
 import com.jiubredeemer.rulebook.domain.race.dto.RaceStatsDto;
-import com.jiubredeemer.rulebook.domain.room.dto.RoomDto;
 import com.jiubredeemer.rulebook.domain.room.dto.RuleTypeEnum;
 import com.jiubredeemer.rulebook.domain.room.service.RoomService;
 import com.jiubredeemer.rulebook.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -26,91 +27,40 @@ public class RaceService {
     private final RaceRepository raceRepository;
     private final RaceStatsRepository raceStatsRepository;
     private final RoomService roomService;
+    private final RulebookBundleService rulebookBundleService;
 
-    private final LicenseMode licenseMode;
+    private Collection<UUID> raceBundles(UUID roomId, RuleTypeEnum forceRuleType) {
+        return rulebookBundleService.resolveBundleIds(roomId, forceRuleType, BundleCategoryEnum.RACE);
+    }
+
+    private Collection<UUID> roomContent(UUID roomId) {
+        return rulebookBundleService.getEnabledContentIds(roomId);
+    }
 
     public List<RaceDto> fetchAvailableRacesForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
-        RoomDto roomDto;
-        if (roomId.equals(ZERO_UUID)) {
-            roomDto = new RoomDto();
-            roomDto.setRuleType(forceRuleType);
-            roomDto.setBaseRuleType(forceRuleType);
-        } else {
-            roomDto = roomService.getById(roomId);
-        }
-        return (switch (roomDto.getRuleType()) {
-            case DND5E -> raceRepository.getFull5eRacesForRoom();
-            case DND2024 -> {
-                if (licenseMode.getCcBy4()) {
-                    yield raceRepository.getFull2024SrdRacesForRoom();
-                } else {
-                    yield raceRepository.getFull2024RacesForRoom();
-                }
-            }
-            default -> raceRepository.getFullRacesForRoom(roomId);
-        }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
+        return raceRepository.getRacesForRoomAndBundles(roomId, raceBundles(roomId, forceRuleType), roomContent(roomId)).stream()
+                .peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }
 
     public List<RaceDto> fetchAvailableRootRacesForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
-        RoomDto roomDto;
-        if (roomId.equals(ZERO_UUID)) {
-            roomDto = new RoomDto();
-            roomDto.setRuleType(forceRuleType);
-            roomDto.setBaseRuleType(forceRuleType);
-        } else {
-            roomDto = roomService.getById(roomId);
-        }
-        return (switch (roomDto.getRuleType()) {
-            case DND5E -> raceRepository.getFull5eRootRacesForRoom();
-            case DND2024 -> {
-                if (licenseMode.getCcBy4()) {
-                    yield raceRepository.getFull2024SrdRacesForRoom();
-                } else {
-                    yield raceRepository.getFull2024RacesForRoom();
-                }
-            }
-            default -> raceRepository.getFullRootRacesForRoom(roomId);
-        }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
+        return raceRepository.getRootRacesForRoomAndBundles(roomId, raceBundles(roomId, forceRuleType), roomContent(roomId)).stream()
+                .peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }
 
     public RaceDto fetchByCode(String raceCode, UUID roomId) {
-        final RoomDto roomDto = roomService.getById(roomId);
-        return (switch (roomDto.getRuleType()) {
-            case DND5E -> raceRepository.getFull5eRaceByCode(raceCode);
-            case DND2024 -> {
-                if (licenseMode.getCcBy4()) {
-                    yield raceRepository.getFull2024SrdRaceByCode(raceCode);
-                } else {
-                    yield raceRepository.getFull2024RaceByCode(raceCode);
-                }
-            }
-            default -> raceRepository.getFullRaceByCode(raceCode, roomId);
-        }).map(raceDto -> {
-            raceDto.setRoomId(roomId);
-            return raceDto;
-        }).orElseThrow(() -> new NotFoundException("Race not found by code"));
+        // Сначала — среди доступного комнате (room + включённые наборы/элементы),
+        // затем fallback — любая раса набора по коду (для персонажей с отключённым набором).
+        return raceRepository.getRaceByCodeForRoomAndBundles(roomId, raceBundles(roomId, null), roomContent(roomId), raceCode)
+                .or(() -> raceRepository.getRaceByCodeInAnyBundle(raceCode))
+                .map(raceDto -> {
+                    raceDto.setRoomId(roomId);
+                    return raceDto;
+                }).orElseThrow(() -> new NotFoundException("Race not found by code"));
     }
 
     public List<RaceDto> fetchSubspeciesByCode(String raceCode, UUID roomId, RuleTypeEnum forceRuleType) {
-        RoomDto roomDto;
-        if (roomId.equals(ZERO_UUID)) {
-            roomDto = new RoomDto();
-            roomDto.setRuleType(forceRuleType);
-            roomDto.setBaseRuleType(forceRuleType);
-        } else {
-            roomDto = roomService.getById(roomId);
-        }
-        return (switch (roomDto.getRuleType()) {
-            case DND5E -> raceRepository.getFull5eRaceSubspeciesByCode(raceCode);
-            case DND2024 -> {
-                if (licenseMode.getCcBy4()) {
-                    yield raceRepository.getFull2024SrdRaceSubspeciesByCode(raceCode);
-                } else {
-                    yield raceRepository.getFull2024RaceSubspeciesByCode(raceCode);
-                }
-            }
-            default -> raceRepository.getFullRaceSubspeciesByCode(raceCode, roomId);
-        }).stream().peek(raceDto -> raceDto.setRoomId(roomId)).toList();
+        return raceRepository.getSubspeciesForRoomAndBundles(roomId, raceBundles(roomId, forceRuleType), roomContent(roomId), raceCode).stream()
+                .peek(raceDto -> raceDto.setRoomId(roomId)).toList();
     }
 
     public List<RaceGroupDto> fetchGroupedRacesForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
@@ -196,5 +146,35 @@ public class RaceService {
 
     public RaceDto setHidden(UUID id, Boolean hidden) {
         return raceRepository.setHidden(id, hidden);
+    }
+
+    // ---- Авторство: расы внутри бандла ----
+
+    public List<RaceDto> getRacesByBundle(UUID bundleId) {
+        return raceRepository.getRacesByBundle(bundleId);
+    }
+
+    public RaceDto saveRaceInBundle(UUID bundleId, RaceDto raceDto) throws JsonProcessingException {
+        if (raceDto.getStats() == null) {
+            throw new NotFoundException("Race stats not found");
+        }
+        boolean isUpdate = raceDto.getId() != null && raceRepository.getFullRaceById(raceDto.getId()).isPresent();
+        raceDto.setHidden(raceDto.getHidden() != null ? raceDto.getHidden() : false);
+        raceDto.getStats().setId(UUID.randomUUID());
+        raceDto.setStats(raceStatsRepository.create(raceDto.getStats()));
+        if (isUpdate) {
+            raceDto.setRoomId(null);
+            return raceRepository.updateRace(raceDto);
+        }
+        raceDto.setId(UUID.randomUUID());
+        raceDto.setCode(raceDto.getCode() != null ? raceDto.getCode() : raceDto.getId().toString());
+        raceDto.setSpeciesCode(raceDto.getSpeciesCode() == null ? raceDto.getCode() : raceDto.getSpeciesCode());
+        raceDto.setImgUrl(raceDto.getImgUrl() == null ? raceDto.getId().toString() : raceDto.getImgUrl());
+        raceDto.setRoomId(null);
+        return raceRepository.createRaceForBundle(bundleId, raceDto);
+    }
+
+    public void deleteRace(UUID id) {
+        raceRepository.deleteById(id);
     }
 }

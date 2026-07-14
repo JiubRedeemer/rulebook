@@ -68,7 +68,7 @@ public class Race extends TableImpl<RaceRecord> {
     /**
      * The column <code>rules.race.room_id</code>.
      */
-    public final TableField<RaceRecord, UUID> ROOM_ID = createField(DSL.name("room_id"), SQLDataType.UUID.nullable(false), this, "");
+    public final TableField<RaceRecord, UUID> ROOM_ID = createField(DSL.name("room_id"), SQLDataType.UUID, this, "");
 
     /**
      * The column <code>rules.race.name</code>.
@@ -104,6 +104,11 @@ public class Race extends TableImpl<RaceRecord> {
      * The column <code>rules.race.hidden</code>.
      */
     public final TableField<RaceRecord, Boolean> HIDDEN = createField(DSL.name("hidden"), SQLDataType.BOOLEAN.nullable(false).defaultValue(DSL.field(DSL.raw("false"), SQLDataType.BOOLEAN)), this, "");
+
+    /**
+     * The column <code>rules.race.bundle_id</code>.
+     */
+    public final TableField<RaceRecord, UUID> BUNDLE_ID = createField(DSL.name("bundle_id"), SQLDataType.UUID, this, "");
 
     private Race(Name alias, Table<RaceRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -174,7 +179,7 @@ public class Race extends TableImpl<RaceRecord> {
 
     @Override
     public List<Index> getIndexes() {
-        return Arrays.asList(Indexes.RACE_ROOM_ID);
+        return Arrays.asList(Indexes.RACE_BUNDLE_ID_IDX, Indexes.RACE_ROOM_ID);
     }
 
     @Override

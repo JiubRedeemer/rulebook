@@ -25,6 +25,9 @@ import com.jiubredeemer.rulebook.dal.entity.tables.RaceProficiency;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.Room;
+import com.jiubredeemer.rulebook.dal.entity.tables.RoomRulebookBundle;
+import com.jiubredeemer.rulebook.dal.entity.tables.RoomRulebookContent;
+import com.jiubredeemer.rulebook.dal.entity.tables.RulebookBundle;
 import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Clazz;
@@ -143,6 +146,21 @@ public class Tables {
      * Реплика информации о комнате из core микросервиса
      */
     public static final Room ROOM = Room.ROOM;
+
+    /**
+     * The table <code>rules.room_rulebook_bundle</code>.
+     */
+    public static final RoomRulebookBundle ROOM_RULEBOOK_BUNDLE = RoomRulebookBundle.ROOM_RULEBOOK_BUNDLE;
+
+    /**
+     * The table <code>rules.room_rulebook_content</code>.
+     */
+    public static final RoomRulebookContent ROOM_RULEBOOK_CONTENT = RoomRulebookContent.ROOM_RULEBOOK_CONTENT;
+
+    /**
+     * Наборы правил (издания) для рас/классов/предысторий
+     */
+    public static final RulebookBundle RULEBOOK_BUNDLE = RulebookBundle.RULEBOOK_BUNDLE;
 
     /**
      * Кастомные навыки существ (для homebrew игр)

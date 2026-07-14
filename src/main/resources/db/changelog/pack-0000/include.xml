@@ -42,5 +42,7 @@
     <include file="035-PRO-80-init-srd-backgrounds.sql" relativeToChangelogFile="true"/>
     <include file="036-PRO-80-add-hidden-flag.sql" relativeToChangelogFile="true"/>
     <include file="037-PRO-64-add-states.sql" relativeToChangelogFile="true"/>
+    <include file="038-PRO-0-rulebook-bundles.sql" relativeToChangelogFile="true"/>
+    <include file="039-PRO-0-room-rulebook-content.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

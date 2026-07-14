@@ -1,11 +1,12 @@
 package com.jiubredeemer.rulebook.domain.background.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.jiubredeemer.rulebook.configuration.LicenseMode;
 import com.jiubredeemer.rulebook.dal.repository.background.BackgroundRepository;
 import com.jiubredeemer.rulebook.dal.repository.background.BackgroundStatsRepository;
 import com.jiubredeemer.rulebook.domain.background.dto.BackgroundDto;
 import com.jiubredeemer.rulebook.domain.background.dto.BackgroundStatsDto;
+import com.jiubredeemer.rulebook.domain.bundle.dto.BundleCategoryEnum;
+import com.jiubredeemer.rulebook.domain.bundle.service.RulebookBundleService;
 import com.jiubredeemer.rulebook.domain.room.dto.RoomDto;
 import com.jiubredeemer.rulebook.domain.room.dto.RuleTypeEnum;
 import com.jiubredeemer.rulebook.domain.room.service.RoomService;
@@ -13,7 +14,7 @@ import com.jiubredeemer.rulebook.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,60 +26,27 @@ public class BackgroundService {
     private final BackgroundRepository backgroundRepository;
     private final BackgroundStatsRepository backgroundStatsRepository;
     private final RoomService roomService;
-    private final LicenseMode licenseMode;
+    private final RulebookBundleService rulebookBundleService;
+
+    private Collection<UUID> backgroundBundles(UUID roomId, RuleTypeEnum forceRuleType) {
+        return rulebookBundleService.resolveBundleIds(roomId, forceRuleType, BundleCategoryEnum.BACKGROUND);
+    }
+
+    private Collection<UUID> roomContent(UUID roomId) {
+        return rulebookBundleService.getEnabledContentIds(roomId);
+    }
 
     public List<BackgroundDto> fetchAvailableBackgroundsForRoom(UUID roomId, RuleTypeEnum forceRuleType) {
-        RoomDto roomDto;
-        if (roomId.equals(ZERO_UUID)) {
-            roomDto = new RoomDto();
-            roomDto.setRuleType(forceRuleType);
-            roomDto.setBaseRuleType(forceRuleType);
-        } else {
-            roomDto = roomService.getById(roomId);
-        }
-        if (roomDto.getRuleType() != RuleTypeEnum.DND2024 && roomDto.getBaseRuleType() != RuleTypeEnum.DND2024) {
-            return List.of();
-        }
-        if (roomDto.getRuleType().equals(RuleTypeEnum.DND2024)) {
-            List<BackgroundDto> list;
-            if (licenseMode.getCcBy4()) {
-                list = new ArrayList<>(backgroundRepository.getFull2024SrdBackgroundsForRoom());
-            } else {
-                list = new ArrayList<>(backgroundRepository.getFull2024BackgroundsForRoom());
-                list.addAll(backgroundRepository.getFullEberronBackgroundsForRoom());
-            }
-            return list.stream()
-                    .map(dto -> enrichOnRead(dto, roomId))
-                    .toList();
-        } else {
-            List<BackgroundDto> list = new ArrayList<>(backgroundRepository.getFullBackgroundsForRoom(roomId));
-            return list.stream()
-                    .map(dto -> enrichOnRead(dto, roomId))
-                    .toList();
-        }
+        return backgroundRepository.getBackgroundsForRoomAndBundles(roomId, backgroundBundles(roomId, forceRuleType), roomContent(roomId)).stream()
+                .map(dto -> enrichOnRead(dto, roomId))
+                .toList();
     }
 
     public BackgroundDto fetchByCode(String code, UUID roomId) {
-        RoomDto roomDto = roomService.getById(roomId);
-        if (roomDto.getRuleType() != RuleTypeEnum.DND2024 && roomDto.getBaseRuleType() != RuleTypeEnum.DND2024) {
-            throw new NotFoundException("Backgrounds are only available for D&D 2024 rules");
-        }
-        if (roomDto.getRuleType().equals(RuleTypeEnum.HOMEBREW)) {
-            return backgroundRepository.getFullBackgroundByCode(code, roomId)
-                    .map(dto -> {
-                        dto.setRoomId(roomId);
-                        return dto;
-                    })
-                    .orElseThrow(() -> new NotFoundException("Background not found by code"));
-        }
-        return (licenseMode.getCcBy4()
-                ? backgroundRepository.getFull2024SrdBackgroundByCode(code)
-                : backgroundRepository.getFull2024BackgroundByCode(code)
-                .or(() -> backgroundRepository.getFullEberronBackgroundByCode(code)))
-                .map(dto -> {
-                    dto.setRoomId(roomId);
-                    return dto;
-                })
+        // room + включённые наборы, затем fallback — любая предыстория набора (для персонажей с отключённым набором).
+        return backgroundRepository.getBackgroundByCodeForRoomAndBundles(roomId, backgroundBundles(roomId, null), roomContent(roomId), code)
+                .or(() -> backgroundRepository.getBackgroundByCodeInAnyBundle(code))
+                .map(dto -> enrichOnRead(dto, roomId))
                 .orElseThrow(() -> new NotFoundException("Background not found by code"));
     }
 
@@ -123,6 +91,37 @@ public class BackgroundService {
 
     public BackgroundDto setHidden(UUID id, Boolean hidden) {
         return backgroundRepository.setHidden(id, hidden);
+    }
+
+    // ---- Авторство: предыстории внутри бандла ----
+
+    public List<BackgroundDto> getBackgroundsByBundle(UUID bundleId) {
+        return backgroundRepository.getBackgroundsByBundle(bundleId).stream()
+                .map(dto -> enrichOnRead(dto, null))
+                .toList();
+    }
+
+    public BackgroundDto saveBackgroundInBundle(UUID bundleId, BackgroundDto backgroundDto) throws JsonProcessingException {
+        if (backgroundDto.getStats() == null) {
+            throw new NotFoundException("Background stats not found");
+        }
+        boolean isUpdate = backgroundDto.getId() != null;
+        backgroundDto.setHidden(backgroundDto.getHidden() != null ? backgroundDto.getHidden() : false);
+        backgroundDto.getStats().setId(UUID.randomUUID());
+        backgroundDto.setStats(backgroundStatsRepository.create(backgroundDto.getStats()));
+        if (isUpdate) {
+            backgroundDto.setRoomId(null);
+            return backgroundRepository.update(backgroundDto);
+        }
+        backgroundDto.setId(UUID.randomUUID());
+        backgroundDto.setCode(backgroundDto.getCode() != null ? backgroundDto.getCode() : backgroundDto.getId().toString());
+        backgroundDto.setImgUrl(backgroundDto.getImgUrl() == null ? backgroundDto.getId().toString() : backgroundDto.getImgUrl());
+        backgroundDto.setRoomId(null);
+        return backgroundRepository.createBackgroundForBundle(bundleId, backgroundDto);
+    }
+
+    public void deleteBackground(UUID id) {
+        backgroundRepository.deleteById(id);
     }
 
     private BackgroundDto enrichOnRead(BackgroundDto dto, UUID roomId) {
