@@ -44,5 +44,6 @@
     <include file="037-PRO-64-add-states.sql" relativeToChangelogFile="true"/>
     <include file="038-PRO-0-rulebook-bundles.sql" relativeToChangelogFile="true"/>
     <include file="039-PRO-0-room-rulebook-content.sql" relativeToChangelogFile="true"/>
+    <include file="040-PRO-0-blueprints.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -9,6 +9,7 @@ import com.jiubredeemer.rulebook.dal.entity.tables.Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundProficiency;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
+import com.jiubredeemer.rulebook.dal.entity.tables.Blueprint;
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClazzStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.DefaultEberronBackground;
@@ -32,6 +33,7 @@ import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Race;
+import com.jiubredeemer.rulebook.dal.entity.tables.UsersBlueprint;
 
 import java.util.Arrays;
 import java.util.List;
@@ -79,6 +81,11 @@ public class Rules extends SchemaImpl {
      * Черта происхождения (Origin Feat), даруемая предысторией
      */
     public final BackgroundTrait BACKGROUND_TRAIT = BackgroundTrait.BACKGROUND_TRAIT;
+
+    /**
+     * The table <code>rules.blueprint</code>.
+     */
+    public final Blueprint BLUEPRINT = Blueprint.BLUEPRINT;
 
     /**
      * The table <code>rules.clazz</code>.
@@ -197,6 +204,11 @@ public class Rules extends SchemaImpl {
     public final Srd_2024Race SRD_2024_RACE = Srd_2024Race.SRD_2024_RACE;
 
     /**
+     * The table <code>rules.users_blueprint</code>.
+     */
+    public final UsersBlueprint USERS_BLUEPRINT = UsersBlueprint.USERS_BLUEPRINT;
+
+    /**
      * No further instances allowed
      */
     private Rules() {
@@ -217,6 +229,7 @@ public class Rules extends SchemaImpl {
             BackgroundProficiency.BACKGROUND_PROFICIENCY,
             BackgroundStats.BACKGROUND_STATS,
             BackgroundTrait.BACKGROUND_TRAIT,
+            Blueprint.BLUEPRINT,
             Clazz.CLAZZ,
             ClazzStats.CLAZZ_STATS,
             Default_2024Background.DEFAULT_2024_BACKGROUND,
@@ -239,7 +252,8 @@ public class Rules extends SchemaImpl {
             Skill.SKILL,
             Srd_2024Background.SRD_2024_BACKGROUND,
             Srd_2024Clazz.SRD_2024_CLAZZ,
-            Srd_2024Race.SRD_2024_RACE
+            Srd_2024Race.SRD_2024_RACE,
+            UsersBlueprint.USERS_BLUEPRINT
         );
     }
 }

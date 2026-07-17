@@ -9,6 +9,7 @@ import com.jiubredeemer.rulebook.dal.entity.tables.Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundProficiency;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
+import com.jiubredeemer.rulebook.dal.entity.tables.Blueprint;
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.ClazzStats;
 import com.jiubredeemer.rulebook.dal.entity.tables.DefaultEberronBackground;
@@ -32,6 +33,7 @@ import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.Srd_2024Race;
+import com.jiubredeemer.rulebook.dal.entity.tables.UsersBlueprint;
 
 
 /**
@@ -65,6 +67,11 @@ public class Tables {
      * Черта происхождения (Origin Feat), даруемая предысторией
      */
     public static final BackgroundTrait BACKGROUND_TRAIT = BackgroundTrait.BACKGROUND_TRAIT;
+
+    /**
+     * The table <code>rules.blueprint</code>.
+     */
+    public static final Blueprint BLUEPRINT = Blueprint.BLUEPRINT;
 
     /**
      * The table <code>rules.clazz</code>.
@@ -181,4 +188,9 @@ public class Tables {
      * The table <code>rules.srd_2024_race</code>.
      */
     public static final Srd_2024Race SRD_2024_RACE = Srd_2024Race.SRD_2024_RACE;
+
+    /**
+     * The table <code>rules.users_blueprint</code>.
+     */
+    public static final UsersBlueprint USERS_BLUEPRINT = UsersBlueprint.USERS_BLUEPRINT;
 }

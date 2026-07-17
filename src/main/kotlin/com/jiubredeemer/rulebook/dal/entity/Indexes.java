@@ -8,6 +8,7 @@ import com.jiubredeemer.rulebook.dal.entity.tables.Ability;
 import com.jiubredeemer.rulebook.dal.entity.tables.Background;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundProficiency;
 import com.jiubredeemer.rulebook.dal.entity.tables.BackgroundTrait;
+import com.jiubredeemer.rulebook.dal.entity.tables.Blueprint;
 import com.jiubredeemer.rulebook.dal.entity.tables.Clazz;
 import com.jiubredeemer.rulebook.dal.entity.tables.Default_5eSkill;
 import com.jiubredeemer.rulebook.dal.entity.tables.Race;
@@ -16,6 +17,7 @@ import com.jiubredeemer.rulebook.dal.entity.tables.RaceTrait;
 import com.jiubredeemer.rulebook.dal.entity.tables.RoomRulebookBundle;
 import com.jiubredeemer.rulebook.dal.entity.tables.RoomRulebookContent;
 import com.jiubredeemer.rulebook.dal.entity.tables.Skill;
+import com.jiubredeemer.rulebook.dal.entity.tables.UsersBlueprint;
 
 import org.jooq.Index;
 import org.jooq.OrderField;
@@ -35,6 +37,9 @@ public class Indexes {
 
     public static final Index ABILITY_ROOM_ID = Internal.createIndex(DSL.name("ability_room_id"), Ability.ABILITY, new OrderField[] { Ability.ABILITY.ROOM_ID }, false);
     public static final Index BACKGROUND_BUNDLE_ID_IDX = Internal.createIndex(DSL.name("background_bundle_id_idx"), Background.BACKGROUND, new OrderField[] { Background.BACKGROUND.BUNDLE_ID }, false);
+    public static final Index BLUEPRINT_BUNDLE_IDX = Internal.createIndex(DSL.name("blueprint_bundle_idx"), Blueprint.BLUEPRINT, new OrderField[] { Blueprint.BLUEPRINT.BUNDLE_ID }, false);
+    public static final Index BLUEPRINT_CODE_UIDX = Internal.createIndex(DSL.name("blueprint_code_uidx"), Blueprint.BLUEPRINT, new OrderField[] { Blueprint.BLUEPRINT.CODE }, true);
+    public static final Index BLUEPRINT_GROUP_CODE_IDX = Internal.createIndex(DSL.name("blueprint_group_code_idx"), Blueprint.BLUEPRINT, new OrderField[] { Blueprint.BLUEPRINT.GROUP_CODE }, false);
     public static final Index CLAZZ_BUNDLE_ID_IDX = Internal.createIndex(DSL.name("clazz_bundle_id_idx"), Clazz.CLAZZ, new OrderField[] { Clazz.CLAZZ.BUNDLE_ID }, false);
     public static final Index CLAZZ_ROOM_ID = Internal.createIndex(DSL.name("clazz_room_id"), Clazz.CLAZZ, new OrderField[] { Clazz.CLAZZ.ROOM_ID }, false);
     public static final Index DEFAULT_5E_SKILL_DEPEND_ON_ABILITY = Internal.createIndex(DSL.name("default_5e_skill_depend_on_ability"), Default_5eSkill.DEFAULT_5E_SKILL, new OrderField[] { Default_5eSkill.DEFAULT_5E_SKILL.DEPEND_ON_ABILITY }, false);
@@ -47,4 +52,6 @@ public class Indexes {
     public static final Index ROOM_RULEBOOK_BUNDLE_ROOM_IDX = Internal.createIndex(DSL.name("room_rulebook_bundle_room_idx"), RoomRulebookBundle.ROOM_RULEBOOK_BUNDLE, new OrderField[] { RoomRulebookBundle.ROOM_RULEBOOK_BUNDLE.ROOM_ID }, false);
     public static final Index ROOM_RULEBOOK_CONTENT_ROOM_IDX = Internal.createIndex(DSL.name("room_rulebook_content_room_idx"), RoomRulebookContent.ROOM_RULEBOOK_CONTENT, new OrderField[] { RoomRulebookContent.ROOM_RULEBOOK_CONTENT.ROOM_ID }, false);
     public static final Index SKILL_DEPEND_ON_ABILITY_ID = Internal.createIndex(DSL.name("skill_depend_on_ability_id"), Skill.SKILL, new OrderField[] { Skill.SKILL.DEPEND_ON_ABILITY_ID }, false);
+    public static final Index USERS_BLUEPRINT_GROUP_CODE_IDX = Internal.createIndex(DSL.name("users_blueprint_group_code_idx"), UsersBlueprint.USERS_BLUEPRINT, new OrderField[] { UsersBlueprint.USERS_BLUEPRINT.GROUP_CODE }, false);
+    public static final Index USERS_BLUEPRINT_ROOM_IDX = Internal.createIndex(DSL.name("users_blueprint_room_idx"), UsersBlueprint.USERS_BLUEPRINT, new OrderField[] { UsersBlueprint.USERS_BLUEPRINT.ROOM_ID }, false);
 }
